@@ -1,3 +1,4 @@
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 import { QueryResponseItem } from './QueryResponse';
 
 export interface Event {
@@ -9,6 +10,7 @@ export interface Event {
     filename: string;
     alt?: string | null;
   };
+  description: StoryblokRichtext;
 
   teemunkierros: boolean;
 }

@@ -3,10 +3,13 @@ import {
   Dispatch,
   FC,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
 import { ApolloError } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+
 import { EventItem } from 'interfaces';
 import { useEventQuery } from 'hooks';
 
@@ -16,6 +19,7 @@ interface Filter {
 }
 
 interface EventContextValue {
+  data: EventItem[];
   error?: ApolloError;
   events: EventItem[];
   filter: {
@@ -30,6 +34,7 @@ const initialFilter = {
 };
 
 const initialContext: EventContextValue = {
+  data: [],
   events: [],
   filter: {
     teemunkierros: initialFilter,
@@ -47,6 +52,27 @@ const useFilter = () => {
 
 export const useEventContext = () => useContext(EventContext);
 
+export const useEvent = (slug?: string) => {
+  const { data, loading } = useEventContext();
+  const navigate = useNavigate();
+
+  const event = useMemo(() => {
+    if (data.length > 0 && slug) {
+      return data.find((e) => e.slug === slug);
+    }
+
+    return undefined;
+  }, [data, slug]);
+
+  useEffect(() => {
+    if (!loading && !event) {
+      navigate('/events');
+    }
+  }, [event, loading, navigate]);
+
+  return event;
+};
+
 export const EventContextProvider: FC = (props) => {
   const { data, error, loading } = useEventQuery();
 
@@ -62,7 +88,7 @@ export const EventContextProvider: FC = (props) => {
 
   return (
     <EventContext.Provider
-      value={{ error, events, filter: { teemunkierros }, loading }}
+      value={{ data, error, events, filter: { teemunkierros }, loading }}
       {...props}
     />
   );

@@ -1,5 +1,5 @@
 export interface QueryResponseItem<TItem> {
-  id: string;
+  slug: string;
   content: TItem;
 }
 

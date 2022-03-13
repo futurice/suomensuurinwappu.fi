@@ -6,7 +6,7 @@ const eventQuery = gql`
   query EventQuery {
     EventItems {
       items {
-        id
+        slug
         content {
           title
           dateBegin: date_begin
@@ -16,6 +16,7 @@ const eventQuery = gql`
             filename
             alt
           }
+          description
 
           teemunkierros
           locationTag: location_tag

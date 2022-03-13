@@ -1,12 +1,13 @@
-import { FC } from 'react';
+import { Outlet } from 'react-router-dom';
+
 import { EventList } from 'components';
 import { useEventContext } from 'contexts';
 
-export const Events: FC = () => {
+export const Events = () => {
   const { events, filter } = useEventContext();
 
   return (
-    <div className="bg-gradient-to-b from-yellow-300 to-pink-500">
+    <>
       <label>
         <input
           type="checkbox"
@@ -17,6 +18,8 @@ export const Events: FC = () => {
       </label>
 
       <EventList events={events} />
-    </div>
+
+      <Outlet />
+    </>
   );
 };
