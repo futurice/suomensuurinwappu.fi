@@ -5,6 +5,11 @@ export interface Event {
   dateBegin: string;
   dateEnd: string;
   location: string;
+  image: {
+    filename: string;
+    alt?: string | null;
+  };
+
   teemunkierros: boolean;
 }
 

@@ -12,6 +12,10 @@ const eventQuery = gql`
           dateBegin: date_begin
           dateEnd: date_end
           location
+          image {
+            filename
+            alt
+          }
 
           teemunkierros
           locationTag: location_tag
