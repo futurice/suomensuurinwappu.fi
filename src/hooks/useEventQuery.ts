@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-
-import { StoryblokItems, useStoryblokQuery } from './storyblok';
+import { Event } from 'interfaces';
+import { useStoryblokQuery } from './useStoryblokQuery';
 
 const eventQuery = gql`
   query EventQuery {
@@ -21,15 +21,5 @@ const eventQuery = gql`
   }
 `;
 
-interface Event {
-  title: string;
-  dateBegin: string;
-  dateEnd: string;
-  location: string;
-  teemunkierros: boolean;
-}
-
-export type EventItems = StoryblokItems<Event>;
-
-export const useQueryEvents = () =>
+export const useEventQuery = () =>
   useStoryblokQuery<Event>('EventItems', eventQuery);

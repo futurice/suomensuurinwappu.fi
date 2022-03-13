@@ -16,15 +16,17 @@ export const EventList: FC = () => {
       </label>
 
       <ul>
-        {events.map(({ id, title, dateBegin, dateEnd, location }) => (
-          <li key={id}>
-            <p>{title}</p>
-            <p>
-              {dateBegin}–{dateEnd}
-            </p>
-            <p>{location}</p>
-          </li>
-        ))}
+        {events.map(
+          ({ id, content: { title, dateBegin, dateEnd, location } }) => (
+            <li key={id}>
+              <p>{title}</p>
+              <p>
+                {dateBegin}–{dateEnd}
+              </p>
+              <p>{location}</p>
+            </li>
+          )
+        )}
       </ul>
     </>
   );
