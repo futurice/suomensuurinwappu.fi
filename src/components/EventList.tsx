@@ -1,6 +1,10 @@
 import { EventItem } from 'interfaces';
 import { Link } from 'react-router-dom';
 
+import { formatTimeRange } from 'utils';
+
+import { Image } from './Image';
+
 interface EventListProps {
   events: EventItem[];
 }
@@ -9,9 +13,9 @@ const Event = ({
   content: { title, dateBegin, dateEnd, location, image },
   slug,
 }: Pick<EventItem, 'content' | 'slug'>) => (
-  <li className="relative flex rounded-xl rounded-tl bg-white">
-    <img
-      className="w-32 rounded-tl rounded-bl-xl object-cover"
+  <li className="relative flex rounded-md rounded-tl-sm bg-white">
+    <Image
+      className="w-32 rounded-bl-md rounded-tl-sm object-cover"
       src={image.filename}
       alt={image.alt || ''}
     />
@@ -19,14 +23,12 @@ const Event = ({
       <p>
         <Link
           to={slug}
-          className="text-pink-700 before:absolute before:inset-0 before:content-[''] hover:underline"
+          className="font-bold text-pink-700 before:absolute before:inset-0 before:content-[''] hover:underline"
         >
           {title}
         </Link>
       </p>
-      <p>
-        {dateBegin}–{dateEnd}
-      </p>
+      <p>{formatTimeRange(dateBegin, dateEnd)}</p>
       <p>{location}</p>
     </div>
   </li>

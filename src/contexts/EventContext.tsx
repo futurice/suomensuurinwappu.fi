@@ -2,6 +2,7 @@ import {
   createContext,
   Dispatch,
   FC,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -64,13 +65,15 @@ export const useEvent = (slug?: string) => {
     return undefined;
   }, [data, slug]);
 
+  const closeEvent = useCallback(() => navigate('/events'), [navigate]);
+
   useEffect(() => {
     if (!loading && !event) {
-      navigate('/events');
+      closeEvent();
     }
-  }, [event, loading, navigate]);
+  }, [closeEvent, event, loading]);
 
-  return event;
+  return { event, closeEvent };
 };
 
 export const EventContextProvider: FC = (props) => {

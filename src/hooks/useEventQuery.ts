@@ -11,6 +11,7 @@ const eventQuery = gql`
           title
           dateBegin: date_begin
           dateEnd: date_end
+          organizer
           location
           image {
             filename

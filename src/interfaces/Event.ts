@@ -6,6 +6,7 @@ export interface Event {
   dateBegin: string;
   dateEnd: string;
   location: string;
+  organizer: string;
   image: {
     filename: string;
     alt?: string | null;
