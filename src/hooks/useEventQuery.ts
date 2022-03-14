@@ -3,8 +3,8 @@ import { Event } from 'interfaces';
 import { useStoryblokQuery } from './useStoryblokQuery';
 
 const eventQuery = gql`
-  query EventQuery {
-    EventItems {
+  query EventQuery($langParam: String!) {
+    EventItems(starts_with: $langParam) {
       items {
         slug
         content {
