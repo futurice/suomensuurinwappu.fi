@@ -12,8 +12,8 @@ export interface Event {
     alt?: string | null;
   };
   description: StoryblokRichtext;
-
   teemunkierros: boolean;
+  teemunkierrosKey: string;
 }
 
 export type EventItem = QueryResponseItem<Event>;

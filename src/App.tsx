@@ -3,10 +3,9 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { client } from 'api';
 import { EventContextProvider } from 'contexts';
-import { EventModal, Events } from 'views';
+import { EventModal, Events, Layout } from 'views';
 
 import './index.css';
-import { Layout } from 'views/Layout';
 
 export const App = () => {
   return (

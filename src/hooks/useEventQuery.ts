@@ -18,8 +18,8 @@ const eventQuery = gql`
             alt
           }
           description
-
           teemunkierros
+          teemunkierrosKey: teemunkierros_key
           locationTag: location_tag
         }
       }
