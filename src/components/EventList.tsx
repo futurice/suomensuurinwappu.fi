@@ -22,7 +22,7 @@ const Event: VFC<EventItem> = ({ content, slug }) => (
       <p>
         <Link
           to={slug}
-          className="font-bold text-cyan-700 before:absolute before:inset-0 before:content-[''] hover:underline"
+          className="style-heading text-cyan-700 before:absolute before:inset-0 before:content-[''] hover:underline"
         >
           {content.title}
         </Link>

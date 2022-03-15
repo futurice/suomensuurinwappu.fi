@@ -17,6 +17,7 @@ module.exports = {
         [500]: '#FE9D0B',
       },
       white: '#FFFFFF',
+      dark: '#120208',
       backdrop: '#0000007F',
     },
     borderRadius: {
@@ -26,6 +27,10 @@ module.exports = {
       md: '1rem',
       lg: '2rem',
       full: '9999px',
+    },
+    fontFamily: {
+      body: ['Rubik', 'sans-serif'],
+      heading: ['Inter', 'sans-serif'],
     },
     extend: {
       fontSize: {

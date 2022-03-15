@@ -1,3 +1,4 @@
+import { VFC } from 'react';
 import { Clock, Crown, Location, PeopleGroup } from 'akar-icons';
 
 import { Event } from 'interfaces';
@@ -5,14 +6,14 @@ import { formatTimeRange } from 'utils';
 
 import { IconItem } from './IconItem';
 
-export const EventInfo = ({
+export const EventInfo: VFC<Event> = ({
   dateBegin,
   dateEnd,
   location,
   organizer,
   teemunkierros,
   teemunkierrosKey,
-}: Event) => (
+}) => (
   <>
     <IconItem icon={Clock}>{formatTimeRange(dateBegin, dateEnd)}</IconItem>
     <IconItem icon={Location}>{location}</IconItem>

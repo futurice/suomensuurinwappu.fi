@@ -1,9 +1,10 @@
+import { VFC } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { EventList } from 'components';
 import { useEventContext } from 'contexts';
 
-export const Events = () => {
+export const Events: VFC = () => {
   const { events, filter } = useEventContext();
 
   return (
