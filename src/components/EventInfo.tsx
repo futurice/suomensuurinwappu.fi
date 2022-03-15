@@ -1,4 +1,4 @@
-import { Clock, Crown, Fire, Location } from 'akar-icons';
+import { Clock, Crown, Location, PeopleGroup } from 'akar-icons';
 
 import { Event } from 'interfaces';
 import { formatTimeRange } from 'utils';
@@ -16,9 +16,9 @@ export const EventInfo = ({
   <>
     <IconItem icon={Clock}>{formatTimeRange(dateBegin, dateEnd)}</IconItem>
     <IconItem icon={Location}>{location}</IconItem>
-    <IconItem icon={Fire}>{organizer}</IconItem>
     {teemunkierros && (
       <IconItem icon={Crown}>Teemunkierros {teemunkierrosKey}</IconItem>
     )}
+    <IconItem icon={PeopleGroup}>{organizer}</IconItem>
   </>
 );

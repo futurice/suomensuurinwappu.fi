@@ -27,6 +27,11 @@ module.exports = {
       lg: '2rem',
       full: '9999px',
     },
+    extend: {
+      fontSize: {
+        '2xs': '0.625rem',
+      },
+    },
   },
   plugins: [],
 };
