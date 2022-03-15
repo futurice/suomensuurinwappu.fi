@@ -1,7 +1,7 @@
 import { VFC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { EventList } from 'components';
+import { EventList, Filter } from 'components';
 import { useEventContext } from 'contexts';
 
 export const Events: VFC = () => {
@@ -9,14 +9,7 @@ export const Events: VFC = () => {
 
   return (
     <>
-      <label>
-        <input
-          type="checkbox"
-          onChange={(e) => filter.teemunkierros.set(e.target.checked)}
-          checked={filter.teemunkierros.value}
-        />{' '}
-        teemunkierros
-      </label>
+      <Filter {...filter.teemunkierros}>teemunkierros</Filter>
 
       <EventList events={events} />
 

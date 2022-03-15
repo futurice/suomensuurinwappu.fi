@@ -26,8 +26,8 @@ const Event: VFC<EventItem> = ({ content, slug }) => (
         >
           {content.title}
         </Link>
-        {content.teemunkierros && <Tag>Teemunkierros</Tag>}
       </p>
+      {content.teemunkierros && <Tag>Teemunkierros</Tag>}
       <EventInfo {...content} />
     </div>
   </li>

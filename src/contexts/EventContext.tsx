@@ -1,6 +1,6 @@
 import {
+  ChangeEventHandler,
   createContext,
-  Dispatch,
   FC,
   useCallback,
   useContext,
@@ -14,9 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import { EventItem } from 'interfaces';
 import { useEventQuery } from 'hooks';
 
-interface Filter {
-  value: boolean;
-  set: Dispatch<React.SetStateAction<boolean>>;
+export interface FilterProps {
+  value: string;
+  checked: boolean;
+  onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
 interface EventContextValue {
@@ -24,14 +25,15 @@ interface EventContextValue {
   error?: ApolloError;
   events: EventItem[];
   filter: {
-    teemunkierros: Filter;
+    teemunkierros: FilterProps;
   };
   loading: boolean;
 }
 
 const initialFilter = {
-  value: false,
-  set: () => undefined,
+  value: '',
+  checked: false,
+  onChange: () => undefined,
 };
 
 const initialContext: EventContextValue = {
@@ -45,10 +47,15 @@ const initialContext: EventContextValue = {
 
 const EventContext = createContext(initialContext);
 
-const useFilter = () => {
-  const [value, set] = useState<boolean>(false);
+const useFilter = (value: string) => {
+  const [checked, set] = useState<boolean>(false);
 
-  return { value, set };
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => set(e.target.checked),
+    []
+  );
+
+  return { value, checked, onChange };
 };
 
 export const useEventContext = () => useContext(EventContext);
@@ -79,15 +86,15 @@ export const useEvent = (slug?: string) => {
 export const EventContextProvider: FC = (props) => {
   const { data, error, loading } = useEventQuery();
 
-  const teemunkierros = useFilter();
+  const teemunkierros = useFilter('teemunkierros');
 
   const events = useMemo(() => {
-    if (teemunkierros.value) {
+    if (teemunkierros.checked) {
       return data.filter(({ content: { teemunkierros } }) => teemunkierros);
     }
 
     return data;
-  }, [data, teemunkierros.value]);
+  }, [data, teemunkierros.checked]);
 
   return (
     <EventContext.Provider

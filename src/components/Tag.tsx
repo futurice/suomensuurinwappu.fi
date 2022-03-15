@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 export const Tag: FC = ({ children }) => (
-  <div className="style-heading absolute top-2 -left-0.5 flex h-3.5 items-start text-2xs font-bold text-cyan-700">
+  <div className="absolute top-2 -left-0.5 flex h-3.5 items-start text-2xs font-bold font-bold text-cyan-700">
     <svg
       className="w-1"
       fill="none"
