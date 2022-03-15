@@ -1,5 +1,6 @@
 import { ApolloProvider } from '@apollo/client';
 import { Navigate, Route, Routes } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { client } from 'api';
 import { EventContextProvider, LanguageContextProvider } from 'contexts';
@@ -12,6 +13,13 @@ export const App = () => {
     <ApolloProvider client={client}>
       <LanguageContextProvider>
         <EventContextProvider>
+          <Helmet>
+            <title>Wappukalenteri 2022</title>
+            <meta
+              name="description"
+              content="Suomen Suurin Wappu: Wappukalenteri"
+            />
+          </Helmet>
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="events" element={<Events />}>

@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-gradient-page {
+  background: linear-gradient(
+    191.69deg,
+    #ffca7a 6.13%,
+    #ffaa5b 27.42%,
+    #ff79af 42.77%,
+    #a894ff 76.93%,
+    #38aecc 95.74%
+  );
+}
