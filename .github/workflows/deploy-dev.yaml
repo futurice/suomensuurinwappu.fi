@@ -2,7 +2,7 @@ name: Deploy dev
 on:
   push:
     branches:
-      - feature/infra
+      - main
     paths:
       - .github/**
       - client/**
