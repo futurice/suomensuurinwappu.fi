@@ -1,0 +1,21 @@
+name: Deploy dev
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/**
+      - client/**
+      - infra/**
+concurrency:
+  group: development
+jobs:
+  deploy-dev:
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      STACK: suomensuurinwappu-stack-dev
+      AWS_REGION: eu-north-1
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      REACT_APP_STORYBLOK_TOKEN: ${{ secrets.REACT_APP_STORYBLOK_TOKEN }}
