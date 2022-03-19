@@ -16,7 +16,7 @@ on:
       REACT_APP_STORYBLOK_TOKEN:
         required: true
 jobs:
-  build:
+  build-and-deploy:
     env:
       BUNDLE_PATH: client/build
     runs-on: ubuntu-latest

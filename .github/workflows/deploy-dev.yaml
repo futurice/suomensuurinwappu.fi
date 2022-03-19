@@ -4,7 +4,7 @@ on:
     branches:
       - feature/infra
 concurrency:
-  group: ${{ github.ref }}
+  group: development
 jobs:
   deploy-dev:
     uses: ./.github/workflows/deploy.yaml
