@@ -26,3 +26,16 @@ const devStack = new WappuStack(
     },
   }
 );
+
+const prodStack = new WappuStack(
+  app,
+  `${config.PROJECT_NAME}-stack-${WappuStage.PROD}`,
+  {
+    config,
+    stage: WappuStage.PROD,
+    env: {
+      region: config.CDK_DEFAULT_REGION,
+      account: config.CDK_DEFAULT_ACCOUNT,
+    },
+  }
+);

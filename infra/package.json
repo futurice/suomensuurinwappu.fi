@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "cdk:synth:dev": "cdk synth suomensuurinwappu-stack-dev",
-    "cdk:deploy:dev": "cdk deploy suomensuurinwappu-stack-dev"
+    "cdk:deploy:dev": "cdk deploy suomensuurinwappu-stack-dev",
+    "cdk:synth:prod": "cdk synth suomensuurinwappu-stack-prod",
+    "cdk:deploy:prod": "cdk deploy suomensuurinwappu-stack-prod"
   },
   "dependencies": {
     "@types/node": "^17.0.21",
