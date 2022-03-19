@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - feature/infra
+    paths:
+      - .github/**
+      - client/**
+      - infra/**
 concurrency:
   group: development
 jobs:
