@@ -3,9 +3,18 @@ on:
   push:
     branches:
       - feature/infra
+concurrency:
+  group: ${{ github.ref }}
 jobs:
-  deploy-dev:
-    uses: ./.github/workflows/deploy.yaml
-    with:
-      stack: suomensuurinwappu-stack-dev
-      environment: development
+  deploy:
+    runs-on: ubuntu-latest
+    environment: development
+    steps:
+      - name: Build & deploy
+        uses: ./.github/workflows/deploy.yaml
+        with:
+          STACK: suomensuurinwappu-stack-dev
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          REACT_APP_STORYBLOK_TOKEN: ${{ secrets.REACT_APP_STORYBLOK_TOKEN }}

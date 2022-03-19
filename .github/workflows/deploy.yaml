@@ -2,16 +2,20 @@ name: Deploy
 on:
   workflow_call:
     inputs:
-      stack:
+      STACK:
         required: true
         type: string
-      environment:
+    secrets:
+      AWS_ACCESS_KEY_ID:
         required: true
-        type: string
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+      AWS_REGION:
+        required: true
+      REACT_APP_STORYBLOK_TOKEN:
+        required: true
 jobs:
   build:
-    environment:
-      name: ${{ input.environment }}
     env:
       BUNDLE_PATH: client/build
     runs-on: ubuntu-latest
@@ -47,8 +51,8 @@ jobs:
 
       - name: Synth infra
         working-directory: infra
-        run: npx cdk synth ${{ inputs.stack }}
+        run: npx cdk synth ${{ inputs.STACK }}
 
       - name: Deploy
         working-directory: infra
-        run: npx cdk synth ${{ inputs.stack }} --require-approval never
+        run: npx cdk synth ${{ inputs.STACK }} --require-approval never
