@@ -5,8 +5,13 @@ on:
       stack:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
 jobs:
   build:
+    environment:
+      name: ${{ input.environment }}
     env:
       BUNDLE_PATH: client/build
     runs-on: ubuntu-latest

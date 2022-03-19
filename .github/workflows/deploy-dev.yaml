@@ -8,3 +8,4 @@ jobs:
     uses: ./deploy.yaml
     with:
       stack: suomensuurinwappu-stack-dev
+      environment: development
