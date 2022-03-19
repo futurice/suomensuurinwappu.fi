@@ -1,0 +1,10 @@
+name: Deploy dev
+on:
+  push:
+    branches:
+      - feature/infra
+jobs:
+  deploy-dev:
+    uses: ./deploy.yaml
+    with:
+      stack: suomensuurinwappu-stack-dev

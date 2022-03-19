@@ -1,0 +1,49 @@
+name: Deploy
+on:
+  workflow_call:
+    inputs:
+      stack:
+        required: true
+        type: string
+jobs:
+  build:
+    env:
+      BUNDLE_PATH: client/build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@master
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Install dependencies
+        working-directory: infra
+        run: npm ci
+
+      - working-directory: client
+        run: npm ci
+
+      - name: Build client
+        working-directory: client
+        run: npm build
+        env:
+          REACT_APP_STORYBLOK_API: https://gapi.storyblok.com/v1/api
+          REACT_APP_STORYBLOK_TOKEN: ${{ secrets.REACT_APP_STORYBLOK_TOKEN }}
+          INLINE_RUNTIME_CHUNK: false
+          GENERATE_SOURCEMAP: false
+
+      - name: Synth infra
+        working-directory: infra
+        run: npx cdk synth ${{ inputs.stack }}
+
+      - name: Deploy
+        working-directory: infra
+        run: npx cdk synth ${{ inputs.stack }} --require-approval never
