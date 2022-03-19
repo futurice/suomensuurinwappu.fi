@@ -11,6 +11,13 @@ Storyblok token can be found from **Settings** / **API-Keys** from the Storyblok
 Then just install packages and start the app:
 
 ```
-npm install
+cd client
+npm ci
 npm start
 ```
+
+## Deployment
+Pushes to `main` branch will trigger an automatic deployment to development environment.
+
+## Architecture
+Built client is stored in S3 bucket and served through CloudFront. Thats it.
