@@ -5,7 +5,7 @@ on:
       - feature/infra
 jobs:
   deploy-dev:
-    uses: ./deploy.yaml
+    uses: ./.github/workflows/deploy.yaml
     with:
       stack: suomensuurinwappu-stack-dev
       environment: development
