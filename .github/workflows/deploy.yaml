@@ -5,12 +5,13 @@ on:
       STACK:
         required: true
         type: string
+      AWS_REGION:
+        required: true
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
       AWS_SECRET_ACCESS_KEY:
-        required: true
-      AWS_REGION:
         required: true
       REACT_APP_STORYBLOK_TOKEN:
         required: true
