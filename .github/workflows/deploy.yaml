@@ -43,7 +43,7 @@ jobs:
 
       - name: Build client
         working-directory: client
-        run: npm build
+        run: npm run build
         env:
           REACT_APP_STORYBLOK_API: https://gapi.storyblok.com/v1/api
           REACT_APP_STORYBLOK_TOKEN: ${{ secrets.REACT_APP_STORYBLOK_TOKEN }}
