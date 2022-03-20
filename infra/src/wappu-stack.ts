@@ -31,8 +31,8 @@ export class WappuStack extends Stack {
       this,
       `${config.PROJECT_NAME}-bundle-${stage}`,
       {
-        websiteIndexDocument: 'index.html',
-        publicReadAccess: true,
+        encryption: s3.BucketEncryption.S3_MANAGED,
+        accessControl: s3.BucketAccessControl.PRIVATE,
       }
     );
 
@@ -89,13 +89,24 @@ export class WappuStack extends Stack {
       }
     );
 
+    const originAccessIdentity = new cloudfront.OriginAccessIdentity(
+      this,
+      `${config.PROJECT_NAME}-bucket-oai-${stage}`
+    );
+    bucket.grantRead(originAccessIdentity);
+
     const distribution = new cloudfront.Distribution(
       this,
       `${config.PROJECT_NAME}-dist-${stage}`,
       {
+        defaultRootObject: 'index.html',
         defaultBehavior: {
-          origin: new origins.S3Origin(bucket),
+          origin: new origins.S3Origin(bucket, {
+            originAccessIdentity,
+          }),
           responseHeadersPolicy,
+          viewerProtocolPolicy:
+            cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         },
       }
     );
@@ -116,7 +127,6 @@ export class WappuStack extends Stack {
           s3deploy.CacheControl.setPublic(),
           s3deploy.CacheControl.maxAge(Duration.hours(1)),
         ],
-        accessControl: s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
         distribution,
       }
     );
