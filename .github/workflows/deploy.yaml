@@ -34,11 +34,12 @@ jobs:
         with:
           node-version: "16"
 
-      - name: Install dependencies
+      - name: Install infra dependencies
         working-directory: infra
         run: npm ci
 
-      - working-directory: client
+      - name: Install client dependencies
+        working-directory: client
         run: npm ci
 
       - name: Build client
@@ -56,4 +57,4 @@ jobs:
 
       - name: Deploy
         working-directory: infra
-        run: npx cdk synth ${{ inputs.STACK }} --require-approval never
+        run: npx cdk deploy ${{ inputs.STACK }} --require-approval never
