@@ -6,7 +6,7 @@
 
 @layer components {
   .style-heading {
-    @apply font-heading font-bold;
+    @apply font-heading font-bold leading-tight;
   }
 }
 

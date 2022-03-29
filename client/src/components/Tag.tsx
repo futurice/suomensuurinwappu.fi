@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 export const Tag: FC = ({ children }) => (
-  <div className="absolute top-2 -left-0.5 flex h-3.5 items-start text-2xs font-bold font-bold text-cyan-700">
+  <div className="text-2xs absolute top-2 -left-[2px] flex h-3.5 items-start font-bold text-cyan-700 md:-left-[3px] md:top-4 md:text-sm">
     <svg
-      className="w-1"
+      className="w-[4px] md:w-[6px]"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 4 18"
@@ -14,8 +14,14 @@ export const Tag: FC = ({ children }) => (
         d="M4 0H2a2 2 0 0 0-2 2v14c0-1.1.9-2 2-2h2V0Z"
       />
     </svg>
-    <div className="flex h-3.5 items-center bg-white pl-1 pr-2">{children}</div>
-    <svg className="w-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 18">
+    <div className="flex h-[14px] items-center bg-white pl-1 pr-2 md:h-[21px]">
+      {children}
+    </div>
+    <svg
+      className="w-[4px] md:w-[6px]"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 4 18"
+    >
       <path
         className="fill-white"
         d="M0 14h3.1c.4 0 .7-.4.5-.7L.3 7.5a1 1 0 0 1 0-1L3.6.7C3.8.4 3.6 0 3 0H0v14Z"
