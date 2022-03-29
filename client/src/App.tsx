@@ -14,7 +14,7 @@ export const App: VFC = () => {
       <LanguageContextProvider>
         <EventContextProvider>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="*" element={<Layout />}>
               <Route path="events" element={<Events />}>
                 <Route path=":slug" element={<EventModal />} />
               </Route>
