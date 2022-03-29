@@ -4,7 +4,7 @@ import { useStoryblokQuery } from './useStoryblokQuery';
 
 const eventQuery = gql`
   query EventQuery($langParam: String!) {
-    EventItems(starts_with: $langParam) {
+    EventItems(starts_with: $langParam, sort_by: "content.date_begin:asc") {
       items {
         slug
         content {
