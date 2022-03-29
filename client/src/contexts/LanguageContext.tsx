@@ -1,11 +1,4 @@
-import {
-  createContext,
-  FC,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import { createContext, FC, useContext, useMemo, useState } from 'react';
 
 const LANGUAGE = 'WAPPU_LANGUAGE';
 
@@ -17,13 +10,13 @@ export enum Language {
 interface LanguageContextValue {
   lang: Language;
   langParam: string;
-  switchLang: () => void;
+  setLang: (lang: Language) => void;
 }
 
 const initialContext: LanguageContextValue = {
   lang: Language.FI,
   langParam: '',
-  switchLang: () => undefined,
+  setLang: () => undefined,
 };
 
 const LanguageContext = createContext(initialContext);
@@ -42,15 +35,7 @@ export const LanguageContextProvider: FC = (props) => {
     return lang === Language.FI ? '' : 'en/*';
   }, [lang]);
 
-  const switchLang = useCallback(
-    () => setLang((prev) => (prev === Language.FI ? Language.EN : Language.FI)),
-    []
-  );
-
   return (
-    <LanguageContext.Provider
-      value={{ lang, langParam, switchLang }}
-      {...props}
-    />
+    <LanguageContext.Provider value={{ lang, langParam, setLang }} {...props} />
   );
 };
