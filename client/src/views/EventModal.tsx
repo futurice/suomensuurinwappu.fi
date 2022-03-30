@@ -1,4 +1,4 @@
-import { useEffect, VFC } from 'react';
+import { useEffect, useRef, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDialogState } from 'reakit/Dialog';
 import { render } from 'storyblok-rich-text-react-renderer';
@@ -13,17 +13,19 @@ export const EventModal: VFC = () => {
   const { currentRef } = useEventContext();
   const dialog = useDialogState({ visible: true });
   const labelId = `${dialog.baseId}-label`;
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
     if (!dialog.visible) {
       closeEvent();
+    } else {
+      titleRef.current?.focus();
     }
   }, [closeEvent, dialog.visible]);
 
   return (
     <Modal
       aria-labelledby={labelId}
-      tabIndex={0}
       dialog={dialog}
       unstable_finalFocusRef={currentRef}
     >
@@ -33,7 +35,12 @@ export const EventModal: VFC = () => {
         alt={event?.content.image.alt}
       />
       <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
-        <h2 id={labelId} className="style-heading text-lg text-pink-700">
+        <h2
+          ref={titleRef}
+          id={labelId}
+          tabIndex={-1}
+          className="style-heading text-lg text-pink-700 outline-none focus:underline"
+        >
           {event?.content.title}
         </h2>
         {event && (
@@ -46,7 +53,7 @@ export const EventModal: VFC = () => {
         )}
         <button
           onClick={closeEvent}
-          className="mx-auto my-4 block rounded-full bg-cyan-700 py-2 px-4 font-bold text-white"
+          className="style-focus mx-auto my-4 block rounded-full bg-cyan-700 py-2 px-4 font-bold text-white outline-none"
         >
           Takaisin kalenteriin
         </button>

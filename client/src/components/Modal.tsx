@@ -1,4 +1,4 @@
-import { ComponentProps, FC } from 'react';
+import { FC } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -6,9 +6,7 @@ import {
   DialogStateReturn,
 } from 'reakit/Dialog';
 
-interface ModalProps
-  extends ComponentProps<'div'>,
-    Omit<DialogOptions, 'baseId'> {
+interface ModalProps extends Omit<DialogOptions, 'baseId'> {
   dialog: DialogStateReturn;
 }
 
