@@ -1,6 +1,7 @@
 import { VFC } from 'react';
 import { Clock, Crown, Location, PeopleGroup } from 'akar-icons';
 
+import { useGlobalContext } from 'contexts';
 import { Event } from 'interfaces';
 import { Format } from 'utils';
 
@@ -13,15 +14,21 @@ export const EventInfo: VFC<Event> = ({
   organizer,
   teemunkierros,
   teemunkierrosKey,
-}) => (
-  <>
-    <IconItem icon={Clock}>
-      <Format.DateTime value={[dateBegin, dateEnd]} />
-    </IconItem>
-    <IconItem icon={Location}>{location}</IconItem>
-    {teemunkierros && (
-      <IconItem icon={Crown}>Teemunkierros {teemunkierrosKey}</IconItem>
-    )}
-    <IconItem icon={PeopleGroup}>{organizer}</IconItem>
-  </>
-);
+}) => {
+  const { translation } = useGlobalContext();
+
+  return (
+    <>
+      <IconItem icon={Clock}>
+        <Format.DateTime value={[dateBegin, dateEnd]} />
+      </IconItem>
+      <IconItem icon={Location}>{location}</IconItem>
+      {teemunkierros && (
+        <IconItem icon={Crown}>
+          {translation?.teemunkierros} {teemunkierrosKey}
+        </IconItem>
+      )}
+      <IconItem icon={PeopleGroup}>{organizer}</IconItem>
+    </>
+  );
+};

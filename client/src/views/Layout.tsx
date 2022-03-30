@@ -10,19 +10,18 @@ import {
 import { ThreeLineHorizontal } from 'akar-icons';
 
 import { LanguageSwitcher } from 'components';
+import { useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
+  const { translation } = useGlobalContext();
   const dialog = useDialogState();
   const labelId = `${dialog.baseId}-label`;
 
   return (
     <>
       <Helmet>
-        <title>Wappukalenteri 2022</title>
-        <meta
-          name="description"
-          content="Suomen Suurin Wappu: Wappukalenteri"
-        />
+        <title>{translation?.title}</title>
+        <meta name="description" content={translation?.description} />
         <html className="font-body text-dark min-h-full" />
         <body className="bg-gradient-page bg-cover bg-fixed" />
       </Helmet>
@@ -30,7 +29,7 @@ export const Layout: VFC = () => {
       <div className="bg-white p-4 drop-shadow">
         <div className="flex max-w-7xl justify-between py-1 px-2">
           <h1 className="style-heading text-lg text-cyan-700">
-            Wappukalenteri 2022
+            {translation?.title}
           </h1>
           <DialogDisclosure
             {...dialog}
@@ -52,7 +51,7 @@ export const Layout: VFC = () => {
                   id={labelId}
                   className="style-heading flex-1 text-lg text-pink-700"
                 >
-                  Menu
+                  {translation?.menu}
                 </h2>
                 <LanguageSwitcher className="flex-none" />
               </div>

@@ -4,13 +4,14 @@ import { useDialogState } from 'reakit/Dialog';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 import { EventInfo, Image, Modal } from 'components';
-import { useEvent, useEventContext } from 'contexts';
+import { useEvent, useEventContext, useGlobalContext } from 'contexts';
 
 export const EventModal: VFC = () => {
   const { slug } = useParams<'slug'>();
   const { event, closeEvent } = useEvent(slug);
 
   const { currentRef } = useEventContext();
+  const { translation } = useGlobalContext();
   const dialog = useDialogState({ visible: true });
   const labelId = `${dialog.baseId}-label`;
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -55,7 +56,7 @@ export const EventModal: VFC = () => {
           onClick={closeEvent}
           className="style-focus mx-auto my-4 block rounded-full bg-cyan-700 py-2 px-4 font-bold text-white outline-none"
         >
-          Takaisin kalenteriin
+          {translation?.backToCalendar}
         </button>
       </div>
     </Modal>

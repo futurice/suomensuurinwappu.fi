@@ -3,15 +3,19 @@ import { ApolloProvider } from '@apollo/client';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { client } from 'api';
-import { EventContextProvider, LanguageContextProvider } from 'contexts';
+import {
+  EventContextProvider,
+  GlobalContextProvider,
+  LanguageContextProvider,
+} from 'contexts';
 import { EventModal, Events, Layout } from 'views';
 
 import './index.css';
 
-export const App: VFC = () => {
-  return (
-    <ApolloProvider client={client}>
-      <LanguageContextProvider>
+export const App: VFC = () => (
+  <ApolloProvider client={client}>
+    <LanguageContextProvider>
+      <GlobalContextProvider>
         <EventContextProvider>
           <Routes>
             <Route path="*" element={<Layout />}>
@@ -22,7 +26,7 @@ export const App: VFC = () => {
             </Route>
           </Routes>
         </EventContextProvider>
-      </LanguageContextProvider>
-    </ApolloProvider>
-  );
-};
+      </GlobalContextProvider>
+    </LanguageContextProvider>
+  </ApolloProvider>
+);
