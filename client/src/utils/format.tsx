@@ -13,13 +13,16 @@ const TIME: Intl.DateTimeFormatOptions = {
 
 const DATETIME: Intl.DateTimeFormatOptions = { ...DATE, ...TIME };
 
+const strReplace = (str: string) => str.replaceAll('-', '/');
+const asDate = (str: string) => new Date(strReplace(str));
+
 export const formatTimeRange = (
   locale: string,
   beginStr: string,
   endStr: string
 ) => {
-  const begin = new Date(beginStr);
-  const end = new Date(endStr);
+  const begin = asDate(beginStr);
+  const end = asDate(endStr);
 
   const isSameDate =
     begin.getMonth() === end.getMonth() && begin.getDate() === end.getDate();
@@ -31,7 +34,8 @@ export const formatTimeRange = (
 };
 
 export const formatDay = (locale: string, str: string) => {
-  const date = new Date(str);
+  const date = asDate(str);
+
   return date.toLocaleDateString(locale, {
     day: 'numeric',
     month: 'numeric',
