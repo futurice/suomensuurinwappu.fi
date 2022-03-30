@@ -13,7 +13,7 @@ interface EventListProps {
 }
 
 const Event: VFC<EventItem> = ({ content, slug }) => (
-  <li className="relative flex rounded-md rounded-tl bg-white drop-shadow md:flex-col">
+  <li className="style-focus relative flex rounded-md rounded-tl bg-white drop-shadow md:flex-col">
     <Image
       className="w-32 rounded-bl-md rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-md"
       src={content.image.filename}
@@ -23,7 +23,7 @@ const Event: VFC<EventItem> = ({ content, slug }) => (
       <p className="style-heading mb-0.5">
         <Link
           to={slug}
-          className="text-cyan-700 before:absolute before:inset-0 before:content-[''] hover:underline"
+          className="text-cyan-700 outline-none before:absolute before:inset-0 before:content-[''] hover:underline focus:underline"
         >
           {content.title}
         </Link>

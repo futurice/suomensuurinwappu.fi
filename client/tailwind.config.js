@@ -18,7 +18,7 @@ module.exports = {
       },
       white: '#FFFFFF',
       dark: '#120208',
-      backdrop: '#0000007F',
+      backdrop: '#0080A14D',
     },
     borderRadius: {
       none: '0',

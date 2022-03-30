@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useMemo, VFC } from 'react';
+import { ChangeEventHandler, ComponentProps, useMemo, VFC } from 'react';
 
 import { Language, useLanguageContext } from 'contexts';
 import { cn } from 'utils';
@@ -17,7 +17,7 @@ const LanguageButton: VFC<LanguageButtonProps> = ({ value, label, sr }) => {
   return (
     <label
       className={cn(
-        'flex h-8 w-8 items-center justify-center rounded-full border border-cyan-700 text-sm font-bold ring-cyan-700/50 focus-within:ring',
+        'style-btn-circle cursor-pointer border border-cyan-700',
         checked ? 'bg-cyan-700 text-white' : 'bg-white text-cyan-700'
       )}
     >
@@ -25,7 +25,7 @@ const LanguageButton: VFC<LanguageButtonProps> = ({ value, label, sr }) => {
         type="radio"
         name="language-switch"
         value={value}
-        checked={checked}
+        defaultChecked={checked}
         className="sr-only"
       />
       {label}
@@ -34,7 +34,9 @@ const LanguageButton: VFC<LanguageButtonProps> = ({ value, label, sr }) => {
   );
 };
 
-export const LanguageSwitcher: VFC = () => {
+export const LanguageSwitcher: VFC<
+  Pick<ComponentProps<'div'>, 'className'>
+> = ({ className }) => {
   const { setLang } = useLanguageContext();
 
   const onChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -43,7 +45,7 @@ export const LanguageSwitcher: VFC = () => {
 
   return (
     <div
-      className="flex gap-4"
+      className={cn('flex gap-4', className)}
       role="radiogroup"
       aria-label="Valitse kieli"
       onChange={onChange}
