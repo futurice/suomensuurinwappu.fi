@@ -7,7 +7,7 @@ interface ModalProps extends ComponentProps<'div'> {
 
 export const Modal: FC<ModalProps> = ({ children, dialog, ...props }) => (
   <DialogBackdrop
-    className="absolute inset-0 flex items-end justify-center bg-backdrop sm:items-center sm:p-4"
+    className="bg-backdrop fixed inset-0 flex items-end justify-center sm:items-center sm:p-4"
     {...dialog}
   >
     <Dialog
