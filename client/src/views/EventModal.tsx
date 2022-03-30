@@ -4,13 +4,14 @@ import { useDialogState } from 'reakit/Dialog';
 import { render } from 'storyblok-rich-text-react-renderer';
 
 import { EventInfo, Image, Modal } from 'components';
-import { useEvent } from 'contexts';
+import { useEvent, useEventContext } from 'contexts';
 
 export const EventModal: VFC = () => {
   const { slug } = useParams<'slug'>();
   const { event, closeEvent } = useEvent(slug);
-  const dialog = useDialogState({ visible: true });
 
+  const { currentRef } = useEventContext();
+  const dialog = useDialogState({ visible: true });
   const labelId = `${dialog.baseId}-label`;
 
   useEffect(() => {
@@ -20,7 +21,12 @@ export const EventModal: VFC = () => {
   }, [closeEvent, dialog.visible]);
 
   return (
-    <Modal aria-labelledby={labelId} tabIndex={0} dialog={dialog}>
+    <Modal
+      aria-labelledby={labelId}
+      tabIndex={0}
+      dialog={dialog}
+      unstable_finalFocusRef={currentRef}
+    >
       <Image
         className="h-64 w-full rounded-t-lg object-cover"
         src={event?.content.image.filename}

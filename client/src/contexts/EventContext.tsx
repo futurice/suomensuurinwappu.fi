@@ -2,10 +2,12 @@ import {
   ChangeEventHandler,
   createContext,
   FC,
+  RefObject,
   useCallback,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 import { ApolloError } from '@apollo/client';
@@ -21,6 +23,7 @@ export interface FilterProps {
 }
 
 interface EventContextValue {
+  currentRef?: RefObject<HTMLAnchorElement>;
   data: EventItem[];
   error?: ApolloError;
   events: EventItem[];
@@ -86,6 +89,8 @@ export const useEvent = (slug?: string) => {
 export const EventContextProvider: FC = (props) => {
   const { data, error, loading } = useEventQuery();
 
+  const currentRef = useRef<HTMLAnchorElement>(null);
+
   const teemunkierros = useFilter('teemunkierros');
 
   const events = useMemo(() => {
@@ -98,7 +103,14 @@ export const EventContextProvider: FC = (props) => {
 
   return (
     <EventContext.Provider
-      value={{ data, error, events, filter: { teemunkierros }, loading }}
+      value={{
+        currentRef,
+        data,
+        error,
+        events,
+        filter: { teemunkierros },
+        loading,
+      }}
       {...props}
     />
   );
