@@ -1,8 +1,8 @@
 import { QueryResponseItem } from './QueryResponse';
 
 export interface Ad {
-  title: string;
-  image: {
+  companyName: string;
+  logo: {
     filename: string;
     alt?: string | null;
   };

@@ -7,8 +7,10 @@ import {
   EventContextProvider,
   GlobalContextProvider,
   LanguageContextProvider,
+  AdContextProvider
 } from 'contexts';
 import { EventModal, Events, Layout } from 'views';
+import { FooterWrapper } from 'components/Footer';
 
 import './index.css';
 
@@ -17,14 +19,17 @@ export const App: VFC = () => (
     <LanguageContextProvider>
       <GlobalContextProvider>
         <EventContextProvider>
-          <Routes>
-            <Route path="*" element={<Layout />}>
-              <Route path="events" element={<Events />}>
-                <Route path=":slug" element={<EventModal />} />
+          <AdContextProvider>
+            <Routes>
+              <Route path="*" element={<Layout />}>
+                <Route path="events" element={<Events />}>
+                  <Route path=":slug" element={<EventModal />} />
+                </Route>
+                <Route path="*" element={<Navigate to="events" />} />
               </Route>
-              <Route path="*" element={<Navigate to="events" />} />
-            </Route>
-          </Routes>
+            </Routes>
+            <FooterWrapper />
+          </AdContextProvider>
         </EventContextProvider>
       </GlobalContextProvider>
     </LanguageContextProvider>
