@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, LinkProps, useLocation } from 'react-router-dom';
 
 export enum Language {
   FI = 'FI',
@@ -9,16 +9,16 @@ export enum Language {
 interface LanguageContextValue {
   lang: Language;
   path: {
-    fi: string;
-    en: string;
+    [Language.FI]: string;
+    [Language.EN]: string;
   };
 }
 
 const initialContext: LanguageContextValue = {
   lang: Language.FI,
   path: {
-    fi: '',
-    en: 'en',
+    [Language.FI]: '',
+    [Language.EN]: 'en',
   },
 };
 
@@ -36,11 +36,17 @@ export const LanguageContextProvider: FC = (props) => {
 
   const path = useMemo(
     () => ({
-      fi: basePath,
-      en: `en${basePath}`,
+      [Language.FI]: basePath,
+      [Language.EN]: `/en${basePath}`,
     }),
     [basePath]
   );
 
   return <LanguageContext.Provider value={{ lang, path }} {...props} />;
+};
+
+export const LocalizedLink: FC<LinkProps> = ({ to, ...props }) => {
+  const { lang } = useLanguageContext();
+
+  return <Link to={lang === Language.EN ? `en${to}` : to} {...props} />;
 };

@@ -10,7 +10,7 @@ import {
 import { ChevronRight, ThreeLineHorizontal } from 'akar-icons';
 
 import { Footer, LanguageSwitcher } from 'components';
-import { useGlobalContext } from 'contexts';
+import { LocalizedLink, useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
@@ -58,14 +58,14 @@ export const Layout: VFC = () => {
                 </div>
                 <nav>
                   {pages.map(({ slug, content }) => (
-                    <Link
+                    <LocalizedLink
                       key={slug}
                       to={`/pages/${slug}`}
                       className="style-heading flex items-center justify-between border-b border-pink-300 py-4 px-2 text-cyan-700 hover:underline"
                     >
                       {content.title}
                       <ChevronRight size={20} />
-                    </Link>
+                    </LocalizedLink>
                   ))}
                 </nav>
               </Dialog>
