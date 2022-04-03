@@ -1,19 +1,19 @@
 import { VFC } from 'react';
 import { Helmet } from 'react-helmet';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import {
   Dialog,
   DialogBackdrop,
   DialogDisclosure,
   useDialogState,
 } from 'reakit/Dialog';
-import { ThreeLineHorizontal } from 'akar-icons';
+import { ChevronRight, ThreeLineHorizontal } from 'akar-icons';
 
 import { Footer, LanguageSwitcher } from 'components';
 import { useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
-  const { translation } = useGlobalContext();
+  const { pages, translation } = useGlobalContext();
   const dialog = useDialogState();
   const labelId = `${dialog.baseId}-label`;
 
@@ -47,7 +47,7 @@ export const Layout: VFC = () => {
                 aria-labelledby={labelId}
                 {...dialog}
               >
-                <div className="mb-4 flex items-center border-b border-cyan-900 pb-4">
+                <div className="flex items-center border-b border-cyan-900 pb-4">
                   <h2
                     id={labelId}
                     className="style-heading flex-1 text-lg text-pink-700"
@@ -56,6 +56,18 @@ export const Layout: VFC = () => {
                   </h2>
                   <LanguageSwitcher className="flex-none" />
                 </div>
+                <nav>
+                  {pages.map(({ slug, content }) => (
+                    <Link
+                      key={slug}
+                      to={`/pages/${slug}`}
+                      className="style-heading flex items-center justify-between border-b border-pink-300 py-4 px-2 text-cyan-700 hover:underline"
+                    >
+                      {content.title}
+                      <ChevronRight size={20} />
+                    </Link>
+                  ))}
+                </nav>
               </Dialog>
             </div>
           </DialogBackdrop>
