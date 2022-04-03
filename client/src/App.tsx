@@ -10,7 +10,7 @@ import {
   AdContextProvider
 } from 'contexts';
 import { EventModal, Events, Layout } from 'views';
-import { FooterWrapper } from 'components/Footer';
+import { Footer } from 'components/Footer';
 
 import './index.css';
 
@@ -28,7 +28,7 @@ export const App: VFC = () => (
                 <Route path="*" element={<Navigate to="events" />} />
               </Route>
             </Routes>
-            <FooterWrapper />
+            <Footer />
           </AdContextProvider>
         </EventContextProvider>
       </GlobalContextProvider>
