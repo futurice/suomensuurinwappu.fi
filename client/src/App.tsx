@@ -9,7 +9,7 @@ import {
   LanguageContextProvider,
   AdContextProvider,
 } from 'contexts';
-import { EventModal, Events, Layout } from 'views';
+import { EventModal, Events, Layout, PageContent } from 'views';
 
 import './index.css';
 
@@ -18,6 +18,7 @@ const routes = () => [
     <Route path="events" element={<Events />}>
       <Route path=":slug" element={<EventModal />} />
     </Route>
+    <Route path="pages/:slug" element={<PageContent />} />
     <Route path="*" element={<Navigate to="events" />} />
   </Route>,
 ];
