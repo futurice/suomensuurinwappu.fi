@@ -1,4 +1,5 @@
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+import { Image } from './Image';
 import { QueryResponseItem } from './QueryResponse';
 
 export interface Event {
@@ -7,10 +8,7 @@ export interface Event {
   dateEnd: string;
   location: string;
   organizer: string;
-  image: {
-    filename: string;
-    alt?: string | null;
-  };
+  image: Image;
   description: StoryblokRichtext;
   teemunkierros: boolean;
   teemunkierrosKey: string;

@@ -13,6 +13,7 @@ const pageQuery = gql`
             filename
             alt
           }
+          body
         }
       }
     }
