@@ -4,7 +4,7 @@
   bottom: 0;
   padding: 10px;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='200px' width='150px'%3E%3Ccircle cx='75' cy='230' r='130%25' fill='%237B61FF' /%3E%3C/svg%3E");
-  background-position-x: -20%;
+  background-position-x: center;
   position: fixed;
   display: flex;
   align-items: center;
