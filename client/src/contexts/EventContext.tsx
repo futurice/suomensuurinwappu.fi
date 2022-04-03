@@ -29,6 +29,14 @@ interface EventContextValue {
   events: EventItem[];
   filter: {
     teemunkierros: FilterProps;
+    hervanta: FilterProps;
+    center: FilterProps;
+    elsewhere: FilterProps;
+    needsRegistration: FilterProps;
+    outside: FilterProps;
+    inside: FilterProps;
+    isRemote: FilterProps;
+    hasMusic: FilterProps;
   };
   loading: boolean;
 }
@@ -44,6 +52,14 @@ const initialContext: EventContextValue = {
   events: [],
   filter: {
     teemunkierros: initialFilter,
+    hervanta: initialFilter,
+    center: initialFilter,
+    elsewhere: initialFilter,
+    needsRegistration: initialFilter,
+    outside: initialFilter,
+    inside: initialFilter,
+    isRemote: initialFilter,
+    hasMusic: initialFilter,
   },
   loading: false,
 };
@@ -92,14 +108,69 @@ export const EventContextProvider: FC = (props) => {
   const currentRef = useRef<HTMLAnchorElement>(null);
 
   const teemunkierros = useFilter('teemunkierros');
+  const hervanta = useFilter('hervanta');
+  const center = useFilter('center');
+  const elsewhere = useFilter('elsewhere');
+  const needsRegistration = useFilter('registration');
+  const outside = useFilter('outside');
+  const inside = useFilter('inside');
+  const isRemote = useFilter('remote');
+  const hasMusic = useFilter('music');
 
   const events = useMemo(() => {
     if (teemunkierros.checked) {
       return data.filter(({ content: { teemunkierros } }) => teemunkierros);
     }
+    if (hervanta.checked) {
+      return data.filter(
+        ({ content: { locationTag } }) =>
+          locationTag.toLowerCase() === 'hervanta'
+      );
+    }
+
+    if (center.checked) {
+      return data.filter(
+        ({ content: { locationTag } }) =>
+          locationTag.toLowerCase() === 'keskusta'
+      );
+    }
+    if (elsewhere.checked) {
+      return data.filter(
+        ({ content: { locationTag } }) => locationTag.toLowerCase() === 'muu'
+      );
+    }
+    if (needsRegistration.checked) {
+      return data.filter(
+        ({ content: { needsRegistration } }) => needsRegistration
+      );
+    }
+    if (hasMusic.checked) {
+      return data.filter(({ content: { hasMusic } }) => hasMusic);
+    }
+    if (inside.checked) {
+      return data.filter(({ content: { isOutside } }) => isOutside === false);
+    }
+    if (outside.checked) {
+      return data.filter(({ content: { isOutside } }) => isOutside === true);
+    }
+
+    if (isRemote.checked) {
+      return data.filter(({ content: { isRemote } }) => isRemote);
+    }
 
     return data;
-  }, [data, teemunkierros.checked]);
+  }, [
+    data,
+    teemunkierros.checked,
+    hervanta.checked,
+    center.checked,
+    elsewhere.checked,
+    needsRegistration.checked,
+    hasMusic.checked,
+    inside.checked,
+    outside.checked,
+    isRemote.checked,
+  ]);
 
   return (
     <EventContext.Provider
@@ -108,7 +179,17 @@ export const EventContextProvider: FC = (props) => {
         data,
         error,
         events,
-        filter: { teemunkierros },
+        filter: {
+          teemunkierros,
+          hervanta,
+          center,
+          elsewhere,
+          needsRegistration,
+          hasMusic,
+          inside,
+          outside,
+          isRemote,
+        },
         loading,
       }}
       {...props}
