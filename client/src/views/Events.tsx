@@ -11,14 +11,14 @@ export const Events: VFC = () => {
   return (
     <>
       <Filter {...filter.teemunkierros}>{translation?.teemunkierros}</Filter>
-      <Filter {...filter.hervanta}>Hervannassa</Filter>
-      <Filter {...filter.center}>Keskustassa</Filter>
-      <Filter {...filter.elsewhere}>Muualla</Filter>
-      <Filter {...filter.needsRegistration}>Ennakkoilmoittatuminen</Filter>
-      <Filter {...filter.hasMusic}>Musiikkia</Filter>
-      <Filter {...filter.inside}>Sisällä</Filter>
-      <Filter {...filter.outside}>Ulkona</Filter>
-      <Filter {...filter.isRemote}>Etänä</Filter>
+      <Filter {...filter.hervanta}>{translation?.hervanta}</Filter>
+      <Filter {...filter.center}>{translation?.center}</Filter>
+      <Filter {...filter.elsewhere}>{translation?.elsewhere}</Filter>
+      <Filter {...filter.needsRegistration}>{translation?.registration}</Filter>
+      <Filter {...filter.hasMusic}>{translation?.music}</Filter>
+      <Filter {...filter.inside}>{translation?.inside}</Filter>
+      <Filter {...filter.outside}>{translation?.outside}</Filter>
+      <Filter {...filter.isRemote}>{translation?.remote}</Filter>
       <EventList events={events} />
 
       <Outlet />
