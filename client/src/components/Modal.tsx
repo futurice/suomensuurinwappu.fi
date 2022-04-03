@@ -16,7 +16,7 @@ export const Modal: FC<ModalProps> = ({ children, dialog, ...props }) => (
     {...dialog}
   >
     <Dialog
-      className="inset-x-0 bottom-0 flex max-h-full max-w-lg flex-col rounded-t-lg bg-white sm:rounded-lg"
+      className="inset-x-0 bottom-0 flex max-h-full max-w-lg flex-col rounded-t-lg bg-white drop-shadow-lg sm:rounded-lg"
       {...dialog}
       {...props}
     >

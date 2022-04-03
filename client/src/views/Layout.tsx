@@ -42,7 +42,7 @@ export const Layout: VFC = () => {
             {...dialog}
           >
             <Dialog
-              className="flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6"
+              className="flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 drop-shadow-lg"
               aria-labelledby={labelId}
               {...dialog}
             >
