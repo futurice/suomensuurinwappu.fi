@@ -27,7 +27,7 @@ export const Layout: VFC = () => {
       </Helmet>
 
       <div className="bg-white p-4 drop-shadow">
-        <div className="flex max-w-7xl justify-between py-1 px-2">
+        <div className="m-auto flex max-w-7xl justify-between py-1 px-2">
           <h1 className="style-heading text-lg text-cyan-700">
             {translation?.title}
           </h1>
@@ -38,24 +38,26 @@ export const Layout: VFC = () => {
             <ThreeLineHorizontal aria-label="Menu" />
           </DialogDisclosure>
           <DialogBackdrop
-            className="bg-backdrop absolute inset-0 flex items-start justify-end p-4 pt-24"
+            className="bg-backdrop absolute inset-0 p-4 pt-24"
             {...dialog}
           >
-            <Dialog
-              className="flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 drop-shadow-lg"
-              aria-labelledby={labelId}
-              {...dialog}
-            >
-              <div className="mb-4 flex items-center border-b border-cyan-900 pb-4">
-                <h2
-                  id={labelId}
-                  className="style-heading flex-1 text-lg text-pink-700"
-                >
-                  {translation?.menu}
-                </h2>
-                <LanguageSwitcher className="flex-none" />
-              </div>
-            </Dialog>
+            <div className="m-auto flex max-w-7xl items-start justify-end">
+              <Dialog
+                className="flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 drop-shadow-lg"
+                aria-labelledby={labelId}
+                {...dialog}
+              >
+                <div className="mb-4 flex items-center border-b border-cyan-900 pb-4">
+                  <h2
+                    id={labelId}
+                    className="style-heading flex-1 text-lg text-pink-700"
+                  >
+                    {translation?.menu}
+                  </h2>
+                  <LanguageSwitcher className="flex-none" />
+                </div>
+              </Dialog>
+            </div>
           </DialogBackdrop>
         </div>
       </div>
