@@ -7,12 +7,20 @@ import {
   EventContextProvider,
   GlobalContextProvider,
   LanguageContextProvider,
-  AdContextProvider
+  AdContextProvider,
 } from 'contexts';
 import { EventModal, Events, Layout } from 'views';
-import { Footer } from 'components/Footer';
 
 import './index.css';
+
+const routes = () => [
+  <Route key="*" path="*" element={<Layout />}>
+    <Route path="events" element={<Events />}>
+      <Route path=":slug" element={<EventModal />} />
+    </Route>
+    <Route path="*" element={<Navigate to="events" />} />
+  </Route>,
+];
 
 export const App: VFC = () => (
   <ApolloProvider client={client}>
@@ -21,14 +29,9 @@ export const App: VFC = () => (
         <EventContextProvider>
           <AdContextProvider>
             <Routes>
-              <Route path="*" element={<Layout />}>
-                <Route path="events" element={<Events />}>
-                  <Route path=":slug" element={<EventModal />} />
-                </Route>
-                <Route path="*" element={<Navigate to="events" />} />
-              </Route>
+              <Route path=":lang">{routes()}</Route>
+              {routes()}
             </Routes>
-            <Footer />
           </AdContextProvider>
         </EventContextProvider>
       </GlobalContextProvider>

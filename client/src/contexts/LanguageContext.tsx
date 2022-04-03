@@ -1,6 +1,5 @@
-import { createContext, FC, useContext, useMemo, useState } from 'react';
-
-const LANGUAGE = 'WAPPU_LANGUAGE';
+import { createContext, FC, useContext, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export enum Language {
   FI = 'FI',
@@ -9,14 +8,18 @@ export enum Language {
 
 interface LanguageContextValue {
   lang: Language;
-  langParam: string;
-  setLang: (lang: Language) => void;
+  path: {
+    fi: string;
+    en: string;
+  };
 }
 
 const initialContext: LanguageContextValue = {
   lang: Language.FI,
-  langParam: '',
-  setLang: () => undefined,
+  path: {
+    fi: '',
+    en: 'en',
+  },
 };
 
 const LanguageContext = createContext(initialContext);
@@ -24,18 +27,20 @@ const LanguageContext = createContext(initialContext);
 export const useLanguageContext = () => useContext(LanguageContext);
 
 export const LanguageContextProvider: FC = (props) => {
-  const [lang, setLang] = useState(
-    window.localStorage.getItem(LANGUAGE) === Language.EN
-      ? Language.EN
-      : Language.FI
+  const location = useLocation();
+
+  const [lang, basePath] = useMemo(() => {
+    const [, langParam, base] = location.pathname.match(/^(\/en)?(.*)$/) || [];
+    return [langParam !== undefined ? Language.EN : Language.FI, base || ''];
+  }, [location]);
+
+  const path = useMemo(
+    () => ({
+      fi: basePath,
+      en: `en${basePath}`,
+    }),
+    [basePath]
   );
 
-  const langParam = useMemo(() => {
-    window.localStorage.setItem(LANGUAGE, lang);
-    return lang === Language.FI ? '' : 'en/*';
-  }, [lang]);
-
-  return (
-    <LanguageContext.Provider value={{ lang, langParam, setLang }} {...props} />
-  );
+  return <LanguageContext.Provider value={{ lang, path }} {...props} />;
 };

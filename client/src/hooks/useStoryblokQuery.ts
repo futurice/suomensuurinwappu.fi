@@ -1,12 +1,12 @@
 import { DocumentNode, useQuery } from '@apollo/client';
 
-import { useLanguageContext } from 'contexts';
+import { Language, useLanguageContext } from 'contexts';
 import { QueryResponse } from 'interfaces';
 
 export const useStoryblokQuery = <TItem>(key: string, query: DocumentNode) => {
-  const { langParam } = useLanguageContext();
+  const { lang } = useLanguageContext();
   const { data, ...rest } = useQuery<QueryResponse<typeof key, TItem>>(query, {
-    variables: { langParam },
+    variables: { langParam: lang === Language.EN ? 'en/*' : '' },
   });
 
   return {
