@@ -9,7 +9,7 @@ import {
 } from 'reakit/Dialog';
 import { ThreeLineHorizontal } from 'akar-icons';
 
-import { LanguageSwitcher } from 'components';
+import { Footer, LanguageSwitcher } from 'components';
 import { useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
@@ -62,9 +62,11 @@ export const Layout: VFC = () => {
         </div>
       </div>
 
-      <div className="p-4">
+      <div className="p-4 pb-32">
         <Outlet />
       </div>
+
+      <Footer />
     </>
   );
 };
