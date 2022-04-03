@@ -130,8 +130,7 @@ export const EventContextProvider: FC = (props) => {
 
     if (center.checked) {
       return data.filter(
-        ({ content: { locationTag } }) =>
-          locationTag.toLowerCase() === 'keskusta'
+        ({ content: { locationTag } }) => locationTag.toLowerCase() === 'center'
       );
     }
     if (elsewhere.checked) {
