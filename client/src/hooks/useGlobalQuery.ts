@@ -16,6 +16,15 @@ const globalQuery = gql`
           teemunkierros
 
           backToCalendar: back_to_calendar
+
+          hervanta
+          center
+          elsewhere
+          registration
+          music
+          inside
+          outside
+          remote
         }
       }
     }

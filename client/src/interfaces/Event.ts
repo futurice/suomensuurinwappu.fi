@@ -8,11 +8,17 @@ export interface Event {
   dateBegin: string;
   dateEnd: string;
   location: string;
+  locationTag: string;
   organizer: string;
   image: Image;
   description: StoryblokRichtext;
   teemunkierros: boolean;
   teemunkierrosKey: string;
+  needsRegistration: boolean;
+  isOutside: boolean;
+  hasMusic: boolean;
+  isRemote: boolean;
+  isFree: boolean;
 }
 
 export type EventItem = QueryResponseItem<Event>;

@@ -21,6 +21,11 @@ const eventQuery = gql`
           teemunkierros
           teemunkierrosKey: teemunkierros_key
           locationTag: location_tag
+          needsRegistration: registration
+          isOutside: outside
+          hasMusic: music
+          isRemote: remote
+          isFree: free
         }
       }
     }
