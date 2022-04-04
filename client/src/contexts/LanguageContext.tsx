@@ -48,5 +48,5 @@ export const LanguageContextProvider: FC = (props) => {
 export const LocalizedLink: FC<LinkProps> = ({ to, ...props }) => {
   const { lang } = useLanguageContext();
 
-  return <Link to={lang === Language.EN ? `en${to}` : to} {...props} />;
+  return <Link to={lang === Language.EN ? `/en${to}` : to} {...props} />;
 };
