@@ -1,9 +1,8 @@
 import { VFC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { EventList, Filter } from 'components';
+import { EventList, Filter, Search } from 'components';
 import { useEventContext, useGlobalContext } from 'contexts';
-import { Search } from 'components/Search';
 
 export const Events: VFC = () => {
   const { translation } = useGlobalContext();

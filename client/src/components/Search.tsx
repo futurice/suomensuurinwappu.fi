@@ -1,8 +1,8 @@
-import { FC, useState, VFC } from 'react';
-
-import './Search.css';
-import { Search as MagnifyingClass } from 'akar-icons';
+import { FC, VFC } from 'react';
+import { Search as MagnifyingGlass } from 'akar-icons';
 import { SearchProps, useGlobalContext } from 'contexts';
+
+import './Styles.css';
 
 const searchEvents = (e: any, onChange: any) => {
   e.preventDefault();
@@ -11,33 +11,27 @@ const searchEvents = (e: any, onChange: any) => {
 
 const SearchIcon: VFC = () => {
   return (
-    <p className="flex items-center text-xs">
-      <MagnifyingClass
-        size={16}
-        className="mr-2 ml-1 flex-none text-cyan-700"
-      />
-    </p>
+    <MagnifyingGlass
+      size={16}
+      className="mr-2 ml-1 flex flex-none items-center text-xs text-cyan-700"
+      aria-label="Search"
+    />
   );
 };
 
 export const Search: FC<SearchProps> = (search) => {
-  const [searchTerm, setSearchTerm] = useState('');
   const { translation } = useGlobalContext();
 
   return (
-    <div className="search">
+    <label className="search flex items-center" aria-label={translation?.searchPlaceholder}>
       <SearchIcon />
       <input
-        type="text"
+        type="search"
         name="event-search"
         id="eventSearch"
-        value={searchTerm}
         placeholder={translation?.searchPlaceholder}
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-          searchEvents(e, search.onChange);
-        }}
+        onChange={(e) => searchEvents(e, search.onChange)}
       />
-    </div>
+    </label>
   );
 };
