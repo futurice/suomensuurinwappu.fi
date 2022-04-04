@@ -5,11 +5,11 @@ import { IconItem, Image } from 'components';
 import { PersonListBlock } from 'interfaces';
 
 export const PersonList: VFC<PersonListBlock> = ({ items }) => (
-  <ul className="my-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <ul className="my-4 grid gap-4 sm:grid-cols-2">
     {items.map((item) => (
       <li key={item._uid} className="flex items-center gap-4">
         <Image
-          className="h-16 w-16 rounded-full sm:h-24 sm:w-24"
+          className="h-16 w-16 rounded-full md:h-24 md:w-24"
           src={item.image.filename}
           alt={item.image.alt}
         />

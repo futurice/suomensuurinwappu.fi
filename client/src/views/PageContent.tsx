@@ -17,12 +17,12 @@ export const PageContent: VFC = () => {
   return (
     <div className="m-auto max-w-7xl rounded-lg bg-white">
       <Image
-        className="h-64 w-full rounded-t-lg object-cover"
+        className="h-64 w-full rounded-t-lg object-cover md:h-96"
         src={page?.content.image.filename}
         alt={page?.content.image.alt}
       />
 
-      <div className="p-4">
+      <div className="m-auto max-w-3xl p-4 sm:p-8">
         <h2 className="style-heading text-3xl text-pink-700">
           {page?.content.title}
         </h2>
