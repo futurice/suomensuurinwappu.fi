@@ -10,5 +10,5 @@ export * from './Loading';
 export * from './Modal';
 export * from './NavLink';
 export * from './RichText';
-export * from './Tag';
 export * from './Search';
+export * from './Tag';
