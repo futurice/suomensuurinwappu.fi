@@ -1,16 +1,16 @@
 import { VFC } from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import {
   Dialog,
   DialogBackdrop,
   DialogDisclosure,
   useDialogState,
 } from 'reakit/Dialog';
-import { ChevronRight, ThreeLineHorizontal } from 'akar-icons';
+import { ThreeLineHorizontal } from 'akar-icons';
 
-import { Footer, LanguageSwitcher } from 'components';
-import { LocalizedLink, useGlobalContext } from 'contexts';
+import { Footer, LanguageSwitcher, NavLink } from 'components';
+import { useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
@@ -57,15 +57,11 @@ export const Layout: VFC = () => {
                   <LanguageSwitcher className="flex-none" />
                 </div>
                 <nav>
+                  <NavLink to="/events">{translation?.events}</NavLink>
                   {pages.map(({ slug, content }) => (
-                    <LocalizedLink
-                      key={slug}
-                      to={`/pages/${slug}`}
-                      className="style-heading flex items-center justify-between border-b border-pink-300 py-4 px-2 text-cyan-700 hover:underline"
-                    >
+                    <NavLink key={slug} to={`/pages/${slug}`}>
                       {content.title}
-                      <ChevronRight size={20} />
-                    </LocalizedLink>
+                    </NavLink>
                   ))}
                 </nav>
               </Dialog>

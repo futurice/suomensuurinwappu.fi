@@ -9,6 +9,7 @@ const globalQuery = gql`
         content {
           title
           description
+          events
 
           menu
 
