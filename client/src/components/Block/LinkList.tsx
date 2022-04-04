@@ -54,15 +54,27 @@ const getLinkProps = (
   }
 };
 
-const LinkWrapper: FC<LinkWrapperProps> = ({ href, target, ...props }) =>
+const LinkWrapper: FC<LinkWrapperProps> = ({
+  href,
+  target,
+  children,
+  ...props
+}) =>
   target === TargetType.Route ? (
-    <RouterLink to={href} {...props} />
+    <RouterLink to={href} {...props}>
+      {children}
+    </RouterLink>
   ) : (
     <a
       href={href}
-      {...(target === TargetType.Blank && { target: '_blank' })}
+      {...(target === TargetType.Blank && {
+        target: '_blank',
+        rel: 'noreferrer',
+      })}
       {...props}
-    />
+    >
+      {children}
+    </a>
   );
 
 const LinkItem: VFC<LinkItemProps> = ({ link, label }) => {
