@@ -1,28 +1,45 @@
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
 
-import { Image } from './Image';
+import { Image, Link } from './storyblok';
 import { QueryResponseItem } from './QueryResponse';
 
-interface BaseBlock {
+export enum BlockComponent {
+  LinkList = 'link_list',
+  PersonList = 'person_list',
+  Text = 'text',
+}
+
+enum BlockPartial {
+  LinkItem = 'link_item',
+  PersonItem = 'person_item',
+}
+
+interface BaseBlock<TComponent extends BlockComponent | BlockPartial> {
+  component: TComponent;
   _uid: string;
 }
 
-export interface TextBlock extends BaseBlock {
-  component: 'text';
-  content: StoryblokRichtext;
+export interface LinkListBlock extends BaseBlock<BlockComponent.LinkList> {
+  items: ({
+    link: Link;
+    label?: string;
+  } & BaseBlock<BlockPartial.LinkItem>)[];
 }
 
-export interface PersonlistBlock extends BaseBlock {
-  component: 'personlist';
+export interface PersonListBlock extends BaseBlock<BlockComponent.PersonList> {
   items: ({
     image: Image;
     name: string;
     title: string;
     telegram: string;
-  } & BaseBlock)[];
+  } & BaseBlock<BlockPartial.PersonItem>)[];
 }
 
-export type BlockProps = TextBlock | PersonlistBlock;
+export interface TextBlock extends BaseBlock<BlockComponent.Text> {
+  content: StoryblokRichtext;
+}
+
+export type BlockProps = LinkListBlock | PersonListBlock | TextBlock;
 export interface Page {
   title: string;
   image: Image;

@@ -1,6 +1,7 @@
 import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
-import { Image } from './Image';
+
 import { QueryResponseItem } from './QueryResponse';
+import { Image } from './storyblok';
 
 export interface Event {
   title: string;
