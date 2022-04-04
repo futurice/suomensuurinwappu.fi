@@ -15,6 +15,7 @@ import { useGlobalContext } from 'contexts';
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
   const dialog = useDialogState();
+
   const labelId = `${dialog.baseId}-label`;
 
   return (
@@ -57,9 +58,15 @@ export const Layout: VFC = () => {
                   <LanguageSwitcher className="flex-none" />
                 </div>
                 <nav>
-                  <NavLink to="/events">{translation?.events}</NavLink>
+                  <NavLink to="/events" onClick={dialog.hide}>
+                    {translation?.events}
+                  </NavLink>
                   {pages.map(({ slug, content }) => (
-                    <NavLink key={slug} to={`/pages/${slug}`}>
+                    <NavLink
+                      key={slug}
+                      to={`/pages/${slug}`}
+                      onClick={dialog.hide}
+                    >
                       {content.title}
                     </NavLink>
                   ))}
