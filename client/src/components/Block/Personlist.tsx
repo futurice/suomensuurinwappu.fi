@@ -5,7 +5,7 @@ import { IconItem, Image } from 'components';
 import { PersonlistBlock } from 'interfaces';
 
 export const Personlist: VFC<PersonlistBlock> = ({ items }) => (
-  <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+  <ul className="my-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {items.map((item) => (
       <li key={item._uid} className="flex items-center gap-4">
         <Image
@@ -20,7 +20,7 @@ export const Personlist: VFC<PersonlistBlock> = ({ items }) => (
             <a
               href={`https://t.me/${item.telegram}`}
               target="_blank"
-              className="text-pink-700 underline hover:no-underline"
+              className="text-cyan-700 underline hover:no-underline"
             >
               @{item.telegram}
             </a>

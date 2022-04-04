@@ -23,7 +23,7 @@ export const PageContent: VFC = () => {
       />
 
       <div className="p-4">
-        <h2 className="style-heading text-2xl text-pink-700">
+        <h2 className="style-heading text-3xl text-pink-700">
           {page?.content.title}
         </h2>
         {page?.content.body.map((block) => (
