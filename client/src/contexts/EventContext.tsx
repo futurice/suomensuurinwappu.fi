@@ -86,7 +86,7 @@ const useFilter = (value: string) => {
 };
 
 const useSearch = () => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState('');
 
   const onChange: ChangeEventHandler<HTMLFormElement> = useCallback((e) => {
     setValue(e.target.value || '');
@@ -129,21 +129,19 @@ const recursiveContent = function (arr: StoryblokRichtextContent[]): string {
 };
 
 const isFound = (searchTerm: string, content: string): boolean => {
-  return content.toLowerCase().indexOf(searchTerm) !== -1;
+  return content.toLowerCase().includes(searchTerm);
 };
 
 const searchEventTexts = (search: string, events: EventItem[]) => {
   return events.filter(({ content }) => {
     const searchTerm = search.toLowerCase();
-    const isInTitle = isFound(searchTerm, content.title);
-    let isInDescription = false;
-    typeof content.description === 'string'
-      ? (isInDescription = isFound(searchTerm, content.description as string))
-      : (isInDescription = isFound(
-          searchTerm,
-          recursiveContent([...content.description.content])
-        ));
-    return isInTitle || isInDescription;
+
+    if (isFound(searchTerm, content.title)) {
+      return true;
+    }
+    return typeof content.description === 'string'
+      ? isFound(searchTerm, content.description as string)
+      : isFound(searchTerm, recursiveContent([...content.description.content]));
   });
 };
 
@@ -164,14 +162,16 @@ export const EventContextProvider: FC = (props) => {
   const search = useSearch();
 
   const events = useMemo(() => {
-    let dataCopy = [...data];
-    if (teemunkierros.checked) {
-      dataCopy = dataCopy.filter(
-        ({ content: { teemunkierros } }) => teemunkierros
-      );
-    }
-    if (search.value && search.value.length > 0) {
-      dataCopy = searchEventTexts(search.value, dataCopy);
+    if (teemunkierros.checked && (!search.value || search.value.length === 0)) {
+      return data.filter(({ content: { teemunkierros } }) => teemunkierros);
+    } else if (search.value && search.value.length > 0) {
+      if (teemunkierros.checked) {
+        return searchEventTexts(search.value, data).filter(
+          ({ content: { teemunkierros } }) => teemunkierros
+        );
+      } else {
+        return searchEventTexts(search.value, data);
+      }
     }
     if (hervanta.checked) {
       return data.filter(

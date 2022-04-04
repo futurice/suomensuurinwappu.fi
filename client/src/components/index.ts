@@ -11,3 +11,4 @@ export * from './Modal';
 export * from './NavLink';
 export * from './RichText';
 export * from './Tag';
+export * from './Search';

@@ -1,7 +1,7 @@
 import { useAdContext } from 'contexts';
 import { AdItem } from 'interfaces';
 import { VFC } from 'react';
-import './Footer.css';
+import './Styles.css';
 
 function shuffleArray(array: AdItem[]) {
   for (var i = array.length - 1; i > 0; i--) {
