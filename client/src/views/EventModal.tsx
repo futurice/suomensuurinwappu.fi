@@ -1,9 +1,8 @@
 import { useEffect, useRef, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDialogState } from 'reakit/Dialog';
-import { render } from 'storyblok-rich-text-react-renderer';
 
-import { EventInfo, Image, Modal } from 'components';
+import { EventInfo, Image, Modal, RichText } from 'components';
 import { useEvent, useEventContext, useGlobalContext } from 'contexts';
 
 export const EventModal: VFC = () => {
@@ -47,8 +46,8 @@ export const EventModal: VFC = () => {
         {event && (
           <>
             <EventInfo {...event.content} />
-            <div className="flex flex-initial flex-col gap-2 overflow-auto pt-2 text-sm">
-              {render(event.content.description)}
+            <div className="flex-initial flex-col overflow-auto text-sm">
+              <RichText>{event.content.description}</RichText>
             </div>
           </>
         )}
