@@ -134,6 +134,9 @@ const isFound = (searchTerm: string, content: string): boolean => {
 
 const searchEventTexts = (search: string, events: EventItem[]) => {
   return events.filter(({ content }) => {
+    if (!content.description) {
+      return false;
+    }
     const searchTerm = search.toLowerCase();
 
     if (isFound(searchTerm, content.title)) {
