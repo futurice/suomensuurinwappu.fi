@@ -36,6 +36,13 @@ module.exports = {
       fontSize: {
         '2xs': '0.625rem',
       },
+      keyframes: {
+        loading: {
+          '0%, 80%': { transform: 'translateY(0)' },
+          '40%': { transform: 'translateY(-100%)' },
+          '60%': { transform: 'translateY(10%)' },
+        },
+      },
     },
   },
   plugins: [],
