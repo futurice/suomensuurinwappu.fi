@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { EventItem } from 'interfaces';
 import { useEventQuery } from 'hooks';
+import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
 
 export interface FilterProps {
   value: string;
@@ -38,7 +39,13 @@ interface EventContextValue {
     isRemote: FilterProps;
     hasMusic: FilterProps;
   };
+  search: SearchProps;
   loading: boolean;
+}
+
+export interface SearchProps {
+  value?: string;
+  onChange: ChangeEventHandler<HTMLFormElement>;
 }
 
 const initialFilter = {
@@ -61,6 +68,7 @@ const initialContext: EventContextValue = {
     isRemote: initialFilter,
     hasMusic: initialFilter,
   },
+  search: initialFilter,
   loading: false,
 };
 
@@ -75,6 +83,16 @@ const useFilter = (value: string) => {
   );
 
   return { value, checked, onChange };
+};
+
+const useSearch = () => {
+  const [value, setValue] = useState<string>();
+
+  const onChange: ChangeEventHandler<HTMLFormElement> = useCallback((e) => {
+    setValue(e.target.value || '');
+  }, []);
+
+  return { value, onChange };
 };
 
 export const useEventContext = () => useContext(EventContext);
@@ -102,6 +120,33 @@ export const useEvent = (slug?: string) => {
   return { event, closeEvent };
 };
 
+const recursiveContent = function (arr: StoryblokRichtextContent[]): string {
+  return arr
+    .flatMap((item) =>
+      'content' in item ? recursiveContent(item.content) : item.text
+    )
+    .join(' ');
+};
+
+const isFound = (searchTerm: string, content: string): boolean => {
+  return content.toLowerCase().indexOf(searchTerm) !== -1;
+};
+
+const searchEventTexts = (search: string, events: EventItem[]) => {
+  return events.filter(({ content }) => {
+    const searchTerm = search.toLowerCase();
+    const isInTitle = isFound(searchTerm, content.title);
+    let isInDescription = false;
+    typeof content.description === 'string'
+      ? (isInDescription = isFound(searchTerm, content.description as string))
+      : (isInDescription = isFound(
+          searchTerm,
+          recursiveContent([...content.description.content])
+        ));
+    return isInTitle || isInDescription;
+  });
+};
+
 export const EventContextProvider: FC = (props) => {
   const { data, error, loading } = useEventQuery();
 
@@ -116,10 +161,17 @@ export const EventContextProvider: FC = (props) => {
   const inside = useFilter('inside');
   const isRemote = useFilter('remote');
   const hasMusic = useFilter('music');
+  const search = useSearch();
 
   const events = useMemo(() => {
+    let dataCopy = [...data];
     if (teemunkierros.checked) {
-      return data.filter(({ content: { teemunkierros } }) => teemunkierros);
+      dataCopy = dataCopy.filter(
+        ({ content: { teemunkierros } }) => teemunkierros
+      );
+    }
+    if (search.value && search.value.length > 0) {
+      dataCopy = searchEventTexts(search.value, dataCopy);
     }
     if (hervanta.checked) {
       return data.filter(
@@ -169,6 +221,7 @@ export const EventContextProvider: FC = (props) => {
     inside.checked,
     outside.checked,
     isRemote.checked,
+    search.value,
   ]);
 
   return (
@@ -189,6 +242,7 @@ export const EventContextProvider: FC = (props) => {
           outside,
           isRemote,
         },
+        search,
         loading,
       }}
       {...props}

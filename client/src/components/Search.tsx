@@ -1,12 +1,12 @@
-import { ComponentProps, useState, VFC } from 'react';
+import { FC, useState, VFC } from 'react';
 
-import './LanguageSwitcher.css';
+import './Search.css';
 import { Search as MagnifyingClass } from 'akar-icons';
+import { SearchProps, useGlobalContext } from 'contexts';
 
-// TODO: Magic goes here
-const searchEvents = (e: any) => {
+const searchEvents = (e: any, onChange: any) => {
   e.preventDefault();
-  console.log(e);
+  onChange(e);
 };
 
 const SearchIcon: VFC = () => {
@@ -20,19 +20,24 @@ const SearchIcon: VFC = () => {
   );
 };
 
-export const Search: VFC<Pick<ComponentProps<'div'>, 'className'>> = () => {
+export const Search: FC<SearchProps> = (search) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const { translation } = useGlobalContext();
 
   return (
-    <form onSubmit={(e) => searchEvents(e)} className="search">
+    <div className="search">
       <SearchIcon />
       <input
         type="text"
         name="event-search"
+        id="eventSearch"
         value={searchTerm}
-        placeholder={'Hae tapahtumaa'}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder={translation?.searchPlaceholder}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          searchEvents(e, search.onChange);
+        }}
       />
-    </form>
+    </div>
   );
 };
