@@ -7,4 +7,5 @@ export * from './IconItem';
 export * from './Image';
 export * from './LanguageSwitcher';
 export * from './Modal';
+export * from './NavLink';
 export * from './Tag';
