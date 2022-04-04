@@ -16,7 +16,15 @@ export const Personlist: VFC<PersonlistBlock> = ({ items }) => (
         <div className="flex flex-col gap-1">
           <p className="style-heading text-pink-700">{item.name}</p>
           <IconItem icon={Crown}>{item.title}</IconItem>
-          <IconItem icon={TelegramFill}>{item.telegram}</IconItem>
+          <IconItem icon={TelegramFill}>
+            <a
+              href={`https://t.me/${item.telegram}`}
+              target="_blank"
+              className="text-pink-700 underline hover:no-underline"
+            >
+              @{item.telegram}
+            </a>
+          </IconItem>
         </div>
       </li>
     ))}
