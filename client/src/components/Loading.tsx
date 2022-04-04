@@ -10,8 +10,6 @@ export const Loading: VFC<LoadingProps> = ({ visible }) => {
   const [isVisible, setVisible] = useState(visible);
   const [isAnimating, setAnimating] = useState(false);
 
-  useEffect(() => console.log(isAnimating), [isAnimating]);
-
   useEffect(
     () =>
       setVisible((prev) => {
