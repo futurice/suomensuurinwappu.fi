@@ -3,10 +3,11 @@ import { Outlet } from 'react-router-dom';
 
 import { EventList, Filter } from 'components';
 import { useEventContext, useGlobalContext } from 'contexts';
+import { Search } from 'components/Search';
 
 export const Events: VFC = () => {
   const { translation } = useGlobalContext();
-  const { events, filter } = useEventContext();
+  const { events, filter, search } = useEventContext();
 
   return (
     <>
@@ -19,6 +20,8 @@ export const Events: VFC = () => {
       <Filter {...filter.inside}>{translation?.inside}</Filter>
       <Filter {...filter.outside}>{translation?.outside}</Filter>
       <Filter {...filter.isRemote}>{translation?.remote}</Filter>
+      <Search {...search} />
+
       <EventList events={events} />
 
       <Outlet />

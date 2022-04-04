@@ -25,6 +25,8 @@ const globalQuery = gql`
           inside
           outside
           remote
+
+          searchPlaceholder: search_placeholder
         }
       }
     }

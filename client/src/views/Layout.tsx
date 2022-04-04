@@ -11,7 +11,6 @@ import { ThreeLineHorizontal } from 'akar-icons';
 
 import { Footer, LanguageSwitcher, NavLink } from 'components';
 import { useGlobalContext } from 'contexts';
-import { Search } from 'components/Search';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();

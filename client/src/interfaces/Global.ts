@@ -16,4 +16,6 @@ export interface Global {
   remote: string;
 
   backToCalendar: string;
+
+  searchPlaceholder: string;
 }
