@@ -1,18 +1,21 @@
 import { VFC } from 'react';
 
-import { BlockProps } from 'interfaces';
+import { BlockComponent, BlockProps } from 'interfaces';
 
-import { Personlist } from './Personlist';
+import { LinkList } from './LinkList';
+import { PersonList } from './PersonList';
 import { Text } from './Text';
 
 export const Block: VFC<BlockProps> = (props) => {
   const { component } = props;
 
   switch (component) {
-    case 'text':
+    case BlockComponent.LinkList:
+      return <LinkList {...props} />;
+    case BlockComponent.PersonList:
+      return <PersonList {...props} />;
+    case BlockComponent.Text:
       return <Text {...props} />;
-    case 'personlist':
-      return <Personlist {...props} />;
     default:
       return null;
   }

@@ -2,9 +2,9 @@ import { VFC } from 'react';
 import { Crown, TelegramFill } from 'akar-icons';
 
 import { IconItem, Image } from 'components';
-import { PersonlistBlock } from 'interfaces';
+import { PersonListBlock } from 'interfaces';
 
-export const Personlist: VFC<PersonlistBlock> = ({ items }) => (
+export const PersonList: VFC<PersonListBlock> = ({ items }) => (
   <ul className="my-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
     {items.map((item) => (
       <li key={item._uid} className="flex items-center gap-4">
