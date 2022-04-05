@@ -1,2 +1,2 @@
-export const isNotEmpty = (str?: string): str is string =>
+export const isNotEmpty = (str?: string | null): str is string =>
   !!str && str.length > 0;

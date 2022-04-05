@@ -31,8 +31,8 @@ export const EventModal: VFC = () => {
     >
       <Image
         className="h-64 w-full rounded-t-lg object-cover"
-        src={event?.content.image.filename}
-        alt={event?.content.image.alt}
+        crop="1024x512"
+        img={event?.content.image}
       />
       <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
         <h2

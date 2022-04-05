@@ -1,5 +1,5 @@
 export interface Image {
-  filename: string;
+  filename?: string | null;
   alt?: string | null;
 }
 
