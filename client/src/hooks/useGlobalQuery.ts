@@ -13,6 +13,8 @@ const globalQuery = gql`
 
           menu
 
+          filter
+          filterButton: filter_button
           teemunkierros
           hervanta
           center

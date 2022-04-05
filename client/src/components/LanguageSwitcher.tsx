@@ -17,7 +17,7 @@ const LanguageLink: VFC<LanguageLinkProps> = ({ link, label, sr }) => {
   return (
     <Link
       className={cn(
-        'style-btn-circle cursor-pointer border border-cyan-700 outline-none',
+        'style-btn w-8 cursor-pointer border border-cyan-700 outline-none',
         current ? 'bg-cyan-700 text-white' : 'bg-white text-cyan-700'
       )}
       to={path[link]}

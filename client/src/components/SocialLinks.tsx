@@ -20,7 +20,7 @@ const SocialLink: VFC<SocialLinkProps> = ({ href, icon: Icon, label }) => (
     href={href}
     target="_blank"
     rel="noreferrer"
-    className="style-btn-circle text-cyan-700 outline-none hover:bg-cyan-500/20"
+    className="style-btn w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
   >
     <Icon aria-label={label} />
   </a>

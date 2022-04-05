@@ -1,22 +1,21 @@
 import { VFC } from 'react';
 import { Helmet } from 'react-helmet';
 import { Outlet } from 'react-router-dom';
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogDisclosure,
-  useDialogState,
-} from 'reakit/Dialog';
+import { DialogDisclosure, useDialogState } from 'reakit/Dialog';
 import { ThreeLineHorizontal } from 'akar-icons';
 
-import { Footer, LanguageSwitcher, NavLink, SocialLinks } from 'components';
+import {
+  Footer,
+  LanguageSwitcher,
+  Modal,
+  NavLink,
+  SocialLinks,
+} from 'components';
 import { LocalizedLink, useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
   const dialog = useDialogState();
-
-  const labelId = `${dialog.baseId}-label`;
 
   return (
     <>
@@ -36,48 +35,27 @@ export const Layout: VFC = () => {
           </h1>
           <DialogDisclosure
             {...dialog}
-            className="style-btn-circle text-cyan-700 outline-none hover:bg-cyan-500/20"
+            className="style-btn w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
           >
             <ThreeLineHorizontal aria-label="Menu" />
           </DialogDisclosure>
-          <DialogBackdrop
-            className="bg-backdrop absolute inset-0 px-4 pt-24"
+          <Modal
+            title={translation?.menu}
+            titleAddition={<LanguageSwitcher className="flex-none" />}
             {...dialog}
           >
-            <div className="m-auto flex max-h-full max-w-7xl items-start justify-end overflow-auto">
-              <Dialog
-                className="style-focus flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 outline-none drop-shadow-lg"
-                aria-labelledby={labelId}
-                tabIndex={0}
-                {...dialog}
-              >
-                <div className="flex items-center border-b border-cyan-900 pb-4">
-                  <h2
-                    id={labelId}
-                    className="style-heading flex-1 text-lg text-pink-700"
-                  >
-                    {translation?.menu}
-                  </h2>
-                  <LanguageSwitcher className="flex-none" />
-                </div>
-                <nav>
-                  <NavLink to="/events" onClick={dialog.hide}>
-                    {translation?.events}
-                  </NavLink>
-                  {pages.map(({ slug, content }) => (
-                    <NavLink
-                      key={slug}
-                      to={`/pages/${slug}`}
-                      onClick={dialog.hide}
-                    >
-                      {content.title}
-                    </NavLink>
-                  ))}
-                </nav>
-                <SocialLinks />
-              </Dialog>
-            </div>
-          </DialogBackdrop>
+            <nav>
+              <NavLink to="/events" onClick={dialog.hide}>
+                {translation?.events}
+              </NavLink>
+              {pages.map(({ slug, content }) => (
+                <NavLink key={slug} to={`/pages/${slug}`} onClick={dialog.hide}>
+                  {content.title}
+                </NavLink>
+              ))}
+            </nav>
+            <SocialLinks />
+          </Modal>
         </div>
       </div>
 
