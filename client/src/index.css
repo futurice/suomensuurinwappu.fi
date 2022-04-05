@@ -33,4 +33,8 @@
       #38aecc 95.74%
     );
   }
+
+  .rounded-inherit {
+    border-radius: inherit;
+  }
 }

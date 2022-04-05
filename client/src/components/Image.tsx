@@ -14,7 +14,7 @@ export const Image: VFC<ImageProps> = ({ crop, img, className, ...props }) => {
   return (
     <div
       className={cn(
-        "relative flex-none overflow-hidden from-pink-500 to-yellow-300 before:absolute before:inset-0 before:bg-gradient-to-b before:opacity-40 before:mix-blend-screen before:content-['']",
+        "before:rounded-inherit relative flex-none overflow-hidden from-pink-500 to-yellow-300 before:absolute before:inset-0 before:bg-gradient-to-b before:opacity-40 before:mix-blend-screen before:content-['']",
         { 'bg-pink-500': !hasImg },
         className
       )}
