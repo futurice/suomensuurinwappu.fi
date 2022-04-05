@@ -6,8 +6,8 @@ import { cn } from 'utils';
 export const Filter: FC<FilterProps> = ({
   children,
   checked,
-  reset,
-  ...props
+  onChange,
+  value,
 }) => (
   <label
     className={cn(
@@ -17,7 +17,13 @@ export const Filter: FC<FilterProps> = ({
         : 'bg-white text-cyan-700 hover:bg-cyan-300'
     )}
   >
-    <input type="checkbox" checked={checked} className="sr-only" {...props} />
+    <input
+      type="checkbox"
+      checked={checked}
+      className="sr-only"
+      onChange={onChange}
+      value={value}
+    />
     {children}
   </label>
 );
