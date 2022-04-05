@@ -1,37 +1,25 @@
-import { FC, VFC } from 'react';
+import { VFC } from 'react';
 import { Search as MagnifyingGlass } from 'akar-icons';
-import { SearchProps, useGlobalContext } from 'contexts';
 
-import './Styles.css';
+import { SearchProps } from 'contexts';
 
-const searchEvents = (e: any, onChange: any) => {
-  e.preventDefault();
-  onChange(e);
-};
-
-const SearchIcon: VFC = () => {
-  return (
+export const Search: VFC<SearchProps & { label?: string }> = ({
+  label,
+  onChange,
+}) => (
+  <label className="style-focus flex items-center rounded-sm border border-cyan-700 bg-white px-1 text-xs text-cyan-700 focus-within:ring">
     <MagnifyingGlass
       size={16}
-      className="mr-2 ml-1 flex flex-none items-center text-xs text-cyan-700"
-      aria-label="Search"
+      className="mr-2 ml-1 flex-none"
+      aria-label={label}
     />
-  );
-};
-
-export const Search: FC<SearchProps> = (search) => {
-  const { translation } = useGlobalContext();
-
-  return (
-    <label className="search flex items-center" aria-label={translation?.searchPlaceholder}>
-      <SearchIcon />
-      <input
-        type="search"
-        name="event-search"
-        id="eventSearch"
-        placeholder={translation?.searchPlaceholder}
-        onChange={(e) => searchEvents(e, search.onChange)}
-      />
-    </label>
-  );
-};
+    <input
+      type="search"
+      name="event-search"
+      id="eventSearch"
+      className="h-8 flex-1 text-xs outline-none placeholder:text-cyan-700/60"
+      placeholder={label}
+      onChange={onChange}
+    />
+  </label>
+);
