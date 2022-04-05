@@ -8,7 +8,7 @@ import { Cross, SettingsHorizontal } from 'akar-icons';
 
 export const Events: VFC = () => {
   const { translation } = useGlobalContext();
-  const { events, filter, filterCount } = useEventContext();
+  const { events, filter, filterCount, filterReset } = useEventContext();
   const dialog = useDialogState();
 
   return (
@@ -28,7 +28,7 @@ export const Events: VFC = () => {
             className="style-btn w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
             onClick={dialog.hide}
           >
-            <Cross size={20} />
+            <Cross size={20} aria-label={translation?.backToCalendar} />
           </button>
         }
         {...dialog}
@@ -58,6 +58,15 @@ export const Events: VFC = () => {
         </div>
 
         <Search {...filter.search} label={translation?.searchPlaceholder} />
+
+        {filterCount > 0 && (
+          <button
+            onClick={filterReset}
+            className="style-btn mx-auto mt-6 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
+          >
+            {translation?.filterReset}
+          </button>
+        )}
       </Modal>
 
       <EventList events={events} />

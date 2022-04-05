@@ -15,6 +15,7 @@ const globalQuery = gql`
 
           filter
           filterButton: filter_button
+          filterReset: filter_reset
           teemunkierros
           hervanta
           center

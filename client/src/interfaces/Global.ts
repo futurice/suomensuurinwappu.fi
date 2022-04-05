@@ -11,6 +11,7 @@ export interface Global {
 
   filter: string;
   filterButton: string;
+  filterReset: string;
   teemunkierros: string;
   hervanta: string;
   center: string;

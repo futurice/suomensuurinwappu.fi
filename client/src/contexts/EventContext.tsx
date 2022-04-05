@@ -22,11 +22,13 @@ export interface FilterProps {
   value: string;
   checked: boolean;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  reset: () => void;
 }
 
 export interface SearchProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
+  reset: () => void;
 }
 
 interface EventContextValue {
@@ -47,6 +49,7 @@ interface EventContextValue {
     search: SearchProps;
   };
   filterCount: number;
+  filterReset: () => void;
   loading: boolean;
 }
 
@@ -54,6 +57,7 @@ const initialFilter = {
   value: '',
   checked: false,
   onChange: () => undefined,
+  reset: () => undefined,
 };
 
 const initialContext: EventContextValue = {
@@ -72,6 +76,7 @@ const initialContext: EventContextValue = {
     search: initialFilter,
   },
   filterCount: 0,
+  filterReset: () => undefined,
   loading: false,
 };
 
@@ -85,18 +90,22 @@ const useFilter = (value: string) => {
     []
   );
 
-  return { value, checked, onChange };
+  const reset = useCallback(() => set(false), []);
+
+  return { value, checked, onChange, reset };
 };
 
 const useSearch = () => {
-  const [value, setValue] = useState('');
+  const [value, set] = useState('');
 
   const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => setValue(e.target.value || ''),
+    (e) => set(e.target.value || ''),
     []
   );
 
-  return { value, onChange };
+  const reset = useCallback(() => set(''), []);
+
+  return { value, onChange, reset };
 };
 
 export const useEventContext = () => useContext(EventContext);
@@ -165,18 +174,6 @@ export const EventContextProvider: FC = (props) => {
     search: useSearch(),
   };
 
-  const filterCount = useMemo(() => {
-    return Object.values(filter)
-      .map((f) => {
-        if ('checked' in f) {
-          return f.checked;
-        }
-
-        return isNotEmpty(f.value);
-      })
-      .filter((f) => f).length;
-  }, [filter]);
-
   const events = useMemo(
     () =>
       data.filter(({ content }) => {
@@ -215,6 +212,25 @@ export const EventContextProvider: FC = (props) => {
     [data, filter]
   );
 
+  const filterCount = useMemo(
+    () =>
+      Object.values(filter)
+        .map((f) => {
+          if ('checked' in f) {
+            return f.checked;
+          }
+
+          return isNotEmpty(f.value);
+        })
+        .filter((f) => f).length,
+    [filter]
+  );
+
+  const filterReset = useCallback(
+    () => Object.values(filter).forEach(({ reset }) => reset()),
+    [filter]
+  );
+
   return (
     <EventContext.Provider
       value={{
@@ -224,6 +240,7 @@ export const EventContextProvider: FC = (props) => {
         events,
         filter,
         filterCount,
+        filterReset,
         loading,
       }}
       {...props}
