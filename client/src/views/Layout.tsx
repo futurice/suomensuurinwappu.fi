@@ -9,7 +9,7 @@ import {
 } from 'reakit/Dialog';
 import { ThreeLineHorizontal } from 'akar-icons';
 
-import { Footer, LanguageSwitcher, NavLink } from 'components';
+import { Footer, LanguageSwitcher, NavLink, SocialLinks } from 'components';
 import { LocalizedLink, useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
@@ -73,6 +73,7 @@ export const Layout: VFC = () => {
                     </NavLink>
                   ))}
                 </nav>
+                <SocialLinks />
               </Dialog>
             </div>
           </DialogBackdrop>

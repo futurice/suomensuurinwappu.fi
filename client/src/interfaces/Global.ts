@@ -1,3 +1,7 @@
+interface SocialLink {
+  url?: string;
+}
+
 export interface Global {
   title: string;
   description: string;
@@ -18,4 +22,14 @@ export interface Global {
   backToCalendar: string;
 
   searchPlaceholder: string;
+
+  social: string;
+  instagramLabel: string;
+  instagram: SocialLink;
+  facebookLabel: string;
+  facebook: SocialLink;
+  telegramLabel: string;
+  telegram: SocialLink;
+  wappuradioLabel: string;
+  wappuradio: SocialLink;
 }
