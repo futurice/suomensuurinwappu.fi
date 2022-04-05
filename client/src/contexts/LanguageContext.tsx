@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useMemo } from 'react';
-import { Link, LinkProps, useLocation } from 'react-router-dom';
+import { NavLink, NavLinkProps, useLocation } from 'react-router-dom';
 
 export enum Language {
   FI = 'FI',
@@ -45,8 +45,8 @@ export const LanguageContextProvider: FC = (props) => {
   return <LanguageContext.Provider value={{ lang, path }} {...props} />;
 };
 
-export const LocalizedLink: FC<LinkProps> = ({ to, ...props }) => {
+export const LocalizedLink: FC<NavLinkProps> = ({ to, ...props }) => {
   const { lang } = useLanguageContext();
 
-  return <Link to={lang === Language.EN ? `/en${to}` : to} {...props} />;
+  return <NavLink to={lang === Language.EN ? `/en${to}` : to} {...props} />;
 };
