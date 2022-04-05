@@ -46,8 +46,9 @@ export const Layout: VFC = () => {
           >
             <div className="m-auto flex max-h-full max-w-7xl items-start justify-end overflow-auto">
               <Dialog
-                className="flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 drop-shadow-lg"
+                className="style-focus flex max-h-full w-full max-w-lg flex-col rounded-md rounded-tl bg-white p-6 outline-none drop-shadow-lg"
                 aria-labelledby={labelId}
+                tabIndex={0}
                 {...dialog}
               >
                 <div className="flex items-center border-b border-cyan-900 pb-4">

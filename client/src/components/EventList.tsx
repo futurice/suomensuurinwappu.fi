@@ -18,7 +18,7 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
     const { translation } = useGlobalContext();
 
     return (
-      <li className="style-focus relative flex rounded-md rounded-tl bg-white drop-shadow md:flex-col">
+      <li className="style-focus relative flex rounded-md rounded-tl bg-white drop-shadow focus-within:ring md:flex-col">
         <Image
           className="w-32 rounded-bl-md rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-md"
           crop="512x256"
