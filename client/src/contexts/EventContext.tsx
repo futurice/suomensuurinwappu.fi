@@ -44,8 +44,9 @@ interface EventContextValue {
     inside: FilterProps;
     isRemote: FilterProps;
     hasMusic: FilterProps;
+    search: SearchProps;
   };
-  search: SearchProps;
+  filterCount: number;
   loading: boolean;
 }
 
@@ -68,8 +69,9 @@ const initialContext: EventContextValue = {
     inside: initialFilter,
     isRemote: initialFilter,
     hasMusic: initialFilter,
+    search: initialFilter,
   },
-  search: initialFilter,
+  filterCount: 0,
   loading: false,
 };
 
@@ -150,42 +152,58 @@ export const EventContextProvider: FC = (props) => {
 
   const currentRef = useRef<HTMLAnchorElement>(null);
 
-  const teemunkierros = useFilter('teemunkierros');
-  const hervanta = useFilter('hervanta');
-  const center = useFilter('center');
-  const elsewhere = useFilter('elsewhere');
-  const needsRegistration = useFilter('registration');
-  const outside = useFilter('outside');
-  const inside = useFilter('inside');
-  const isRemote = useFilter('remote');
-  const hasMusic = useFilter('music');
-  const search = useSearch();
+  const filter = {
+    teemunkierros: useFilter('teemunkierros'),
+    hervanta: useFilter('hervanta'),
+    center: useFilter('center'),
+    elsewhere: useFilter('elsewhere'),
+    needsRegistration: useFilter('registration'),
+    outside: useFilter('outside'),
+    inside: useFilter('inside'),
+    isRemote: useFilter('remote'),
+    hasMusic: useFilter('music'),
+    search: useSearch(),
+  };
+
+  const filterCount = useMemo(() => {
+    return Object.values(filter)
+      .map((f) => {
+        if ('checked' in f) {
+          return f.checked;
+        }
+
+        return isNotEmpty(f.value);
+      })
+      .filter((f) => f).length;
+  }, [filter]);
 
   const events = useMemo(
     () =>
       data.filter(({ content }) => {
         if (
-          (teemunkierros.checked && !content.teemunkierros) ||
-          (hervanta.checked && content.locationTag !== Location.Hervanta) ||
-          (center.checked && content.locationTag !== Location.Center) ||
-          (elsewhere.checked && content.locationTag !== Location.Other) ||
-          (needsRegistration.checked && !content.needsRegistration) ||
-          (hasMusic.checked && !content.hasMusic) ||
-          (inside.checked && content.isOutside) ||
-          (outside.checked && !content.isOutside) ||
-          (isRemote.checked && !content.isRemote)
+          (filter.teemunkierros.checked && !content.teemunkierros) ||
+          (filter.hervanta.checked &&
+            content.locationTag !== Location.Hervanta) ||
+          (filter.center.checked && content.locationTag !== Location.Center) ||
+          (filter.elsewhere.checked &&
+            content.locationTag !== Location.Other) ||
+          (filter.needsRegistration.checked && !content.needsRegistration) ||
+          (filter.hasMusic.checked && !content.hasMusic) ||
+          (filter.inside.checked && content.isOutside) ||
+          (filter.outside.checked && !content.isOutside) ||
+          (filter.isRemote.checked && !content.isRemote)
         ) {
           return false;
         }
 
-        if (isNotEmpty(search.value)) {
-          if (inStr(search.value, content.title)) {
+        if (isNotEmpty(filter.search.value)) {
+          if (inStr(filter.search.value, content.title)) {
             return true;
           }
 
           const desc = recursiveContent(content.description.content);
 
-          if (inStr(search.value, desc)) {
+          if (inStr(filter.search.value, desc)) {
             return true;
           }
 
@@ -194,19 +212,7 @@ export const EventContextProvider: FC = (props) => {
 
         return true;
       }),
-    [
-      data,
-      teemunkierros.checked,
-      hervanta.checked,
-      center.checked,
-      elsewhere.checked,
-      needsRegistration.checked,
-      hasMusic.checked,
-      inside.checked,
-      outside.checked,
-      isRemote.checked,
-      search.value,
-    ]
+    [data, filter]
   );
 
   return (
@@ -216,18 +222,8 @@ export const EventContextProvider: FC = (props) => {
         data,
         error,
         events,
-        filter: {
-          teemunkierros,
-          hervanta,
-          center,
-          elsewhere,
-          needsRegistration,
-          hasMusic,
-          inside,
-          outside,
-          isRemote,
-        },
-        search,
+        filter,
+        filterCount,
         loading,
       }}
       {...props}
