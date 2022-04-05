@@ -10,7 +10,7 @@
   }
 
   .style-focus {
-    @apply ring-cyan-500 transition-shadow focus-within:ring;
+    @apply outline-none ring-cyan-500 transition-shadow focus:ring;
   }
 
   .style-btn-circle {

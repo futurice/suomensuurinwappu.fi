@@ -13,13 +13,13 @@ export const EventModal: VFC = () => {
   const { translation } = useGlobalContext();
   const dialog = useDialogState({ visible: true });
   const labelId = `${dialog.baseId}-label`;
-  const titleRef = useRef<HTMLHeadingElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!dialog.visible) {
       closeEvent();
     } else {
-      titleRef.current?.focus();
+      modalRef.current?.focus();
     }
   }, [closeEvent, dialog.visible]);
 
@@ -28,6 +28,8 @@ export const EventModal: VFC = () => {
       aria-labelledby={labelId}
       dialog={dialog}
       unstable_finalFocusRef={currentRef}
+      modalRef={modalRef}
+      tabIndex={0}
     >
       <Image
         className="h-64 w-full rounded-t-lg object-cover"
@@ -36,9 +38,7 @@ export const EventModal: VFC = () => {
       />
       <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
         <h2
-          ref={titleRef}
           id={labelId}
-          tabIndex={-1}
           className="style-heading text-lg text-pink-700 outline-none focus:underline"
         >
           {event?.content.title}
