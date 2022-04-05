@@ -23,6 +23,11 @@ export interface FilterProps {
   onChange: ChangeEventHandler<HTMLInputElement>;
 }
 
+export interface SearchProps {
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+}
+
 interface EventContextValue {
   currentRef?: RefObject<HTMLAnchorElement>;
   data: EventItem[];
@@ -41,11 +46,6 @@ interface EventContextValue {
   };
   search: SearchProps;
   loading: boolean;
-}
-
-export interface SearchProps {
-  value?: string;
-  onChange: ChangeEventHandler<HTMLFormElement>;
 }
 
 const initialFilter = {
@@ -88,7 +88,7 @@ const useFilter = (value: string) => {
 const useSearch = () => {
   const [value, setValue] = useState('');
 
-  const onChange: ChangeEventHandler<HTMLFormElement> = useCallback((e) => {
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
     setValue(e.target.value || '');
   }, []);
 

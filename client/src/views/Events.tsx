@@ -19,7 +19,8 @@ export const Events: VFC = () => {
       <Filter {...filter.inside}>{translation?.inside}</Filter>
       <Filter {...filter.outside}>{translation?.outside}</Filter>
       <Filter {...filter.isRemote}>{translation?.remote}</Filter>
-      <Search {...search} />
+
+      <Search {...search} label={translation?.searchPlaceholder} />
 
       <EventList events={events} />
 
