@@ -10,7 +10,7 @@ function shuffleArray(array: AdItem[]) {
   }
 }
 
-export const Footer: VFC = () => { 
+export const Footer: VFC = () => {
   const { data } = useAdContext();
   let adverts = [...data];
   shuffleArray(adverts);
@@ -19,7 +19,7 @@ export const Footer: VFC = () => {
     <footer className="footer">
       {adverts.slice(0, 3).map((ad) => (
         <img
-          src={ad.content.logo.filename}
+          src={`${ad.content.logo.filename}/m/352x0/`}
           alt={ad.content.logo.alt || `${ad.content.companyName} logo`}
           key={`company-logo-${ad.content.companyName}`}
         />
