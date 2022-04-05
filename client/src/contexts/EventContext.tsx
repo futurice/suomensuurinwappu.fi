@@ -191,8 +191,18 @@ enum Location {
   Other = 'other',
 }
 
+const useMultipleQuery = () => {
+  const { data: data1, error: error1, loading: loading1 } = useEventQuery(1);
+  const { data: data2, error: error2, loading: loading2 } = useEventQuery(2);
+  return {
+    data: data1.concat(data2),
+    error: error1 ? error1 : error2 ? error2 : undefined,
+    loading: loading1 || loading2 ? true : false,
+  };
+};
+
 export const EventContextProvider: FC = (props) => {
-  const { data, error, loading } = useEventQuery();
+  const { data, error, loading } = useMultipleQuery();
 
   const currentRef = useRef<HTMLAnchorElement>(null);
 
