@@ -12,10 +12,11 @@ import {
 } from 'react';
 import { ApolloError } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-
-import { EventItem } from 'interfaces';
-import { useEventQuery } from 'hooks';
 import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
+
+import { useEventQuery } from 'hooks';
+import { EventItem } from 'interfaces';
+import { inStr, isNotEmpty } from 'utils';
 
 export interface FilterProps {
   value: string;
@@ -75,7 +76,7 @@ const initialContext: EventContextValue = {
 const EventContext = createContext(initialContext);
 
 const useFilter = (value: string) => {
-  const [checked, set] = useState<boolean>(false);
+  const [checked, set] = useState(false);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => set(e.target.checked),
@@ -88,9 +89,10 @@ const useFilter = (value: string) => {
 const useSearch = () => {
   const [value, setValue] = useState('');
 
-  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback((e) => {
-    setValue(e.target.value || '');
-  }, []);
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => setValue(e.target.value || ''),
+    []
+  );
 
   return { value, onChange };
 };
@@ -120,33 +122,28 @@ export const useEvent = (slug?: string) => {
   return { event, closeEvent };
 };
 
-const recursiveContent = function (arr: StoryblokRichtextContent[]): string {
-  return arr
-    .flatMap((item) =>
-      'content' in item ? recursiveContent(item.content) : item.text
-    )
-    .join(' ');
-};
+const recursiveContent = (
+  arr: StoryblokRichtextContent[] | undefined
+): string =>
+  arr
+    ?.flatMap((item) => {
+      if ('text' in item) {
+        return item.text;
+      }
 
-const isFound = (searchTerm: string, content: string): boolean => {
-  return content.toLowerCase().includes(searchTerm);
-};
+      if ('content' in item) {
+        return recursiveContent(item.content);
+      }
 
-const searchEventTexts = (search: string, events: EventItem[]) => {
-  return events.filter(({ content }) => {
-    if (!content.description) {
-      return false;
-    }
-    const searchTerm = search.toLowerCase();
+      return '';
+    })
+    .join(' ') || '';
 
-    if (isFound(searchTerm, content.title)) {
-      return true;
-    }
-    return typeof content.description === 'string'
-      ? isFound(searchTerm, content.description as string)
-      : isFound(searchTerm, recursiveContent([...content.description.content]));
-  });
-};
+enum Location {
+  Hervanta = 'hervanta',
+  Center = 'center',
+  Other = 'other',
+}
 
 export const EventContextProvider: FC = (props) => {
   const { data, error, loading } = useEventQuery();
@@ -164,68 +161,53 @@ export const EventContextProvider: FC = (props) => {
   const hasMusic = useFilter('music');
   const search = useSearch();
 
-  const events = useMemo(() => {
-    if (teemunkierros.checked && (!search.value || search.value.length === 0)) {
-      return data.filter(({ content: { teemunkierros } }) => teemunkierros);
-    } else if (search.value && search.value.length > 0) {
-      if (teemunkierros.checked) {
-        return searchEventTexts(search.value, data).filter(
-          ({ content: { teemunkierros } }) => teemunkierros
-        );
-      } else {
-        return searchEventTexts(search.value, data);
-      }
-    }
-    if (hervanta.checked) {
-      return data.filter(
-        ({ content: { locationTag } }) =>
-          locationTag.toLowerCase() === 'hervanta'
-      );
-    }
+  const events = useMemo(
+    () =>
+      data.filter(({ content }) => {
+        if (
+          (teemunkierros.checked && !content.teemunkierros) ||
+          (hervanta.checked && content.locationTag !== Location.Hervanta) ||
+          (center.checked && content.locationTag !== Location.Center) ||
+          (elsewhere.checked && content.locationTag !== Location.Other) ||
+          (needsRegistration.checked && !content.needsRegistration) ||
+          (hasMusic.checked && !content.hasMusic) ||
+          (inside.checked && content.isOutside) ||
+          (outside.checked && !content.isOutside) ||
+          (isRemote.checked && !content.isRemote)
+        ) {
+          return false;
+        }
 
-    if (center.checked) {
-      return data.filter(
-        ({ content: { locationTag } }) => locationTag.toLowerCase() === 'center'
-      );
-    }
-    if (elsewhere.checked) {
-      return data.filter(
-        ({ content: { locationTag } }) => locationTag.toLowerCase() === 'muu'
-      );
-    }
-    if (needsRegistration.checked) {
-      return data.filter(
-        ({ content: { needsRegistration } }) => needsRegistration
-      );
-    }
-    if (hasMusic.checked) {
-      return data.filter(({ content: { hasMusic } }) => hasMusic);
-    }
-    if (inside.checked) {
-      return data.filter(({ content: { isOutside } }) => isOutside === false);
-    }
-    if (outside.checked) {
-      return data.filter(({ content: { isOutside } }) => isOutside === true);
-    }
+        if (isNotEmpty(search.value)) {
+          if (inStr(search.value, content.title)) {
+            return true;
+          }
 
-    if (isRemote.checked) {
-      return data.filter(({ content: { isRemote } }) => isRemote);
-    }
+          const desc = recursiveContent(content.description.content);
 
-    return data;
-  }, [
-    data,
-    teemunkierros.checked,
-    hervanta.checked,
-    center.checked,
-    elsewhere.checked,
-    needsRegistration.checked,
-    hasMusic.checked,
-    inside.checked,
-    outside.checked,
-    isRemote.checked,
-    search.value,
-  ]);
+          if (inStr(search.value, desc)) {
+            return true;
+          }
+
+          return false;
+        }
+
+        return true;
+      }),
+    [
+      data,
+      teemunkierros.checked,
+      hervanta.checked,
+      center.checked,
+      elsewhere.checked,
+      needsRegistration.checked,
+      hasMusic.checked,
+      inside.checked,
+      outside.checked,
+      isRemote.checked,
+      search.value,
+    ]
+  );
 
   return (
     <EventContext.Provider
