@@ -244,6 +244,10 @@ export const EventContextProvider: FC = (props) => {
             return true;
           }
 
+          if (inStr(search.value, content.organizer)) {
+            return true;
+          }
+
           return false;
         }
 
