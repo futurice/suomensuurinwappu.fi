@@ -1,24 +1,34 @@
 import { FC, ReactNode } from 'react';
 import { Dialog, DialogBackdrop, DialogStateReturn } from 'reakit/Dialog';
+import { Cross } from 'akar-icons';
+
+import { useGlobalContext } from 'contexts';
+import { cn } from 'utils';
 
 interface ModalProps extends DialogStateReturn {
+  alignLeft?: boolean;
   title?: string;
   titleAddition?: ReactNode;
 }
 
 export const Modal: FC<ModalProps> = ({
+  alignLeft,
   children,
   title,
   titleAddition,
   ...dialog
 }) => {
+  const { translation } = useGlobalContext();
   const labelId = `${dialog.baseId}-label`;
 
   return (
     <DialogBackdrop className="bg-backdrop fixed inset-0 p-4 pt-20" {...dialog}>
       <div className="relative m-auto h-full max-w-7xl">
         <Dialog
-          className="style-focus absolute top-0 right-0 flex max-h-full w-full max-w-lg flex-initial flex-col rounded-md rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg"
+          className={cn(
+            'style-focus absolute top-0 flex max-h-full w-full max-w-lg flex-initial flex-col rounded-md rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg',
+            alignLeft ? 'left-0' : 'right-0'
+          )}
           aria-labelledby={labelId}
           tabIndex={0}
           preventBodyScroll={false}
@@ -31,7 +41,16 @@ export const Modal: FC<ModalProps> = ({
             >
               {title}
             </h2>
-            {titleAddition}
+            {titleAddition ? (
+              titleAddition
+            ) : (
+              <button
+                className="style-btn w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
+                onClick={dialog.hide}
+              >
+                <Cross size={20} aria-label={translation?.backToCalendar} />
+              </button>
+            )}
           </div>
           <div className="flex-initial overflow-scroll p-6 pt-0">
             {children}

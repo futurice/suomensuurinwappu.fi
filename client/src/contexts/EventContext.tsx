@@ -19,6 +19,12 @@ import { useEventQuery } from 'hooks';
 import { EventItem } from 'interfaces';
 import { inStr, isNotEmpty } from 'utils';
 
+export interface DateSelectProps {
+  selected: string[];
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  reset: () => void;
+}
+
 export interface FilterProps {
   value: string;
   checked: boolean;
@@ -35,6 +41,7 @@ export interface SearchProps {
 interface EventContextValue {
   currentRef?: RefObject<HTMLAnchorElement>;
   data: EventItem[];
+  dateSelect: DateSelectProps;
   error?: ApolloError;
   events: EventItem[];
   filter: {
@@ -63,6 +70,11 @@ const initialFilter = {
 
 const initialContext: EventContextValue = {
   data: [],
+  dateSelect: {
+    selected: [],
+    onChange: () => undefined,
+    reset: () => undefined,
+  },
   events: [],
   filter: {
     teemunkierros: initialFilter,
@@ -82,6 +94,24 @@ const initialContext: EventContextValue = {
 };
 
 const EventContext = createContext(initialContext);
+
+const useDateSelect = () => {
+  const [selected, set] = useState<string[]>([]);
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) =>
+      set((prev) =>
+        e.target.checked
+          ? [...prev, e.target.value]
+          : prev.filter((s) => s !== e.target.value)
+      ),
+    []
+  );
+
+  const reset = useCallback(() => set([]), []);
+
+  return { selected, onChange, reset };
+};
 
 const useFilter = (value: string) => {
   const [checked, set] = useState(false);
@@ -166,6 +196,7 @@ export const EventContextProvider: FC = (props) => {
 
   const currentRef = useRef<HTMLAnchorElement>(null);
 
+  const dateSelect = useDateSelect();
   const teemunkierros = useFilter('teemunkierros');
   const hervanta = useFilter('hervanta');
   const center = useFilter('center');
@@ -194,6 +225,14 @@ export const EventContextProvider: FC = (props) => {
           return false;
         }
 
+        if (dateSelect.selected.length > 0) {
+          const date = content.dateBegin.split(' ')[0];
+
+          if (dateSelect.selected.every((d) => d !== date)) {
+            return false;
+          }
+        }
+
         if (isNotEmpty(search.value)) {
           if (inStr(search.value, content.title)) {
             return true;
@@ -212,6 +251,7 @@ export const EventContextProvider: FC = (props) => {
       }),
     [
       data,
+      dateSelect.selected,
       teemunkierros.checked,
       hervanta.checked,
       center.checked,
@@ -286,6 +326,7 @@ export const EventContextProvider: FC = (props) => {
       value={{
         currentRef,
         data,
+        dateSelect,
         error,
         events,
         filter: {

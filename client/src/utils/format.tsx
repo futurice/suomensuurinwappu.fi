@@ -14,7 +14,7 @@ const TIME: Intl.DateTimeFormatOptions = {
 const DATETIME: Intl.DateTimeFormatOptions = { ...DATE, ...TIME };
 
 const strReplace = (str: string) => str.replaceAll('-', '/');
-const asDate = (str: string) => new Date(strReplace(str));
+export const asDate = (str: string) => new Date(strReplace(str));
 
 export const formatTimeRange = (
   locale: string,

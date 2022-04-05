@@ -1,4 +1,5 @@
 export * from './Block';
+export * from './Disclosure';
 export * from './EventInfo';
 export * from './EventList';
 export * from './Filter';
