@@ -34,6 +34,7 @@ export const EventModal: VFC = () => {
         tabIndex={0}
         ref={modalRef}
         className="style-focus inset-x-0 bottom-0 flex max-h-full max-w-lg flex-col rounded-t-lg bg-white drop-shadow-lg sm:rounded-lg"
+        preventBodyScroll={false}
         {...dialog}
       >
         <Image
