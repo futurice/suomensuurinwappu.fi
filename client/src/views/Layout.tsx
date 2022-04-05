@@ -10,7 +10,7 @@ import {
 import { ThreeLineHorizontal } from 'akar-icons';
 
 import { Footer, LanguageSwitcher, NavLink } from 'components';
-import { useGlobalContext } from 'contexts';
+import { LocalizedLink, useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
@@ -30,7 +30,9 @@ export const Layout: VFC = () => {
       <div className="bg-white p-4 drop-shadow">
         <div className="m-auto flex max-w-7xl justify-between py-1 px-2">
           <h1 className="style-heading text-lg text-cyan-700">
-            {translation?.title}
+            <LocalizedLink to="/events" className="hover:underline">
+              {translation?.title}
+            </LocalizedLink>
           </h1>
           <DialogDisclosure
             {...dialog}
