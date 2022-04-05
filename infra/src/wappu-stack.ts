@@ -141,7 +141,7 @@ export class WappuStack extends Stack {
     new CfnOutput(this, `${config.PROJECT_NAME}-url-${stage}`, {
       value: distribution.distributionDomainName,
       description: 'CDN url',
-      exportName: `${config.PROJECT_NAME}-url`,
+      exportName: `${config.PROJECT_NAME}-url-${stage}`,
     });
   }
 }
