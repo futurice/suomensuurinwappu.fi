@@ -14,6 +14,7 @@ import { ApolloError } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
 
+import { Language, useLanguageContext } from 'contexts';
 import { useEventQuery } from 'hooks';
 import { EventItem } from 'interfaces';
 import { inStr, isNotEmpty } from 'utils';
@@ -111,6 +112,7 @@ const useSearch = () => {
 export const useEventContext = () => useContext(EventContext);
 
 export const useEvent = (slug?: string) => {
+  const { lang } = useLanguageContext();
   const { data, loading } = useEventContext();
   const navigate = useNavigate();
 
@@ -122,7 +124,10 @@ export const useEvent = (slug?: string) => {
     return undefined;
   }, [data, slug]);
 
-  const closeEvent = useCallback(() => navigate('/events'), [navigate]);
+  const closeEvent = useCallback(
+    () => navigate(lang === Language.EN ? '/en/events' : '/events'),
+    [lang, navigate]
+  );
 
   useEffect(() => {
     if (!loading && !event) {
