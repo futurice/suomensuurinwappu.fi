@@ -10,8 +10,8 @@ export const PersonList: VFC<PersonListBlock> = ({ items }) => (
       <li key={item._uid} className="flex items-center gap-4">
         <Image
           className="h-16 w-16 rounded-full md:h-24 md:w-24"
-          src={item.image.filename}
-          alt={item.image.alt}
+          crop="144x144"
+          img={item.image}
         />
         <div className="flex flex-col gap-1">
           <p className="style-heading text-pink-700">{item.name}</p>

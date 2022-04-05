@@ -21,8 +21,8 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
       <li className="style-focus relative flex rounded-md rounded-tl bg-white drop-shadow md:flex-col">
         <Image
           className="w-32 rounded-bl-md rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-md"
-          src={content.image.filename}
-          alt={content.image.alt}
+          crop="512x256"
+          img={content.image}
         />
         <div className="flex flex-auto flex-col gap-1 px-4 pt-2 pb-3">
           <p className="style-heading mb-0.5">
