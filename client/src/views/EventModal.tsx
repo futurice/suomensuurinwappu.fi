@@ -25,7 +25,7 @@ export const EventModal: VFC = () => {
 
   return (
     <DialogBackdrop
-      className="bg-backdrop fixed inset-0 flex items-end justify-center sm:items-center sm:p-4"
+      className="bg-backdrop fixed inset-0 flex items-end justify-center pt-20 sm:items-center sm:p-4"
       {...dialog}
     >
       <Dialog
@@ -58,7 +58,7 @@ export const EventModal: VFC = () => {
           )}
           <button
             onClick={closeEvent}
-            className="style-focus mx-auto my-4 block rounded-full bg-cyan-700 py-2 px-4 font-bold text-white outline-none"
+            className="style-btn mx-auto mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
           >
             {translation?.backToCalendar}
           </button>

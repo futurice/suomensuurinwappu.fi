@@ -16,7 +16,7 @@ export const Modal: FC<ModalProps> = ({
 
   return (
     <DialogBackdrop
-      className="bg-backdrop absolute inset-0 p-4 pt-24"
+      className="bg-backdrop absolute inset-0 p-4 pt-20"
       {...dialog}
     >
       <div className="relative m-auto h-full max-w-7xl">
@@ -26,7 +26,7 @@ export const Modal: FC<ModalProps> = ({
           tabIndex={0}
           {...dialog}
         >
-          <div className="flex flex-none items-center border-b border-cyan-900 px-6 pb-4">
+          <div className="mx-6 flex flex-none items-center border-b border-cyan-500 pb-4">
             <h2
               id={labelId}
               className="style-heading flex-1 text-lg text-pink-700"
