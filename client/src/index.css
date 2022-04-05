@@ -13,8 +13,12 @@
     @apply outline-none ring-cyan-500 transition-shadow focus:ring;
   }
 
+  .style-btn {
+    @apply style-focus flex h-8 items-center justify-center rounded-full text-sm font-bold;
+  }
+
   .style-btn-circle {
-    @apply style-focus flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold;
+    @apply style-btn w-8;
   }
 }
 

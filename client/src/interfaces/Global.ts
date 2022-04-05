@@ -9,6 +9,8 @@ export interface Global {
 
   menu: string;
 
+  filter: string;
+  filterButton: string;
   teemunkierros: string;
   hervanta: string;
   center: string;
