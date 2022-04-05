@@ -12,6 +12,7 @@
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "akar-icons": "^1.9.14",
+    "date-fns": "^2.28.0",
     "graphql": "^16.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
