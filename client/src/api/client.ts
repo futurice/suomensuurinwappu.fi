@@ -16,7 +16,6 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     headers: {
       ...headers,
       token,
-      version: 'draft',
     },
   }));
   return forward(operation);
