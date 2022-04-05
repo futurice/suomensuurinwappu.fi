@@ -26,8 +26,8 @@ export const Layout: VFC = () => {
         <body className="bg-gradient-page bg-cover bg-fixed" />
       </Helmet>
 
-      <div className="bg-white p-4 drop-shadow">
-        <div className="m-auto flex max-w-7xl justify-between py-1 px-2">
+      <div className="h-16 bg-white p-4 drop-shadow">
+        <div className="m-auto flex h-full max-w-7xl items-center justify-between">
           <h1 className="style-heading text-lg text-cyan-700">
             <LocalizedLink to="/events" className="hover:underline">
               {translation?.title}
@@ -35,7 +35,7 @@ export const Layout: VFC = () => {
           </h1>
           <DialogDisclosure
             {...dialog}
-            className="style-btn w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
+            className="style-btn -mr-2 w-8 text-cyan-700 outline-none hover:bg-cyan-500/20"
           >
             <ThreeLineHorizontal aria-label="Menu" />
           </DialogDisclosure>

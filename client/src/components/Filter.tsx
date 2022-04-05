@@ -3,7 +3,12 @@ import { FC } from 'react';
 import { FilterProps } from 'contexts';
 import { cn } from 'utils';
 
-export const Filter: FC<FilterProps> = ({ children, checked, ...props }) => (
+export const Filter: FC<FilterProps> = ({
+  children,
+  checked,
+  reset,
+  ...props
+}) => (
   <label
     className={cn(
       'style-btn cursor-pointer border border-cyan-700 px-3 transition-colors focus-within:ring',

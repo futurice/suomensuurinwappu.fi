@@ -9,6 +9,8 @@ export interface Global {
 
   menu: string;
 
+  date: string;
+
   filter: string;
   filterButton: string;
   filterReset: string;
@@ -21,10 +23,9 @@ export interface Global {
   inside: string;
   outside: string;
   remote: string;
+  searchPlaceholder: string;
 
   backToCalendar: string;
-
-  searchPlaceholder: string;
 
   social: string;
   instagramLabel: string;

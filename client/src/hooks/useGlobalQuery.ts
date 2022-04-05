@@ -13,6 +13,8 @@ const globalQuery = gql`
 
           menu
 
+          date
+
           filter
           filterButton: filter_button
           filterReset: filter_reset
