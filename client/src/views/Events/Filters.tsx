@@ -1,9 +1,11 @@
-import { VFC } from 'react';
+import { FormEventHandler, VFC } from 'react';
 
 import { Filter, Search } from 'components';
 import { useEventContext, useGlobalContext } from 'contexts';
 
-export const Filters: VFC = () => {
+export const Filters: VFC<{ onSubmit: FormEventHandler<HTMLFormElement> }> = ({
+  onSubmit,
+}) => {
   const { translation } = useGlobalContext();
   const { filter } = useEventContext();
 
@@ -27,7 +29,11 @@ export const Filters: VFC = () => {
 
       <Filter {...filter.isRemote}>{translation?.remote}</Filter>
 
-      <Search {...filter.search} label={translation?.searchPlaceholder} />
+      <Search
+        {...filter.search}
+        label={translation?.searchPlaceholder}
+        onSubmit={onSubmit}
+      />
     </div>
   );
 };
