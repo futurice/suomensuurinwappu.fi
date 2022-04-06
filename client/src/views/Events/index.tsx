@@ -36,7 +36,7 @@ export const Events: VFC = () => {
   const { translation } = useGlobalContext();
   const { count, events, reset } = useEventContext();
 
-  const dateDialog = useDialogState();
+  const dateDialog = useDialogState({ animated: true });
   const dateRef = useRef<HTMLDivElement>(null);
 
   const onDateReset = useCallback(() => {
@@ -44,7 +44,7 @@ export const Events: VFC = () => {
     reset.date();
   }, [reset]);
 
-  const filterDialog = useDialogState();
+  const filterDialog = useDialogState({ animated: true });
   const filterRef = useRef<HTMLDivElement>(null);
 
   const onFilterReset = useCallback(() => {
