@@ -12,7 +12,7 @@ export const NavLink: FC<NavLinkProps> = ({ to, children, ...props }) => (
     to={to}
     className={({ isActive }) =>
       cn(
-        'style-heading flex items-center border-b border-pink-300 py-4 px-2 text-cyan-700 hover:underline',
+        'style-heading style-focus flex items-center border-b border-pink-300 py-4 px-2 text-cyan-700 ring-inset hover:underline',
         {
           "before:-my-2 before:-ml-2 before:mr-2 before:text-2xl before:content-['•'] hover:no-underline":
             isActive,

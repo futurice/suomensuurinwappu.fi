@@ -91,7 +91,7 @@ const LinkItem: VFC<LinkItemProps> = ({ link, label }) => {
       <LinkWrapper
         href={href}
         target={target}
-        className="flex items-center text-cyan-700 underline hover:no-underline"
+        className="style-focus -mx-1 flex items-center rounded-full px-1 text-cyan-700 underline hover:no-underline"
       >
         <Icon size={16} className="mr-2 flex-none text-pink-700" />
         {text}
