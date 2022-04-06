@@ -14,7 +14,10 @@ export interface Global {
   filter: string;
   filterButton: string;
   filterReset: string;
+  filterAll: string;
   teemunkierros: string;
+  location: string;
+  place: string;
   hervanta: string;
   center: string;
   elsewhere: string;

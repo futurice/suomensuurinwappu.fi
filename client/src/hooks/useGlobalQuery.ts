@@ -18,14 +18,17 @@ const globalQuery = gql`
           filter
           filterButton: filter_button
           filterReset: filter_reset
+          filterAll: filter_all
           teemunkierros
+          location
           hervanta
           center
           elsewhere
-          registration
-          music
+          place
           inside
           outside
+          registration
+          music
           remote
 
           backToCalendar: back_to_calendar

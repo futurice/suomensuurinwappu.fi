@@ -9,3 +9,14 @@ export const isNotEmpty = (str?: string | null): str is string =>
  */
 export const inStr = (child: string, parent: string) =>
   parent.toLowerCase().includes(child.toLowerCase());
+
+/**
+ * Checks if string is value of given enum
+ *
+ * str: str that might be enum value
+ * enum: enum to check from
+ */
+export const isOfEnum = <TEnum extends string>(
+  str: string,
+  enumObj: Record<string, TEnum>
+): str is TEnum => Object.values(enumObj).some((e) => e === str);
