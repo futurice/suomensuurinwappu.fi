@@ -8,7 +8,7 @@ export const Search: VFC<SearchProps & { label?: string }> = ({
   onChange,
   value,
 }) => (
-  <label className="style-focus flex items-center rounded-sm border border-cyan-700 bg-white px-1 text-xs text-cyan-700 focus-within:ring">
+  <label className="style-focus flex items-center self-stretch rounded-sm border border-cyan-700 bg-white px-1 text-xs text-cyan-700 focus-within:ring">
     <MagnifyingGlass
       size={16}
       className="mr-2 ml-1 flex-none"

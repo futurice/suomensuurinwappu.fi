@@ -1,4 +1,4 @@
-import { VFC } from 'react';
+import { ComponentProps, useCallback, useRef, VFC } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDialogState } from 'reakit/Dialog';
 import { Calendar, SettingsHorizontal } from 'akar-icons';
@@ -9,32 +9,69 @@ import { useEventContext, useGlobalContext } from 'contexts';
 import { Dates } from './Dates';
 import { Filters } from './Filters';
 
+interface ResetButtonProps extends Pick<ComponentProps<'button'>, 'onClick'> {
+  visible: boolean;
+}
+
+const ResetButton: VFC<ResetButtonProps> = ({ onClick, visible }) => {
+  const { translation } = useGlobalContext();
+
+  return visible ? (
+    <button
+      onClick={onClick}
+      className="style-btn mx-auto mt-6 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
+    >
+      {translation?.filterReset}
+    </button>
+  ) : null;
+};
+
 export const Events: VFC = () => {
   const { translation } = useGlobalContext();
-  const { dateSelect, events, filterCount } = useEventContext();
+  const { count, events, reset } = useEventContext();
 
   const dateDialog = useDialogState();
+  const dateRef = useRef<HTMLDivElement>(null);
+
+  const onDateReset = useCallback(() => {
+    dateRef.current?.focus();
+    reset.date();
+  }, [reset]);
+
   const filterDialog = useDialogState();
+  const filterRef = useRef<HTMLDivElement>(null);
+
+  const onFilterReset = useCallback(() => {
+    filterRef.current?.focus();
+    reset.filter();
+  }, [reset]);
 
   return (
     <>
       <div className="m-auto flex max-w-7xl justify-between">
         <Disclosure icon={Calendar} {...dateDialog}>
           {translation?.date}
-          {dateSelect.selected.length > 0 && (
-            <> ({dateSelect.selected.length})</>
-          )}
+          {count.date > 0 && <> ({count.date})</>}
         </Disclosure>
-        <Modal alignLeft={true} title={translation?.date} {...dateDialog}>
+        <Modal
+          ref={dateRef}
+          alignLeft={true}
+          title={translation?.date}
+          {...dateDialog}
+        >
           <Dates />
+
+          <ResetButton onClick={onDateReset} visible={count.date > 0} />
         </Modal>
 
         <Disclosure icon={SettingsHorizontal} {...filterDialog}>
           {translation?.filterButton}
-          {filterCount > 0 && <> ({filterCount})</>}
+          {count.filter > 0 && <> ({count.filter})</>}
         </Disclosure>
-        <Modal title={translation?.filter} {...filterDialog}>
+        <Modal ref={filterRef} title={translation?.filter} {...filterDialog}>
           <Filters />
+
+          <ResetButton onClick={onFilterReset} visible={count.filter > 0} />
         </Modal>
       </div>
 
