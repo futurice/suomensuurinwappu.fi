@@ -52,12 +52,13 @@ export const Events: VFC = () => {
     reset.filter();
   }, [reset]);
 
+  const hideFilters = filterDialog.hide;
   const onFilterSubmit: FormEventHandler<HTMLFormElement> = useCallback(
     (e) => {
       e.preventDefault();
-      filterDialog.hide();
+      hideFilters();
     },
-    [filterDialog.hide]
+    [hideFilters]
   );
 
   return (
