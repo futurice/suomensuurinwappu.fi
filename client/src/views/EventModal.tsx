@@ -11,21 +11,21 @@ export const EventModal: VFC = () => {
 
   const { currentRef } = useEventContext();
   const { translation } = useGlobalContext();
-  const dialog = useDialogState({ visible: true });
+  const dialog = useDialogState({ visible: true, animated: true });
   const labelId = `${dialog.baseId}-label`;
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!dialog.visible) {
+    if (!dialog.visible && !dialog.animating) {
       closeEvent();
     } else {
       modalRef.current?.focus();
     }
-  }, [closeEvent, dialog.visible]);
+  }, [closeEvent, dialog.visible, dialog.animating]);
 
   return (
     <DialogBackdrop
-      className="bg-backdrop fixed inset-0 flex items-end justify-center pt-20 sm:items-center sm:p-4"
+      className="bg-backdrop enter:opacity-100 fixed inset-0 flex items-end justify-center pt-20 opacity-0 transition-opacity duration-300 sm:items-center sm:p-4"
       {...dialog}
     >
       <Dialog
@@ -33,7 +33,7 @@ export const EventModal: VFC = () => {
         unstable_finalFocusRef={currentRef}
         tabIndex={0}
         ref={modalRef}
-        className="style-focus inset-x-0 bottom-0 flex max-h-full max-w-lg flex-col rounded-t-lg bg-white drop-shadow-lg sm:rounded-lg"
+        className="style-focus enter:translate-y-0 enter:scale-100 inset-x-0 bottom-0 flex max-h-full max-w-lg translate-y-full flex-col rounded-t-lg bg-white drop-shadow-lg transition-transform duration-300 sm:rounded-lg md:scale-50"
         preventBodyScroll={false}
         {...dialog}
       >

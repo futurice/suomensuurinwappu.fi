@@ -15,7 +15,7 @@ import { LocalizedLink, useGlobalContext } from 'contexts';
 
 export const Layout: VFC = () => {
   const { pages, translation } = useGlobalContext();
-  const dialog = useDialogState();
+  const dialog = useDialogState({ animated: true });
 
   return (
     <>

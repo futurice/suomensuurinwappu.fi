@@ -18,15 +18,15 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
 
     return (
       <DialogBackdrop
-        className="bg-backdrop fixed inset-0 p-4 pt-20"
+        className="bg-backdrop enter:opacity-100 fixed inset-0 p-4 pt-20 opacity-0 duration-300"
         {...dialog}
       >
         <div className="relative m-auto h-full max-w-7xl">
           <Dialog
             ref={ref}
             className={cn(
-              'style-focus absolute top-0 flex max-h-full w-full max-w-lg flex-initial flex-col rounded-md rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg',
-              alignLeft ? 'left-0' : 'right-0'
+              'style-focus enter:scale-100 absolute top-0 flex max-h-full w-full max-w-lg flex-initial scale-0 flex-col rounded-md rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg transition-transform duration-300',
+              alignLeft ? 'left-0 origin-top-left' : 'right-0 origin-top-right'
             )}
             aria-labelledby={labelId}
             tabIndex={0}
