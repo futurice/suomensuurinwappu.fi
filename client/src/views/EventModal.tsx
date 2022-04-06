@@ -38,7 +38,7 @@ export const EventModal: VFC = () => {
         {...dialog}
       >
         <Image
-          className="h-64 w-full rounded-t-lg object-cover"
+          className="h-64 max-h-[30vh] w-full rounded-t-lg object-cover"
           crop="1024x512"
           img={event?.content.image}
         />
@@ -50,19 +50,19 @@ export const EventModal: VFC = () => {
             {event?.content.title}
           </h2>
           {event && (
-            <>
-              <EventInfo {...event.content} />
-              <div className="flex-initial flex-col overflow-auto text-sm">
-                <RichText>{event.content.description}</RichText>
+            <div className="flex-initial flex-col overflow-auto text-sm">
+              <div className="mb-1 flex flex-col gap-1">
+                <EventInfo {...event.content} />
               </div>
-            </>
+              <RichText>{event.content.description}</RichText>
+              <button
+                onClick={closeEvent}
+                className="style-btn mx-auto mt-2 mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
+              >
+                {translation?.backToCalendar}
+              </button>
+            </div>
           )}
-          <button
-            onClick={closeEvent}
-            className="style-btn mx-auto mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
-          >
-            {translation?.backToCalendar}
-          </button>
         </div>
       </Dialog>
     </DialogBackdrop>
