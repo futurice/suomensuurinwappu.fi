@@ -34,6 +34,10 @@
     );
   }
 
+  .bg-circles {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='192px' width='144px'%3E%3Ccircle cx='72' cy='224' r='130%25' fill='%237B61FF' /%3E%3C/svg%3E");
+  }
+
   .rounded-inherit {
     border-radius: inherit;
   }

@@ -1,6 +1,16 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
   theme: {
+    borderRadius: {
+      none: '0',
+      sm: '0.25rem',
+      DEFAULT: '0.5rem',
+      md: '1rem',
+      lg: '2rem',
+      full: '9999px',
+    },
     colors: {
       pink: {
         [300]: '#FFE1EF',
@@ -21,17 +31,13 @@ module.exports = {
       dark: '#120208',
       backdrop: '#0080A14D',
     },
-    borderRadius: {
-      none: '0',
-      sm: '0.25rem',
-      DEFAULT: '0.5rem',
-      md: '1rem',
-      lg: '2rem',
-      full: '9999px',
-    },
     fontFamily: {
       body: ['Rubik', 'sans-serif'],
       heading: ['Inter', 'sans-serif'],
+    },
+    screens: {
+      xs: '416px',
+      ...defaultTheme.screens,
     },
     extend: {
       fontSize: {
