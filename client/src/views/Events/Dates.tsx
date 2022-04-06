@@ -6,6 +6,7 @@ import {
   useGlobalContext,
   useLanguageContext,
 } from 'contexts';
+import { useEnterClick } from 'hooks';
 import { asDate, cn } from 'utils';
 
 interface DateItemProps {
@@ -24,6 +25,8 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
     [selected, value]
   );
 
+  const enterClick = useEnterClick();
+
   return (
     <label
       className={cn(
@@ -32,6 +35,7 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
           ? 'bg-cyan-700 text-white hover:bg-cyan-900'
           : 'bg-white text-cyan-700 hover:bg-cyan-300'
       )}
+      {...enterClick}
     >
       <input
         type="checkbox"

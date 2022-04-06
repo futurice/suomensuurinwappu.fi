@@ -1,7 +1,8 @@
 import { createContext, FC, useContext } from 'react';
-import { AdItem } from 'interfaces';
-import { useAdQuery } from '../hooks/useAdQuery';
 import { ApolloError } from '@apollo/client';
+
+import { useAdQuery } from 'hooks';
+import { AdItem } from 'interfaces';
 
 interface AdContextValue {
   data: AdItem[];
