@@ -1,7 +1,7 @@
 import { FormEventHandler, VFC } from 'react';
 
-import { Filter, Search } from 'components';
-import { useEventContext, useGlobalContext } from 'contexts';
+import { Filter, FilterGroup, FilterGroupItem, Search } from 'components';
+import { Location, Place, useEventContext, useGlobalContext } from 'contexts';
 
 export const Filters: VFC<{ onSubmit: FormEventHandler<HTMLFormElement> }> = ({
   onSubmit,
@@ -13,21 +13,34 @@ export const Filters: VFC<{ onSubmit: FormEventHandler<HTMLFormElement> }> = ({
     <div className="mt-4 flex flex-col items-start gap-4">
       <Filter {...filter.teemunkierros}>{translation?.teemunkierros}</Filter>
 
+      <FilterGroup {...filter.location} label={translation?.location}>
+        <FilterGroupItem value={Location.Hervanta}>
+          {translation?.hervanta}
+        </FilterGroupItem>
+        <FilterGroupItem value={Location.Center}>
+          {translation?.center}
+        </FilterGroupItem>
+        <FilterGroupItem value={Location.Other}>
+          {translation?.elsewhere}
+        </FilterGroupItem>
+      </FilterGroup>
+
+      <FilterGroup {...filter.place} label={translation?.place}>
+        <FilterGroupItem value={Place.Inside}>
+          {translation?.inside}
+        </FilterGroupItem>
+        <FilterGroupItem value={Place.Outside}>
+          {translation?.outside}
+        </FilterGroupItem>
+      </FilterGroup>
+
       <div className="flex flex-wrap gap-2">
-        <Filter {...filter.hervanta}>{translation?.hervanta}</Filter>
-        <Filter {...filter.center}>{translation?.center}</Filter>
-        <Filter {...filter.elsewhere}>{translation?.elsewhere}</Filter>
+        <Filter {...filter.needsRegistration}>
+          {translation?.registration}
+        </Filter>
+        <Filter {...filter.hasMusic}>{translation?.music}</Filter>
+        <Filter {...filter.isRemote}>{translation?.remote}</Filter>
       </div>
-
-      <Filter {...filter.needsRegistration}>{translation?.registration}</Filter>
-      <Filter {...filter.hasMusic}>{translation?.music}</Filter>
-
-      <div className="flex flex-wrap gap-2">
-        <Filter {...filter.inside}>{translation?.inside}</Filter>
-        <Filter {...filter.outside}>{translation?.outside}</Filter>
-      </div>
-
-      <Filter {...filter.isRemote}>{translation?.remote}</Filter>
 
       <Search
         {...filter.search}

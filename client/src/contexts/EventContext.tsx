@@ -17,7 +17,7 @@ import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
 import { Language, useLanguageContext } from 'contexts';
 import { useEventQuery } from 'hooks';
 import { EventItem } from 'interfaces';
-import { inStr, isNotEmpty } from 'utils';
+import { inStr, isNotEmpty, isOfEnum } from 'utils';
 
 export interface DateSelectProps {
   selected: string[];
@@ -32,10 +32,28 @@ export interface FilterProps {
   reset: () => void;
 }
 
+export interface FilterGroupProps<TFilter extends string> {
+  name: string;
+  value?: TFilter;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  reset: () => void;
+}
+
 export interface SearchProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   reset: () => void;
+}
+
+export enum Location {
+  Hervanta = 'hervanta',
+  Center = 'center',
+  Other = 'other',
+}
+
+export enum Place {
+  Inside = 'inside',
+  Outside = 'outside',
 }
 
 interface EventContextValue {
@@ -46,13 +64,10 @@ interface EventContextValue {
   events: EventItem[];
   filter: {
     teemunkierros: FilterProps;
-    hervanta: FilterProps;
-    center: FilterProps;
-    elsewhere: FilterProps;
+    location: FilterGroupProps<Location>;
+    place: FilterGroupProps<Place>;
     needsRegistration: FilterProps;
     hasMusic: FilterProps;
-    inside: FilterProps;
-    outside: FilterProps;
     isRemote: FilterProps;
     search: SearchProps;
   };
@@ -74,6 +89,12 @@ const initialFilter = {
   reset: () => undefined,
 };
 
+const initialFilterGroup = {
+  name: '',
+  onChange: () => undefined,
+  reset: () => undefined,
+};
+
 const initialContext: EventContextValue = {
   data: [],
   dateSelect: {
@@ -84,13 +105,10 @@ const initialContext: EventContextValue = {
   events: [],
   filter: {
     teemunkierros: initialFilter,
-    hervanta: initialFilter,
-    center: initialFilter,
-    elsewhere: initialFilter,
+    location: initialFilterGroup,
+    place: initialFilterGroup,
     needsRegistration: initialFilter,
     hasMusic: initialFilter,
-    inside: initialFilter,
-    outside: initialFilter,
     isRemote: initialFilter,
     search: initialFilter,
   },
@@ -136,6 +154,27 @@ const useFilter = (value: string) => {
   const reset = useCallback(() => set(false), []);
 
   return { value, checked, onChange, reset };
+};
+
+const useFilterGroup = <TFilter extends string>(
+  name: string,
+  values: Record<string, TFilter>
+) => {
+  const [value, set] = useState<TFilter>();
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) =>
+      set(
+        isNotEmpty(e.target.value) && isOfEnum(e.target.value, values)
+          ? e.target.value
+          : undefined
+      ),
+    [values]
+  );
+
+  const reset = useCallback(() => set(undefined), []);
+
+  return { name, value, onChange, reset };
 };
 
 const useSearch = () => {
@@ -197,12 +236,6 @@ const recursiveContent = (
     })
     .join(' ') || '';
 
-enum Location {
-  Hervanta = 'hervanta',
-  Center = 'center',
-  Other = 'other',
-}
-
 const useMultipleQuery = () => {
   const { data: data1, error: error1, loading: loading1 } = useEventQuery(1);
   const { data: data2, error: error2, loading: loading2 } = useEventQuery(2);
@@ -219,14 +252,11 @@ export const EventContextProvider: FC = (props) => {
   const currentRef = useRef<HTMLAnchorElement>(null);
 
   const dateSelect = useDateSelect();
+  const location = useFilterGroup('location', Location);
+  const place = useFilterGroup('place', Place);
   const teemunkierros = useFilter('teemunkierros');
-  const hervanta = useFilter('hervanta');
-  const center = useFilter('center');
-  const elsewhere = useFilter('elsewhere');
   const needsRegistration = useFilter('registration');
   const hasMusic = useFilter('music');
-  const inside = useFilter('inside');
-  const outside = useFilter('outside');
   const isRemote = useFilter('remote');
   const search = useSearch();
 
@@ -235,16 +265,26 @@ export const EventContextProvider: FC = (props) => {
       data.filter(({ content }) => {
         if (
           (teemunkierros.checked && !content.teemunkierros) ||
-          (hervanta.checked && content.locationTag !== Location.Hervanta) ||
-          (center.checked && content.locationTag !== Location.Center) ||
-          (elsewhere.checked && content.locationTag !== Location.Other) ||
           (needsRegistration.checked && !content.needsRegistration) ||
           (hasMusic.checked && !content.hasMusic) ||
-          (inside.checked && content.isOutside) ||
-          (outside.checked && !content.isOutside) ||
           (isRemote.checked && !content.isRemote)
         ) {
           return false;
+        }
+
+        if (isNotEmpty(location.value)) {
+          if (location.value !== content.locationTag) {
+            return false;
+          }
+        }
+
+        if (isNotEmpty(place.value)) {
+          if (
+            (place.value === Place.Inside && content.isOutside) ||
+            (place.value === Place.Outside && !content.isOutside)
+          ) {
+            return false;
+          }
         }
 
         if (dateSelect.selected.length > 0) {
@@ -279,13 +319,10 @@ export const EventContextProvider: FC = (props) => {
       data,
       dateSelect.selected,
       teemunkierros.checked,
-      hervanta.checked,
-      center.checked,
-      elsewhere.checked,
+      location.value,
+      place.value,
       needsRegistration.checked,
       hasMusic.checked,
-      inside.checked,
-      outside.checked,
       isRemote.checked,
       search.value,
     ]
@@ -300,25 +337,19 @@ export const EventContextProvider: FC = (props) => {
     () =>
       [
         teemunkierros.checked,
-        hervanta.checked,
-        center.checked,
-        elsewhere.checked,
+        isNotEmpty(location.value),
+        isNotEmpty(place.value),
         needsRegistration.checked,
         hasMusic.checked,
-        inside.checked,
-        outside.checked,
         isRemote.checked,
         isNotEmpty(search.value),
       ].filter((f) => f).length,
     [
       teemunkierros.checked,
-      hervanta.checked,
-      center.checked,
-      elsewhere.checked,
+      location.value,
+      place.value,
       needsRegistration.checked,
       hasMusic.checked,
-      inside.checked,
-      outside.checked,
       isRemote.checked,
       search.value,
     ]
@@ -328,25 +359,19 @@ export const EventContextProvider: FC = (props) => {
     () =>
       [
         teemunkierros.reset,
-        hervanta.reset,
-        center.reset,
-        elsewhere.reset,
+        location.reset,
+        place.reset,
         needsRegistration.reset,
         hasMusic.reset,
-        inside.reset,
-        outside.reset,
         isRemote.reset,
         search.reset,
       ].forEach((reset) => reset()),
     [
       teemunkierros.reset,
-      hervanta.reset,
-      center.reset,
-      elsewhere.reset,
+      location.reset,
+      place.reset,
       needsRegistration.reset,
       hasMusic.reset,
-      inside.reset,
-      outside.reset,
       isRemote.reset,
       search.reset,
     ]
@@ -362,13 +387,10 @@ export const EventContextProvider: FC = (props) => {
         events,
         filter: {
           teemunkierros,
-          hervanta,
-          center,
-          elsewhere,
+          location,
+          place,
           needsRegistration,
           hasMusic,
-          inside,
-          outside,
           isRemote,
           search,
         },
