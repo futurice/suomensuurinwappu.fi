@@ -1,4 +1,10 @@
-import { ComponentProps, useCallback, useRef, VFC } from 'react';
+import {
+  ComponentProps,
+  FormEventHandler,
+  useCallback,
+  useRef,
+  VFC,
+} from 'react';
 import { Outlet } from 'react-router-dom';
 import { useDialogState } from 'reakit/Dialog';
 import { Calendar, SettingsHorizontal } from 'akar-icons';
@@ -46,6 +52,14 @@ export const Events: VFC = () => {
     reset.filter();
   }, [reset]);
 
+  const onFilterSubmit: FormEventHandler<HTMLFormElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      filterDialog.hide();
+    },
+    [filterDialog.hide]
+  );
+
   return (
     <>
       <div className="m-auto flex max-w-7xl justify-between">
@@ -69,7 +83,7 @@ export const Events: VFC = () => {
           {count.filter > 0 && <> ({count.filter})</>}
         </Disclosure>
         <Modal ref={filterRef} title={translation?.filter} {...filterDialog}>
-          <Filters />
+          <Filters onSubmit={onFilterSubmit} />
 
           <ResetButton onClick={onFilterReset} visible={count.filter > 0} />
         </Modal>
