@@ -21,7 +21,7 @@ export const PersonList: VFC<PersonListBlock> = ({ items }) => (
               href={`https://t.me/${item.telegram}`}
               target="_blank"
               rel="noreferrer"
-              className="text-cyan-700 underline hover:no-underline"
+              className="style-focus -mx-1 rounded-full px-1 text-cyan-700 underline hover:no-underline"
             >
               @{item.telegram}
             </a>

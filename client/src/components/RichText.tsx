@@ -24,7 +24,10 @@ export const RichText: VFC<RichTextProps> = ({ children }) => (
         [MARK_BOLD]: (children) => <strong>{children}</strong>,
         [MARK_ITALIC]: (children) => <em>{children}</em>,
         [MARK_LINK]: (children, props) => (
-          <a className="text-cyan-700 underline hover:no-underline" {...props}>
+          <a
+            className="style-focus -mx-1 rounded-full px-1 text-cyan-700 underline hover:no-underline"
+            {...props}
+          >
             {children}
           </a>
         ),

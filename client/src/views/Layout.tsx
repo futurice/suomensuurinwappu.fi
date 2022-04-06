@@ -29,7 +29,10 @@ export const Layout: VFC = () => {
       <div className="h-16 bg-white p-4 drop-shadow">
         <div className="m-auto flex h-full max-w-7xl items-center justify-between">
           <h1 className="style-heading text-lg text-cyan-700">
-            <LocalizedLink to="/events" className="hover:underline">
+            <LocalizedLink
+              to="/events"
+              className="style-focus -my-1 -mx-2 rounded-full py-1 px-2 hover:underline"
+            >
               {translation?.title}
             </LocalizedLink>
           </h1>
