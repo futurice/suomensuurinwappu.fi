@@ -1,11 +1,7 @@
 import { useMemo, VFC } from 'react';
 import { add, differenceInDays, format, getDay, setDay } from 'date-fns';
 
-import {
-  useEventContext,
-  useGlobalContext,
-  useLanguageContext,
-} from 'contexts';
+import { useEventContext, useLanguageContext } from 'contexts';
 import { useEnterClick } from 'hooks';
 import { asDate, cn } from 'utils';
 
@@ -54,11 +50,7 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
 
 export const Dates: VFC = () => {
   const { lang } = useLanguageContext();
-  const { translation } = useGlobalContext();
-  const {
-    data,
-    dateSelect: { selected, reset },
-  } = useEventContext();
+  const { data } = useEventContext();
 
   const weekdays: { day: string; idx: number }[] = useMemo(
     () =>
@@ -92,32 +84,21 @@ export const Dates: VFC = () => {
   }, [data]);
 
   return (
-    <>
-      <div className="m-auto mt-4 w-fit text-sm">
-        <div
-          className="style-heading mb-2 grid grid-cols-7 gap-2 text-center text-pink-700"
-          aria-hidden={true}
-        >
-          {weekdays.map(({ day, idx }) => (
-            <div key={idx}>{day}</div>
-          ))}
-        </div>
-
-        <div className="grid grid-cols-7 gap-2">
-          {dates.map(({ date, idx }) =>
-            date ? <DateItem key={idx} date={date} /> : <div key={idx} />
-          )}
-        </div>
+    <div className="m-auto mt-4 w-fit text-sm">
+      <div
+        className="style-heading mb-2 grid grid-cols-7 gap-2 text-center text-pink-700"
+        aria-hidden={true}
+      >
+        {weekdays.map(({ day, idx }) => (
+          <div key={idx}>{day}</div>
+        ))}
       </div>
 
-      {selected.length > 0 && (
-        <button
-          onClick={reset}
-          className="style-btn mx-auto mt-6 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
-        >
-          {translation?.filterReset}
-        </button>
-      )}
-    </>
+      <div className="grid grid-cols-7 gap-2">
+        {dates.map(({ date, idx }) =>
+          date ? <DateItem key={idx} date={date} /> : <div key={idx} />
+        )}
+      </div>
+    </div>
   );
 };

@@ -56,8 +56,14 @@ interface EventContextValue {
     isRemote: FilterProps;
     search: SearchProps;
   };
-  filterCount: number;
-  filterReset: () => void;
+  count: {
+    date: number;
+    filter: number;
+  };
+  reset: {
+    date: () => void;
+    filter: () => void;
+  };
   loading: boolean;
 }
 
@@ -88,8 +94,14 @@ const initialContext: EventContextValue = {
     isRemote: initialFilter,
     search: initialFilter,
   },
-  filterCount: 0,
-  filterReset: () => undefined,
+  count: {
+    date: 0,
+    filter: 0,
+  },
+  reset: {
+    date: () => undefined,
+    filter: () => undefined,
+  },
   loading: false,
 };
 
@@ -279,6 +291,11 @@ export const EventContextProvider: FC = (props) => {
     ]
   );
 
+  const dateCount = useMemo(
+    () => dateSelect.selected.length,
+    [dateSelect.selected]
+  );
+
   const filterCount = useMemo(
     () =>
       [
@@ -355,8 +372,14 @@ export const EventContextProvider: FC = (props) => {
           isRemote,
           search,
         },
-        filterCount,
-        filterReset,
+        count: {
+          date: dateCount,
+          filter: filterCount,
+        },
+        reset: {
+          date: dateSelect.reset,
+          filter: filterReset,
+        },
         loading,
       }}
       {...props}
