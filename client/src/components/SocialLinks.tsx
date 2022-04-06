@@ -57,7 +57,7 @@ export const SocialLinks: VFC = () => {
         href={translation?.wappuradio?.url}
         target="_blank"
         rel="noreferrer"
-        className="style-heading flex justify-center gap-2 text-sm text-cyan-700 hover:underline"
+        className="style-heading style-focus -my-1 flex justify-center gap-2 rounded-full py-1 text-sm text-cyan-700 hover:underline"
       >
         {translation?.wappuradioLabel}
         <CircleTriangleRight size={20} />
