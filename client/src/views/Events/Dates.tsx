@@ -1,17 +1,9 @@
 import { useMemo, VFC } from 'react';
-import {
-  add,
-  differenceInDays,
-  format,
-  getDay,
-  isSameDay,
-  setDay,
-  startOfToday,
-} from 'date-fns';
+import { format, isSameDay, startOfToday } from 'date-fns';
 
 import { useEventContext, useLanguageContext } from 'contexts';
 import { useEnterClick } from 'hooks';
-import { asDate, cn } from 'utils';
+import { cn } from 'utils';
 
 interface DateItemProps {
   date: Date;
@@ -65,39 +57,7 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
 };
 
 export const Dates: VFC = () => {
-  const { lang } = useLanguageContext();
-  const { data } = useEventContext();
-
-  const weekdays: { day: string; idx: number }[] = useMemo(
-    () =>
-      new Array(7).fill(setDay(Date.now(), 1)).map((date, idx) => ({
-        day: add(date, { days: idx }).toLocaleDateString(lang, {
-          weekday: 'short',
-        }),
-        idx,
-      })),
-    [lang]
-  );
-
-  const dates: { date: Date | null; idx: number }[] = useMemo(() => {
-    if (data.length > 0) {
-      const dateData = data.map(
-        ({ content: { dateBegin } }) => dateBegin.split(' ')[0]
-      );
-
-      const first = asDate(dateData[0]);
-      const last = asDate(dateData[dateData.length - 1]);
-
-      return [
-        ...new Array(getDay(first) - 1).fill(null),
-        ...new Array(differenceInDays(last, first) + 1)
-          .fill(first)
-          .map((date, idx) => add(date, { days: idx })),
-      ].map((date, idx) => ({ date, idx }));
-    }
-
-    return [];
-  }, [data]);
+  const { dates } = useEventContext();
 
   return (
     <div className="m-auto mt-4 w-fit text-sm">
@@ -105,13 +65,13 @@ export const Dates: VFC = () => {
         className="style-heading mb-2 grid grid-cols-7 gap-2 text-center text-pink-700"
         aria-hidden={true}
       >
-        {weekdays.map(({ day, idx }) => (
+        {dates.weekdays.map(({ day, idx }) => (
           <div key={idx}>{day}</div>
         ))}
       </div>
 
       <div className="grid grid-cols-7 gap-2">
-        {dates.map(({ date, idx }) =>
+        {dates.options.map(({ date, idx }) =>
           date ? <DateItem key={idx} date={date} /> : <div key={idx} />
         )}
       </div>
