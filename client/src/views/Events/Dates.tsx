@@ -35,7 +35,7 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
   return (
     <label
       className={cn(
-        'style-btn relative w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
+        'style-btn style-heading relative w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
         checked
           ? 'bg-cyan-700 text-white hover:bg-cyan-900'
           : 'bg-white text-cyan-700 hover:bg-cyan-300'
