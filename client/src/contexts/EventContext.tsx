@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
 
 import { Language, useLanguageContext } from 'contexts';
-import { useEventQuery } from 'hooks';
+import { useDates, useEventQuery } from 'hooks';
 import { EventItem } from 'interfaces';
 import { inStr, isNotEmpty, isOfEnum } from 'utils';
 
@@ -59,6 +59,7 @@ export enum Place {
 interface EventContextValue {
   currentRef?: RefObject<HTMLAnchorElement>;
   data: EventItem[];
+  dates: ReturnType<typeof useDates>;
   dateSelect: DateSelectProps;
   error?: ApolloError;
   events: EventItem[];
@@ -97,6 +98,11 @@ const initialFilterGroup = {
 
 const initialContext: EventContextValue = {
   data: [],
+  dates: {
+    initial: [],
+    options: [],
+    weekdays: [],
+  },
   dateSelect: {
     selected: [],
     onChange: () => undefined,
@@ -125,8 +131,8 @@ const initialContext: EventContextValue = {
 
 const EventContext = createContext(initialContext);
 
-const useDateSelect = () => {
-  const [selected, set] = useState<string[]>([]);
+const useDateSelect = (initial: string[]) => {
+  const [selected, set] = useState(initial);
 
   const onChange: ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) =>
@@ -139,6 +145,8 @@ const useDateSelect = () => {
   );
 
   const reset = useCallback(() => set([]), []);
+
+  useEffect(() => set(initial), [initial]);
 
   return { selected, onChange, reset };
 };
@@ -251,7 +259,8 @@ export const EventContextProvider: FC = (props) => {
 
   const currentRef = useRef<HTMLAnchorElement>(null);
 
-  const dateSelect = useDateSelect();
+  const dates = useDates(data);
+  const dateSelect = useDateSelect(dates.initial);
   const location = useFilterGroup('location', Location);
   const place = useFilterGroup('place', Place);
   const teemunkierros = useFilter('teemunkierros');
@@ -382,6 +391,7 @@ export const EventContextProvider: FC = (props) => {
       value={{
         currentRef,
         data,
+        dates,
         dateSelect,
         error,
         events,
