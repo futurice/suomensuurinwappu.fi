@@ -31,6 +31,7 @@ module.exports = {
       white: '#FFFFFF',
       dark: '#120208',
       backdrop: '#0080A14D',
+      current: 'currentColor',
     },
     fontFamily: {
       body: ['Rubik', 'sans-serif'],

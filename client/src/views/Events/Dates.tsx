@@ -1,5 +1,13 @@
 import { useMemo, VFC } from 'react';
-import { add, differenceInDays, format, getDay, setDay } from 'date-fns';
+import {
+  add,
+  differenceInDays,
+  format,
+  getDay,
+  isSameDay,
+  setDay,
+  startOfToday,
+} from 'date-fns';
 
 import { useEventContext, useLanguageContext } from 'contexts';
 import { useEnterClick } from 'hooks';
@@ -20,17 +28,19 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
     () => selected.some((s) => s === value),
     [selected, value]
   );
+  const current = useMemo(() => isSameDay(startOfToday(), date), [date]);
 
   const enterClick = useEnterClick();
 
   return (
     <label
       className={cn(
-        'style-btn w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
+        'style-btn relative w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
         checked
           ? 'bg-cyan-700 text-white hover:bg-cyan-900'
           : 'bg-white text-cyan-700 hover:bg-cyan-300'
       )}
+      {...(current && { 'aria-current': 'date' })}
       {...enterClick}
     >
       <input
@@ -44,6 +54,12 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
         {date.toLocaleDateString(lang, { weekday: 'long' })}
       </span>
       {date.toLocaleDateString(lang, { day: 'numeric' })}
+      {current && (
+        <div
+          aria-hidden="true"
+          className="absolute bottom-1 h-1 w-1 rounded-full bg-current"
+        />
+      )}
     </label>
   );
 };
