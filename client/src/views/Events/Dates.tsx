@@ -1,9 +1,9 @@
 import { useMemo, VFC } from 'react';
-import { add, differenceInDays, format, getDay, setDay } from 'date-fns';
+import { format, isSameDay, startOfToday } from 'date-fns';
 
 import { useEventContext, useLanguageContext } from 'contexts';
 import { useEnterClick } from 'hooks';
-import { asDate, cn } from 'utils';
+import { cn } from 'utils';
 
 interface DateItemProps {
   date: Date;
@@ -20,17 +20,19 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
     () => selected.some((s) => s === value),
     [selected, value]
   );
+  const current = useMemo(() => isSameDay(startOfToday(), date), [date]);
 
   const enterClick = useEnterClick();
 
   return (
     <label
       className={cn(
-        'style-btn w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
+        'style-btn style-heading relative w-8 cursor-pointer rounded-sm border border-cyan-700 px-3 transition-colors focus-within:ring',
         checked
           ? 'bg-cyan-700 text-white hover:bg-cyan-900'
           : 'bg-white text-cyan-700 hover:bg-cyan-300'
       )}
+      {...(current && { 'aria-current': 'date' })}
       {...enterClick}
     >
       <input
@@ -44,44 +46,18 @@ const DateItem: VFC<DateItemProps> = ({ date }) => {
         {date.toLocaleDateString(lang, { weekday: 'long' })}
       </span>
       {date.toLocaleDateString(lang, { day: 'numeric' })}
+      {current && (
+        <div
+          aria-hidden="true"
+          className="absolute bottom-1 h-1 w-1 rounded-full bg-current"
+        />
+      )}
     </label>
   );
 };
 
 export const Dates: VFC = () => {
-  const { lang } = useLanguageContext();
-  const { data } = useEventContext();
-
-  const weekdays: { day: string; idx: number }[] = useMemo(
-    () =>
-      new Array(7).fill(setDay(Date.now(), 1)).map((date, idx) => ({
-        day: add(date, { days: idx }).toLocaleDateString(lang, {
-          weekday: 'short',
-        }),
-        idx,
-      })),
-    [lang]
-  );
-
-  const dates: { date: Date | null; idx: number }[] = useMemo(() => {
-    if (data.length > 0) {
-      const dateData = data.map(
-        ({ content: { dateBegin } }) => dateBegin.split(' ')[0]
-      );
-
-      const first = asDate(dateData[0]);
-      const last = asDate(dateData[dateData.length - 1]);
-
-      return [
-        ...new Array(getDay(first) - 1).fill(null),
-        ...new Array(differenceInDays(last, first) + 1)
-          .fill(first)
-          .map((date, idx) => add(date, { days: idx })),
-      ].map((date, idx) => ({ date, idx }));
-    }
-
-    return [];
-  }, [data]);
+  const { dates } = useEventContext();
 
   return (
     <div className="m-auto mt-4 w-fit text-sm">
@@ -89,13 +65,13 @@ export const Dates: VFC = () => {
         className="style-heading mb-2 grid grid-cols-7 gap-2 text-center text-pink-700"
         aria-hidden={true}
       >
-        {weekdays.map(({ day, idx }) => (
+        {dates.weekdays.map(({ day, idx }) => (
           <div key={idx}>{day}</div>
         ))}
       </div>
 
       <div className="grid grid-cols-7 gap-2">
-        {dates.map(({ date, idx }) =>
+        {dates.options.map(({ date, idx }) =>
           date ? <DateItem key={idx} date={date} /> : <div key={idx} />
         )}
       </div>
