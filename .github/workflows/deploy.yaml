@@ -15,6 +15,8 @@ on:
         required: true
       REACT_APP_STORYBLOK_TOKEN:
         required: true
+      REACT_APP_GA_MEASUREMENT_ID:
+        required: false
 jobs:
   build-and-deploy:
     env:
@@ -48,6 +50,7 @@ jobs:
         env:
           REACT_APP_STORYBLOK_API: https://gapi.storyblok.com/v1/api
           REACT_APP_STORYBLOK_TOKEN: ${{ secrets.REACT_APP_STORYBLOK_TOKEN }}
+          REACT_APP_GA_MEASUREMENT_ID: ${{ secrets.REACT_APP_GA_MEASUREMENT_ID }}
           INLINE_RUNTIME_CHUNK: false
           GENERATE_SOURCEMAP: false
 
