@@ -15,7 +15,7 @@ import { useGlobalQuery, usePageQuery } from 'hooks';
 import { Global, PageItem } from 'interfaces';
 import { isNotEmpty } from 'utils';
 
-const gaMeasurementId = process.env.REACT_APP_GA_MEASUREMENT_ID || '';
+const gaMeasurementId = process.env.REACT_APP_GA_MEASUREMENT_ID as string;
 const COOKIE_CONSENT = 'COOKIE_CONSENT';
 
 interface GlobalContextValue
@@ -35,13 +35,17 @@ const GlobalContext = createContext(initialContext);
 export const useGlobalContext = () => useContext(GlobalContext);
 
 const getCookieConsent = () => {
-  const value = sessionStorage.getItem(COOKIE_CONSENT);
+  if (isNotEmpty(gaMeasurementId)) {
+    const value = sessionStorage.getItem(COOKIE_CONSENT);
 
-  if (isNotEmpty(value)) {
-    return value === 'true';
+    if (isNotEmpty(value)) {
+      return value === 'true';
+    }
+
+    return undefined;
   }
 
-  return undefined;
+  return false;
 };
 
 const CookieConsentDialog: VFC = () => {
