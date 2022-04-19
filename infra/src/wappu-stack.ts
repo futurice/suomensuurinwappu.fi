@@ -38,7 +38,12 @@ export class WappuStack extends Stack {
 
     const cspDirectives: string[][] = [
       ['default-src', "'self'"],
-      ['connect-src', "'self'", 'https://gapi.storyblok.com'],
+      [
+        'connect-src',
+        "'self'",
+        'https://gapi.storyblok.com',
+        'https://www.googletagmanager.com',
+      ],
       ['font-src', "'self'", 'https:', 'data:'],
       ['style-src', "'self'", 'https:', "'unsafe-inline'"],
       ['upgrade-insecure-requests'],
