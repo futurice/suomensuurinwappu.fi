@@ -7,14 +7,15 @@ import {
   useState,
   VFC,
 } from 'react';
-import ReactGA from 'react-ga';
+import { useLocation } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 
 import { Loading, RichText } from 'components';
 import { useGlobalQuery, usePageQuery } from 'hooks';
 import { Global, PageItem } from 'interfaces';
 import { isNotEmpty } from 'utils';
 
-const trackingId = process.env.REACT_APP_GA_TRACKING_ID || '';
+const gaMeasurementId = process.env.REACT_APP_GA_MEASUREMENT_ID || '';
 const COOKIE_CONSENT = 'COOKIE_CONSENT';
 
 interface GlobalContextValue
@@ -44,6 +45,7 @@ const getCookieConsent = () => {
 };
 
 const CookieConsentDialog: VFC = () => {
+  const { pathname } = useLocation();
   const { translation } = useGlobalContext();
 
   const [consent, set] = useState(getCookieConsent());
@@ -60,11 +62,16 @@ const CookieConsentDialog: VFC = () => {
 
   useEffect(() => {
     if (consent) {
-      ReactGA.initialize(trackingId);
-      ReactGA.set({ page: window.location.pathname });
-      ReactGA.pageview(window.location.pathname);
+      ReactGA.initialize(gaMeasurementId);
     }
   }, [consent]);
+
+  useEffect(() => {
+    if (consent) {
+      ReactGA.set({ page: pathname });
+      ReactGA.send({ hitType: 'pageview', page: pathname });
+    }
+  }, [consent, pathname]);
 
   return consent === undefined ? (
     <div className="sticky top-0 z-40 flex flex-col bg-cyan-700 px-4 pb-4 text-sm text-white">
