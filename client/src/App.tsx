@@ -1,7 +1,6 @@
-import { useEffect, VFC } from 'react';
+import { VFC } from 'react';
 import { ApolloProvider } from '@apollo/client';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import ReactGA from 'react-ga';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { client } from 'api';
 import {
@@ -24,28 +23,19 @@ const routes = () => [
   </Route>,
 ];
 
-export const App: VFC = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    ReactGA.set({ page: location.pathname });
-    ReactGA.pageview(location.pathname);
-  }, [location]);
-
-  return (
-    <ApolloProvider client={client}>
-      <LanguageContextProvider>
-        <GlobalContextProvider>
-          <EventContextProvider>
-            <AdContextProvider>
-              <Routes>
-                <Route path=":lang">{routes()}</Route>
-                {routes()}
-              </Routes>
-            </AdContextProvider>
-          </EventContextProvider>
-        </GlobalContextProvider>
-      </LanguageContextProvider>
-    </ApolloProvider>
-  );
-};
+export const App: VFC = () => (
+  <ApolloProvider client={client}>
+    <LanguageContextProvider>
+      <GlobalContextProvider>
+        <EventContextProvider>
+          <AdContextProvider>
+            <Routes>
+              <Route path=":lang">{routes()}</Route>
+              {routes()}
+            </Routes>
+          </AdContextProvider>
+        </EventContextProvider>
+      </GlobalContextProvider>
+    </LanguageContextProvider>
+  </ApolloProvider>
+);
