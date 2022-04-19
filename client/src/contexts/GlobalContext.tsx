@@ -74,23 +74,25 @@ const CookieConsentDialog: VFC = () => {
   }, [consent, pathname]);
 
   return consent === undefined ? (
-    <div className="sticky top-0 z-40 flex flex-col bg-cyan-700 px-4 pb-4 text-sm text-white">
-      {translation?.consentInfo && (
-        <RichText inverted={true}>{translation.consentInfo}</RichText>
-      )}
-      <div className="flex flex-wrap justify-end gap-4">
-        <button
-          onClick={onDecline}
-          className="style-btn flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-500"
-        >
-          {translation?.consentDecline}
-        </button>
-        <button
-          onClick={onAccept}
-          className="style-btn flex-none bg-white px-3 text-cyan-700 transition-colors hover:bg-cyan-300"
-        >
-          {translation?.consentAccept}
-        </button>
+    <div className="sticky top-0 z-40 bg-cyan-700 px-4 pb-4 text-sm text-white">
+      <div className="m-auto flex max-w-7xl flex-col text-sm text-white">
+        {translation?.consentInfo && (
+          <RichText inverted={true}>{translation.consentInfo}</RichText>
+        )}
+        <div className="flex flex-wrap justify-end gap-4">
+          <button
+            onClick={onDecline}
+            className="style-btn flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-500"
+          >
+            {translation?.consentDecline}
+          </button>
+          <button
+            onClick={onAccept}
+            className="style-btn flex-none bg-white px-3 text-cyan-700 transition-colors hover:bg-cyan-300"
+          >
+            {translation?.consentAccept}
+          </button>
+        </div>
       </div>
     </div>
   ) : null;
