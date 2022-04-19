@@ -52,6 +52,10 @@ const globalQuery = gql`
           wappuradio {
             url
           }
+
+          consentInfo: consent_info
+          consentAccept: consent_accept
+          consentDecline: consent_decline
         }
       }
     }

@@ -13,11 +13,14 @@ import {
   StoryblokRichtextContent,
 } from 'storyblok-rich-text-react-renderer';
 
+import { cn } from 'utils';
+
 interface RichTextProps {
+  inverted?: boolean;
   children: StoryblokRichtext | StoryblokRichtextContent[];
 }
 
-export const RichText: VFC<RichTextProps> = ({ children }) => (
+export const RichText: VFC<RichTextProps> = ({ inverted, children }) => (
   <>
     {render(children, {
       markResolvers: {
@@ -25,7 +28,10 @@ export const RichText: VFC<RichTextProps> = ({ children }) => (
         [MARK_ITALIC]: (children) => <em>{children}</em>,
         [MARK_LINK]: (children, props) => (
           <a
-            className="style-focus -mx-1 rounded-full px-1 text-cyan-700 underline hover:no-underline"
+            className={cn(
+              'style-focus -mx-1 rounded-full px-1 underline hover:no-underline',
+              inverted ? 'text-cyan-300' : 'text-cyan-700'
+            )}
             {...props}
           >
             {children}
