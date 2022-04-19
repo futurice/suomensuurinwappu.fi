@@ -1,3 +1,5 @@
+import { StoryblokRichtext } from 'storyblok-rich-text-react-renderer';
+
 interface SocialLink {
   url?: string;
 }
@@ -39,4 +41,8 @@ export interface Global {
   telegram: SocialLink;
   wappuradioLabel: string;
   wappuradio: SocialLink;
+
+  consentInfo: StoryblokRichtext;
+  consentDecline: string;
+  consentAccept: string;
 }
