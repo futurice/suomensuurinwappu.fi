@@ -51,7 +51,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
                 </button>
               )}
             </div>
-            <div className="flex-initial overflow-scroll p-6 pt-0">
+            <div className="flex-initial overflow-auto p-6 pt-0">
               {children}
             </div>
           </Dialog>
