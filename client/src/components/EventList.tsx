@@ -18,18 +18,18 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
     const { translation } = useGlobalContext();
 
     return (
-      <li className="style-focus relative flex rounded-md rounded-tl bg-white drop-shadow focus-within:ring md:flex-col">
+      <li className="style-focus relative flex rounded-lg rounded-tl bg-white drop-shadow focus-within:ring md:flex-col">
         <Image
-          className="w-32 rounded-bl-md rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-md"
+          className="w-32 rounded-bl-lg rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-lg"
           crop="512x256"
           img={content.image}
         />
-        <div className="flex flex-auto flex-col gap-1 px-4 pt-2 pb-3">
+        <div className="flex flex-auto flex-col gap-1 px-4 pt-2 pb-3 md:px-6 md:pt-3 md:pb-4">
           <p className="style-heading mb-0.5">
             <Link
               ref={ref}
               to={slug}
-              className="text-cyan-700 outline-none before:absolute before:inset-0 before:content-[''] hover:underline focus:underline"
+              className="text-cyan-700 outline-none before:absolute before:inset-0 before:z-10 before:content-[''] hover:underline focus:underline"
             >
               {content.title}
             </Link>

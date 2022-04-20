@@ -14,7 +14,7 @@ export const Tag: FC = ({ children }) => (
         d="M4 0H2a2 2 0 0 0-2 2v14c0-1.1.9-2 2-2h2V0Z"
       />
     </svg>
-    <div className="flex h-[14px] items-center bg-white pl-1 pr-2 md:h-[21px]">
+    <div className="flex h-[14px] items-center bg-white pl-1 pr-2 md:h-[21px] md:pl-5">
       {children}
     </div>
     <svg

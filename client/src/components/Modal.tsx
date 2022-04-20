@@ -25,7 +25,7 @@ export const Modal = forwardRef<HTMLDivElement, PropsWithChildren<ModalProps>>(
           <Dialog
             ref={ref}
             className={cn(
-              'style-focus enter:scale-100 absolute top-0 flex max-h-full w-full max-w-lg flex-initial scale-0 flex-col rounded-md rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg transition-transform duration-300',
+              'style-focus enter:scale-100 absolute top-0 flex max-h-full w-full max-w-lg flex-initial scale-0 flex-col rounded-lg rounded-tl bg-white pt-6 pb-0 outline-none drop-shadow-lg transition-transform duration-300',
               alignLeft ? 'left-0 origin-top-left' : 'right-0 origin-top-right'
             )}
             aria-labelledby={labelId}
