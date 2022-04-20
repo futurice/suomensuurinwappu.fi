@@ -36,7 +36,7 @@ export const useGlobalContext = () => useContext(GlobalContext);
 
 const getCookieConsent = () => {
   if (isNotEmpty(gaMeasurementId)) {
-    const value = sessionStorage.getItem(COOKIE_CONSENT);
+    const value = localStorage.getItem(COOKIE_CONSENT);
 
     if (isNotEmpty(value)) {
       return value === 'true';
@@ -55,12 +55,12 @@ const CookieConsentDialog: VFC = () => {
   const [consent, set] = useState(getCookieConsent());
 
   const onAccept = useCallback(() => {
-    sessionStorage.setItem(COOKIE_CONSENT, 'true');
+    localStorage.setItem(COOKIE_CONSENT, 'true');
     set(true);
   }, []);
 
   const onDecline = useCallback(() => {
-    sessionStorage.setItem(COOKIE_CONSENT, 'false');
+    localStorage.setItem(COOKIE_CONSENT, 'false');
     set(false);
   }, []);
 
