@@ -8,12 +8,13 @@ on:
       AWS_REGION:
         required: true
         type: string
+      GH_ENVIRONMENT:
+        required: true
+        type: string
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
       AWS_SECRET_ACCESS_KEY:
-        required: true
-      REACT_APP_STORYBLOK_TOKEN:
         required: true
       REACT_APP_GA_MEASUREMENT_ID:
         required: false
@@ -21,6 +22,7 @@ jobs:
   build-and-deploy:
     env:
       BUNDLE_PATH: client/build
+    environment: ${{ inputs.GH_ENVIRONMENT }}
     runs-on: ubuntu-latest
     steps:
       - name: Configure aws credentials
