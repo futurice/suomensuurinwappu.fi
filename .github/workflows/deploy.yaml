@@ -18,6 +18,8 @@ on:
         required: true
       REACT_APP_GA_MEASUREMENT_ID:
         required: false
+      REACT_APP_STORYBLOK_TOKEN:
+        required: true
 jobs:
   build-and-deploy:
     env:
