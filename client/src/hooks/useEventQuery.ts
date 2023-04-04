@@ -32,6 +32,9 @@ const eventQuery = (page: number) => {
             hasMusic: music
             isRemote: remote
             isFree: free
+            isParty: party
+            isExercise: exercise,
+            isAccessible: accessible
           }
         }
       }
