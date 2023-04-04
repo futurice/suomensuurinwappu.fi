@@ -9,7 +9,7 @@ import { Outlet } from 'react-router-dom';
 import { useDialogState } from 'reakit/Dialog';
 import { Calendar, SettingsHorizontal } from 'akar-icons';
 
-import { Disclosure, EventList, Modal } from 'components';
+import { Disclosure, EventList, Filter, Modal } from 'components';
 import { useEventContext, useGlobalContext } from 'contexts';
 
 import { Dates } from './Dates';
@@ -34,7 +34,7 @@ const ResetButton: VFC<ResetButtonProps> = ({ onClick, visible }) => {
 
 export const Events: VFC = () => {
   const { translation } = useGlobalContext();
-  const { count, events, reset } = useEventContext();
+  const { count, events, reset, filter } = useEventContext();
 
   const dateDialog = useDialogState({ animated: true });
   const dateRef = useRef<HTMLDivElement>(null);
@@ -64,20 +64,23 @@ export const Events: VFC = () => {
   return (
     <>
       <div className="m-auto flex max-w-7xl justify-between">
-        <Disclosure icon={Calendar} {...dateDialog}>
-          {translation?.date}
-          {count.date > 0 && <> ({count.date})</>}
-        </Disclosure>
-        <Modal
-          ref={dateRef}
-          alignLeft={true}
-          title={translation?.date}
-          {...dateDialog}
-        >
-          <Dates />
+        <div className="flex max-w-7xl space-x-2">
+          <Disclosure icon={Calendar} {...dateDialog}>
+            {translation?.date}
+            {count.date > 0 && <> ({count.date})</>}
+          </Disclosure>
+          <Modal
+            ref={dateRef}
+            alignLeft={true}
+            title={translation?.date}
+            {...dateDialog}
+          >
+            <Dates />
 
-          <ResetButton onClick={onDateReset} visible={count.date > 0} />
-        </Modal>
+            <ResetButton onClick={onDateReset} visible={count.date > 0} />
+          </Modal>
+          <Filter {...filter.teemunkierros}>{translation?.teemunkierros}</Filter>
+        </div>
 
         <Disclosure icon={SettingsHorizontal} {...filterDialog}>
           {translation?.filterButton}
