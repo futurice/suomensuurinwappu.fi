@@ -8,14 +8,34 @@ import { Format } from 'utils';
 import { EventInfo } from './EventInfo';
 import { Image } from './Image';
 import { Tag } from './Tag';
+import { Favourite } from './Favourite';
 
 interface EventListProps {
   events: EventItem[];
 }
 
+
 const Event = forwardRef<HTMLAnchorElement, EventItem>(
   ({ content, slug }, ref) => {
     const { translation } = useGlobalContext();
+    const [ isFavourite, setIsFavourite ] = useState(false);
+
+    useEffect(() => {
+      const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+      setIsFavourite(previousFavourites.includes(slug));
+    }, [setIsFavourite, slug])
+  
+    const addToFavourites = (e: any) => {
+      const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+      let newFavourites = previousFavourites;
+      if (isFavourite) {
+        newFavourites = newFavourites.filter((item: any) => item !== slug);
+      } else {
+        newFavourites = [...previousFavourites, slug];
+      }
+      setIsFavourite(!isFavourite);
+      localStorage.setItem('WAPPU_FAVOURITES', JSON.stringify(newFavourites));
+    }
 
     return (
       <li className="style-focus relative flex rounded-md bg-white drop-shadow focus-within:ring md:flex-col">
@@ -36,6 +56,7 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
           </p>
           {content.teemunkierros && <Tag>{translation?.teemunkierros}</Tag>}
           <EventInfo {...content} />
+          <Favourite fill={isFavourite} addToFavourites={addToFavourites} />
         </div>
       </li>
     );

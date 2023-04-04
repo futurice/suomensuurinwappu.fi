@@ -2,9 +2,9 @@ import { useEffect, useRef, useState, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 
-import { EventInfo, IconItem, Image, RichText } from 'components';
+import { EventInfo, Image, RichText } from 'components';
 import { useEvent, useEventContext, useGlobalContext } from 'contexts';
-import { Octagon, OctagonFill } from 'akar-icons';
+import { Favourite } from 'components/Favourite';
 
 export const EventModal: VFC = () => {
   const { slug } = useParams<'slug'>();
@@ -32,7 +32,7 @@ export const EventModal: VFC = () => {
     setIsFavourite(previousFavourites.includes(event?.slug));
   }, [setIsFavourite, event?.slug])
 
-  const addToFavorites = (e: any) => {
+  const addToFavourites = (e: any) => {
     const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
     let newFavourites = previousFavourites;
     if (isFavourite) {
@@ -63,9 +63,7 @@ export const EventModal: VFC = () => {
           crop="1024x512"
           img={event?.content.image}
         />
-        <button onClick={addToFavorites}>
-          <IconItem icon={isFavourite ? OctagonFill : Octagon}></IconItem>
-        </button>
+        <Favourite fill={isFavourite} addToFavourites={addToFavourites} />
         <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
           <h2
             id={labelId}
