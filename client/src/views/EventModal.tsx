@@ -1,13 +1,17 @@
-import { useEffect, useRef, VFC } from 'react';
+import { useEffect, useRef, useState, VFC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 
-import { EventInfo, Image, RichText } from 'components';
+import { EventInfo, IconItem, Image, RichText } from 'components';
 import { useEvent, useEventContext, useGlobalContext } from 'contexts';
+import { Octagon, OctagonFill } from 'akar-icons';
 
 export const EventModal: VFC = () => {
   const { slug } = useParams<'slug'>();
   const { event, closeEvent } = useEvent(slug);
+
+  // Controls the favourite icon state
+  const [ isFavourite, setIsFavourite ] = useState(false);
 
   const { currentRef } = useEventContext();
   const { translation } = useGlobalContext();
@@ -22,6 +26,23 @@ export const EventModal: VFC = () => {
       modalRef.current?.focus();
     }
   }, [closeEvent, dialog.visible, dialog.animating]);
+
+  useEffect(() => {
+    const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+    setIsFavourite(previousFavourites.includes(event?.slug));
+  }, [setIsFavourite, event?.slug])
+
+  const addToFavorites = (e: any) => {
+    const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+    let newFavourites = previousFavourites;
+    if (isFavourite) {
+      newFavourites = newFavourites.filter((item: any) => item !== event?.slug);
+    } else {
+      newFavourites = [...previousFavourites, event?.slug];
+    }
+    setIsFavourite(!isFavourite);
+    localStorage.setItem('WAPPU_FAVOURITES', JSON.stringify(newFavourites));
+  }
 
   return (
     <DialogBackdrop
@@ -42,6 +63,9 @@ export const EventModal: VFC = () => {
           crop="1024x512"
           img={event?.content.image}
         />
+        <button onClick={addToFavorites}>
+          <IconItem icon={isFavourite ? OctagonFill : Octagon}></IconItem>
+        </button>
         <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
           <h2
             id={labelId}

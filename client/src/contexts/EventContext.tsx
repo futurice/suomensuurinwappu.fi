@@ -75,6 +75,7 @@ interface EventContextValue {
     isExercise: FilterProps;
     isAccessible: FilterProps;
     search: SearchProps;
+    isFavourite: FilterProps;
   };
   count: {
     date: number;
@@ -125,6 +126,7 @@ const initialContext: EventContextValue = {
     isExercise: initialFilter,
     isAccessible: initialFilter,
     search: initialFilter,
+    isFavourite: initialFilter,
   },
   count: {
     date: 0,
@@ -279,7 +281,16 @@ export const EventContextProvider: FC = (props) => {
   const isParty = useFilter('party');
   const isExercise = useFilter('exercise');
   const isAccessible = useFilter('accessible');
+  const isFavourite = useFilter('favourite');
   const search = useSearch();
+
+  const slugify = (str: string) =>
+  str
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '')
+    .replace(/^-+|-+$/g, '');
 
   const events = useMemo(
     () =>
@@ -320,6 +331,14 @@ export const EventContextProvider: FC = (props) => {
           }
         }
 
+        if (isFavourite.checked) {
+          const favourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+
+          if (!favourites.includes(slugify(content.title))) {
+            return false;
+          }
+        }
+
         if (isNotEmpty(search.value)) {
           if (inStr(search.value, content.title)) {
             return true;
@@ -354,6 +373,7 @@ export const EventContextProvider: FC = (props) => {
       isExercise.checked,
       isAccessible.checked,    
       search.value,
+      isFavourite.checked,
     ]
   );
 
@@ -443,6 +463,7 @@ export const EventContextProvider: FC = (props) => {
           isExercise,
           isAccessible,
           search,
+          isFavourite,
         },
         count: {
           date: dateCount,
