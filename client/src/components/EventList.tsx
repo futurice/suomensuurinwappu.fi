@@ -18,9 +18,9 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
     const { translation } = useGlobalContext();
 
     return (
-      <li className="style-focus relative flex rounded-lg rounded-tl bg-white drop-shadow focus-within:ring md:flex-col">
+      <li className="style-focus relative flex rounded-md bg-white drop-shadow focus-within:ring md:flex-col">
         <Image
-          className="w-32 rounded-bl-lg rounded-tl md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-lg"
+          className="w-32 rounded-bl-md rounded-tl-md md:h-32 md:w-auto md:rounded-b-none md:rounded-tr-md"
           crop="512x256"
           img={content.image}
         />
@@ -73,7 +73,7 @@ export const EventList: VFC<EventListProps> = ({ events }) => {
     <ul className="m-auto max-w-7xl">
       {Object.entries(grouped).map(([date, group]) => (
         <li key={date}>
-          <h2 className="my-6 -ml-4 inline-flex rounded-r-sm bg-white py-2 px-4 text-sm font-bold text-pink-700 xl:ml-0 xl:rounded-sm">
+          <h2 className="my-6 -ml-4 inline-flex rounded-r bg-white py-2 px-4 text-sm font-bold text-pink-700 xl:ml-0 xl:rounded">
             <Format.DateTime value={date} />
           </h2>
           <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

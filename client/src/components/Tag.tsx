@@ -8,7 +8,7 @@ export const Tag: FC = ({ children }) => (
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 4 18"
     >
-      <path className="fill-cyan-900" d="M2 14a2 2 0 1 0 0 4v-4Z" />
+      <path className="fill-cyan-700" d="M2 14a2 2 0 1 0 0 4v-4Z" />
       <path
         className="fill-white"
         d="M4 0H2a2 2 0 0 0-2 2v14c0-1.1.9-2 2-2h2V0Z"

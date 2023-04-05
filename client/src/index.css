@@ -26,16 +26,16 @@
   .bg-gradient-page {
     background-image: linear-gradient(
       191.69deg,
-      #ffca7a 6.13%,
-      #ffaa5b 27.42%,
-      #ff79af 42.77%,
-      #a894ff 76.93%,
-      #38aecc 95.74%
+      #ffba78 6.13%,
+      #f3a254 27.42%,
+      #e47660 42.77%,
+      #a64278 76.93%,
+      #723e5a 95.74%
     );
   }
 
   .bg-circles {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='192px' width='144px'%3E%3Ccircle cx='72' cy='224' r='130%25' fill='%237B61FF' /%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='192px' width='144px'%3E%3Ccircle cx='72' cy='224' r='130%25' fill='%233D142A' /%3E%3C/svg%3E");
   }
 
   .rounded-inherit {
