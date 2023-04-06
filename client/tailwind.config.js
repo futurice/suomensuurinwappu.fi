@@ -14,23 +14,23 @@ module.exports = {
     },
     colors: {
       pink: {
-        [300]: '#FFE1EF',
-        [500]: '#FF94BF',
-        [700]: '#C81C6F',
+        [300]: '#F6E9E7',
+        [500]: '#BD5B48',
+        [700]: '#A7250B',
       },
       cyan: {
-        [300]: '#DEF8FF',
-        [500]: '#38AECC',
-        [700]: '#0080A1',
-        [900]: '#006C88',
+        [300]: '#F4F1F3',
+        [500]: '#917484',
+        [700]: '#6D465B',
+        [900]: '#3D142A',
       },
       yellow: {
-        [300]: '#FFCA7A',
-        [500]: '#FE9D0B',
+        [300]: '#E5A66A',
+        [500]: '#DD8838',
       },
       white: '#FFFFFF',
       dark: '#120208',
-      backdrop: '#0080A14D',
+      backdrop: '#9174844D',
       current: 'currentColor',
     },
     fontFamily: {
