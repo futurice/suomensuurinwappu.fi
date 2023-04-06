@@ -28,6 +28,10 @@ export interface Global {
   inside: string;
   outside: string;
   remote: string;
+  free: string;
+  accessible: string;
+  party: string;
+  exercise: string;
   searchPlaceholder: string;
 
   backToCalendar: string;
