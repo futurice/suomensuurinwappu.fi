@@ -284,17 +284,9 @@ export const EventContextProvider: FC = (props) => {
   const isFavourite = useFilter('favourite');
   const search = useSearch();
 
-  const slugify = (str: string) =>
-  str
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '')
-    .replace(/^-+|-+$/g, '');
-
   const events = useMemo(
     () =>
-      data.filter(({ content }) => {
+      data.filter(({ slug, content }) => {
         if (
           (teemunkierros.checked && !content.teemunkierros) ||
           (needsRegistration.checked && !content.needsRegistration) ||
@@ -333,8 +325,7 @@ export const EventContextProvider: FC = (props) => {
 
         if (isFavourite.checked) {
           const favourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
-
-          if (!favourites.includes(slugify(content.title))) {
+          if (!favourites.includes(slug)) {
             return false;
           }
         }
