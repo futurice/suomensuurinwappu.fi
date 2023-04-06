@@ -28,6 +28,10 @@ module.exports = {
         [300]: '#E5A66A',
         [500]: '#DD8838',
       },
+      green: {
+        [500]: '#2CA061',
+        [700]: '#27804F',
+      },
       white: '#FFFFFF',
       dark: '#120208',
       backdrop: '#9174844D',
