@@ -18,25 +18,6 @@ interface EventListProps {
 const Event = forwardRef<HTMLAnchorElement, EventItem>(
   ({ content, slug }, ref) => {
     const { translation } = useGlobalContext();
-    const [ isFavourite, setIsFavourite ] = useState(false);
-
-    useEffect(() => {
-      const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
-      setIsFavourite(previousFavourites.includes(slug));
-    }, [setIsFavourite, slug])
-  
-    const addToFavourites = (e: any) => {
-      const previousFavourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
-      let newFavourites = previousFavourites;
-      if (isFavourite) {
-        newFavourites = newFavourites.filter((item: any) => item !== slug);
-      } else {
-        newFavourites = [...previousFavourites, slug];
-      }
-      setIsFavourite(!isFavourite);
-      localStorage.setItem('WAPPU_FAVOURITES', JSON.stringify(newFavourites));
-    }
-
     return (
       <li className="style-focus relative flex rounded-md bg-white drop-shadow focus-within:ring md:flex-col">
         <Image
@@ -44,19 +25,23 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
           crop="512x256"
           img={content.image}
         />
-        <div className="flex flex-auto flex-col gap-1 px-4 pt-2 pb-3 md:px-6 md:pt-3 md:pb-4">
-          <p className="style-heading mb-0.5">
-            <Link
-              ref={ref}
-              to={slug}
-              className="text-cyan-700 outline-none before:absolute before:inset-0 before:z-10 before:content-[''] hover:underline focus:underline"
-            >
-              {content.title}
-            </Link>
-          </p>
-          {content.teemunkierros && <Tag>{translation?.teemunkierros}</Tag>}
-          <EventInfo {...content} />
-          <Favourite fill={isFavourite} addToFavourites={addToFavourites} />
+        <div className='flex flex-auto flex-row'>
+          <div className="flex flex-auto flex-col gap-1 px-4 pt-2 pb-3 md:px-6 md:pt-3 md:pb-4">
+            <p className="style-heading mb-0.5">
+              <Link
+                ref={ref}
+                to={slug}
+                className="text-cyan-700 outline-none before:absolute before:inset-0 before:z-10 before:content-[''] hover:underline focus:underline"
+              >
+                {content.title}
+              </Link>
+            </p>
+            {content.teemunkierros && <Tag>{translation?.teemunkierros}</Tag>}
+            <EventInfo {...content} />
+          </div>
+          <div className="flex items-end pr-3 pb-4">
+            <Favourite slug={slug} />
+          </div>
         </div>
       </li>
     );
