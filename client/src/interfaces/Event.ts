@@ -19,6 +19,9 @@ export interface Event {
   hasMusic: boolean;
   isRemote: boolean;
   isFree: boolean;
+  isParty: boolean;
+  isExercise: boolean;
+  isAccessible: boolean;
 }
 
 export type EventItem = QueryResponseItem<Event>;

@@ -30,6 +30,10 @@ const globalQuery = gql`
           registration
           music
           remote
+          free
+          accessible
+          party
+          exercise
 
           backToCalendar: back_to_calendar
 

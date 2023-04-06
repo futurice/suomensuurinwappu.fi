@@ -70,6 +70,10 @@ interface EventContextValue {
     needsRegistration: FilterProps;
     hasMusic: FilterProps;
     isRemote: FilterProps;
+    isFree: FilterProps;
+    isParty: FilterProps;
+    isExercise: FilterProps;
+    isAccessible: FilterProps;
     search: SearchProps;
   };
   count: {
@@ -116,6 +120,10 @@ const initialContext: EventContextValue = {
     needsRegistration: initialFilter,
     hasMusic: initialFilter,
     isRemote: initialFilter,
+    isFree: initialFilter,
+    isParty: initialFilter,
+    isExercise: initialFilter,
+    isAccessible: initialFilter,
     search: initialFilter,
   },
   count: {
@@ -267,6 +275,10 @@ export const EventContextProvider: FC = (props) => {
   const needsRegistration = useFilter('registration');
   const hasMusic = useFilter('music');
   const isRemote = useFilter('remote');
+  const isFree = useFilter('free');
+  const isParty = useFilter('party');
+  const isExercise = useFilter('exercise');
+  const isAccessible = useFilter('accessible');
   const search = useSearch();
 
   const events = useMemo(
@@ -276,7 +288,11 @@ export const EventContextProvider: FC = (props) => {
           (teemunkierros.checked && !content.teemunkierros) ||
           (needsRegistration.checked && !content.needsRegistration) ||
           (hasMusic.checked && !content.hasMusic) ||
-          (isRemote.checked && !content.isRemote)
+          (isRemote.checked && !content.isRemote) ||
+          (isFree.checked && !content.isFree) ||
+          (isParty.checked && !content.isParty) ||
+          (isExercise.checked && !content.isExercise) ||
+          (isAccessible.checked && !content.isAccessible)
         ) {
           return false;
         }
@@ -333,6 +349,10 @@ export const EventContextProvider: FC = (props) => {
       needsRegistration.checked,
       hasMusic.checked,
       isRemote.checked,
+      isFree.checked,
+      isParty.checked,
+      isExercise.checked,
+      isAccessible.checked,    
       search.value,
     ]
   );
@@ -351,6 +371,10 @@ export const EventContextProvider: FC = (props) => {
         needsRegistration.checked,
         hasMusic.checked,
         isRemote.checked,
+        isFree.checked,
+        isParty.checked,
+        isExercise.checked,
+        isAccessible.checked,
         isNotEmpty(search.value),
       ].filter((f) => f).length,
     [
@@ -360,6 +384,10 @@ export const EventContextProvider: FC = (props) => {
       needsRegistration.checked,
       hasMusic.checked,
       isRemote.checked,
+      isFree.checked,
+      isParty.checked,
+      isExercise.checked,
+      isAccessible.checked,
       search.value,
     ]
   );
@@ -373,6 +401,10 @@ export const EventContextProvider: FC = (props) => {
         needsRegistration.reset,
         hasMusic.reset,
         isRemote.reset,
+        isFree.reset,
+        isParty.reset,
+        isExercise.reset,
+        isAccessible.reset,
         search.reset,
       ].forEach((reset) => reset()),
     [
@@ -382,6 +414,10 @@ export const EventContextProvider: FC = (props) => {
       needsRegistration.reset,
       hasMusic.reset,
       isRemote.reset,
+      isFree.reset,
+      isParty.reset,
+      isExercise.reset,
+      isAccessible.reset,
       search.reset,
     ]
   );
@@ -402,6 +438,10 @@ export const EventContextProvider: FC = (props) => {
           needsRegistration,
           hasMusic,
           isRemote,
+          isFree,
+          isParty,
+          isExercise,
+          isAccessible,
           search,
         },
         count: {
