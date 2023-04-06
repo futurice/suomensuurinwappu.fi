@@ -51,10 +51,13 @@ export const FavouriteContextProvider: FC = (props) => {
 export const useFavourite = (slug: string) => {
   const { favourites, toggleFavouriteBySlug } = useContext(FavouriteContext);
 
-  const isFavourite = useMemo(() => favourites.includes(slug), [favourites]);
+  const isFavourite = useMemo(
+    () => favourites.includes(slug),
+    [favourites, slug]
+  );
   const toggleFavourite = useCallback(
     () => toggleFavouriteBySlug(slug),
-    [toggleFavouriteBySlug]
+    [slug, toggleFavouriteBySlug]
   );
 
   return { isFavourite, toggleFavourite };
