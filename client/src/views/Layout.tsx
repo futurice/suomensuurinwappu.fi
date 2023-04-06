@@ -23,7 +23,7 @@ export const Layout: VFC = () => {
         <title>{translation?.title}</title>
         <meta name="description" content={translation?.description} />
         <html className="font-body text-dark min-h-full" />
-        <body className="bg-gradient-page bg-cover bg-fixed" />
+        <body className="bg-gradient-page" />
       </Helmet>
 
       <div className="h-16 bg-white p-4 drop-shadow">
