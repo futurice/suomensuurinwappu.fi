@@ -4,6 +4,7 @@ import { Dialog, DialogBackdrop, useDialogState } from 'reakit/Dialog';
 
 import { EventInfo, Image, RichText } from 'components';
 import { useEvent, useEventContext, useGlobalContext } from 'contexts';
+import { Favourite } from 'components/Favourite';
 
 export const EventModal: VFC = () => {
   const { slug } = useParams<'slug'>();
@@ -50,6 +51,7 @@ export const EventModal: VFC = () => {
             {event?.content.title}
           </h2>
           {event && (
+            <>
             <div className="flex-initial flex-col overflow-auto text-sm">
               <div className="mb-1 flex flex-col gap-1">
                 <EventInfo {...event.content} />
@@ -62,6 +64,11 @@ export const EventModal: VFC = () => {
                 {translation?.backToCalendar}
               </button>
             </div>
+
+            <div className='absolute top-8 right-5'>
+              <Favourite slug={event.slug} event={event.content} size={"30px"} />
+            </div>
+          </>
           )}
         </div>
       </Dialog>

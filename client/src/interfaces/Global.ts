@@ -33,6 +33,7 @@ export interface Global {
   party: string;
   exercise: string;
   searchPlaceholder: string;
+  favourites: string;
 
   backToCalendar: string;
 
@@ -49,4 +50,7 @@ export interface Global {
   consentInfo: StoryblokRichtext;
   consentDecline: string;
   consentAccept: string;
+
+  addToFavourites: string;
+  removeFromFavourites: string;
 }

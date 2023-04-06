@@ -12,6 +12,7 @@ export const Filters: VFC<{ onSubmit: FormEventHandler<HTMLFormElement> }> = ({
   return (
     <div className="mt-4 flex flex-col items-start gap-4">
       <Filter {...filter.teemunkierros}>{translation?.teemunkierros}</Filter>
+      <Filter {...filter.isFavourite}>{translation?.favourites}</Filter>
 
       <FilterGroup {...filter.location} label={translation?.location}>
         <FilterGroupItem value={Location.Hervanta}>

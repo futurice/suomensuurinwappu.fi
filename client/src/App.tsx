@@ -7,7 +7,7 @@ import {
   EventContextProvider,
   GlobalContextProvider,
   LanguageContextProvider,
-  AdContextProvider,
+  FavouriteContextProvider,
 } from 'contexts';
 import { EventModal, Events, Layout, PageContent } from 'views';
 
@@ -28,12 +28,12 @@ export const App: VFC = () => (
     <LanguageContextProvider>
       <GlobalContextProvider>
         <EventContextProvider>
-          <AdContextProvider>
+          <FavouriteContextProvider>
             <Routes>
               <Route path=":lang">{routes()}</Route>
               {routes()}
             </Routes>
-          </AdContextProvider>
+          </FavouriteContextProvider>
         </EventContextProvider>
       </GlobalContextProvider>
     </LanguageContextProvider>
