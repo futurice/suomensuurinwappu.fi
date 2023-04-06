@@ -1,34 +1,18 @@
-import { useAdContext } from 'contexts';
-import { AdItem } from 'interfaces';
 import { VFC } from 'react';
 
-function shuffleArray(array: AdItem[]) {
-  for (var i = array.length - 1; i > 0; i--) {
-    var j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
 export const Footer: VFC = () => {
-  const { data } = useAdContext();
-  let adverts = [...data];
-  shuffleArray(adverts);
-
   return (
-    <footer className="bg-circles xs:h-20 fixed bottom-0 left-0 right-0 h-16 bg-[center_top] px-4 pt-4 sm:h-24">
-      <div className="xs:py-4 m-auto flex h-full max-w-4xl items-stretch gap-4 py-2 sm:gap-8 md:gap-16">
-        {adverts.slice(0, 3).map((ad) => (
-          <div
-            key={ad.content.companyName}
-            className="flex flex-1 items-center justify-center"
+    <footer className="xs:h-16 sm:h-18 fixed bottom-0 left-0 right-0 h-12 bg-white bg-[center_top] px-4 drop-shadow">
+      <div className="xs:py-2 m-auto flex h-full max-w-4xl justify-center gap-4 py-2 sm:gap-8 md:gap-16">
+        <a href="https://futurice.com/" target="_blank">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 900 320"
+            className="h-full"
           >
-            <img
-              className="max-h-full max-w-full object-contain object-center"
-              src={`${ad.content.logo.filename}/m/352x0/`}
-              alt={ad.content.logo.alt || `${ad.content.companyName} logo`}
-            />
-          </div>
-        ))}
+            <path d="M654.7 118c23.9 0 37.1 10.2 43.5 31l-23.9 5.9c-3.3-10-9.4-15.1-18.8-15.1-14.7 0-22.2 10-22.2 30.2s7.3 30.2 22.2 30.2c9.4 0 15.5-5.1 18.8-15.1l23.9 5.9c-6.5 20.8-19.6 31-43.5 31-30.2 0-48.4-19.6-48.4-52-.1-32.4 18.2-52 48.4-52m-72.8 102H556V120h25.9v100zM569.2 76.9c8.8 0 15.9 7.1 15.9 15.9s-7.1 15.9-15.9 15.9-15.9-7.1-15.9-15.9 7.1-15.9 15.9-15.9M538 141.8h-34.7V220h-25.9V120H538v21.8zM424.1 179v-59H450v58.8c0 29-14.7 43.1-43.5 43.1s-43.7-14.1-43.7-43.1V120h25.9v59c0 15.3 6.3 21.2 17.8 21.2s17.6-5.9 17.6-21.2M284.5 82.7h25.9V120h32v21.8h-32v44.3c0 10.8 5.7 14.1 13.1 14.1 5.9 0 9.2-2.2 13.3-5.9l10 18.4c-6.7 5.1-15.9 9.2-27.9 9.2-22.4 0-34.5-13.1-34.5-32.8l.1-106.4zM233.1 179v-59H259v58.8c0 29-14.7 43.1-43.5 43.1s-43.7-14.1-43.7-43.1V120h25.9v59c0 15.3 6.3 21.2 17.9 21.2 11.4 0 17.5-5.9 17.5-21.2M99.8 107.8c0-19.6 12.2-33 34.5-33 10 0 19 2.9 26.3 8l-10.2 18c-3.3-2.8-6.9-4.3-12.2-4.3-8.4 0-12.6 5.3-12.6 14.1v9.2h30v21.8h-30V220H99.8V107.8zm708.4 56.9c0-32-19-46.7-46.5-46.7-28.6 0-47.5 19.4-47.5 51.4 0 32.2 16.7 52.5 48.8 52.5 21.8 0 35.3-9.8 44.1-25.3L786.3 186c-4.5 9.4-12.9 14.9-23.9 14.9-12 0-21.4-8.2-22-24.5h67.7v-11.7zm-67.2-5.5c1.2-10.4 7.7-20.6 21.4-20.6 15.9 0 20.6 10.4 20.6 20.6h-42z" />
+          </svg>
+        </a>
       </div>
     </footer>
   );
