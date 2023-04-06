@@ -4,7 +4,7 @@ export const Footer: VFC = () => {
   return (
     <footer className="xs:h-16 sm:h-18 fixed bottom-0 left-0 right-0 h-12 bg-white bg-[center_top] px-4 drop-shadow">
       <div className="xs:py-2 m-auto flex h-full max-w-4xl justify-center gap-4 py-2 sm:gap-8 md:gap-16">
-        <a href="https://futurice.com/" target="_blank">
+        <a href="https://futurice.com/" target="_blank" rel="noreferrer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 900 320"
