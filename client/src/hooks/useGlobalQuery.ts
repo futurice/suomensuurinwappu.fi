@@ -34,6 +34,7 @@ const globalQuery = gql`
           accessible
           party
           exercise
+          favourites
 
           backToCalendar: back_to_calendar
 
@@ -60,6 +61,9 @@ const globalQuery = gql`
           consentInfo: consent_info
           consentAccept: consent_accept
           consentDecline: consent_decline
+
+          addToFavourites: add_to_favourites
+          removeFromFavourites: remove_from_favourites
         }
       }
     }

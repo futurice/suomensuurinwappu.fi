@@ -66,7 +66,7 @@ export const EventModal: VFC = () => {
             </div>
 
             <div className='absolute top-8 right-5'>
-              <Favourite slug={event.slug} size={"30px"} />
+              <Favourite slug={event.slug} event={event.content} size={"30px"} />
             </div>
           </>
           )}

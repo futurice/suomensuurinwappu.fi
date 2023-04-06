@@ -40,7 +40,7 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
             <EventInfo {...content} />
           </div>
           <div className="flex items-end pr-3 pb-4">
-            <Favourite slug={slug} />
+            <Favourite slug={slug} event={content} />
           </div>
         </div>
       </li>
