@@ -44,6 +44,8 @@ export interface Global {
   facebook: SocialLink;
   telegramLabel: string;
   telegram: SocialLink;
+  tiktokLabel: string;
+  tiktok: SocialLink;
   wappuradioLabel: string;
   wappuradio: SocialLink;
 
