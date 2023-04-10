@@ -7,6 +7,7 @@ import {
   Icon,
   InstagramFill,
   TelegramFill,
+  TiktokFill,
 } from 'akar-icons';
 
 interface SocialLinkProps {
@@ -50,6 +51,11 @@ export const SocialLinks: VFC = () => {
           href={translation?.telegram?.url}
           icon={TelegramFill}
           label={translation?.telegramLabel}
+        />
+        <SocialLink
+          href={translation?.tiktok?.url}
+          icon={TiktokFill}
+          label={translation?.tiktokLabel}
         />
       </div>
 

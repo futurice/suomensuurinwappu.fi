@@ -53,6 +53,10 @@ const globalQuery = gql`
           telegram {
             url
           }
+          tiktokLabel: tiktok_label
+          tiktok {
+            url
+          }
           wappuradioLabel: wappuradio_label
           wappuradio {
             url
