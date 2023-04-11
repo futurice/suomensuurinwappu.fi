@@ -34,7 +34,7 @@ export const EventModal: VFC = () => {
         unstable_finalFocusRef={currentRef}
         tabIndex={0}
         ref={modalRef}
-        className="style-focus enter:translate-y-0 enter:scale-100 inset-x-0 bottom-0 flex max-h-full max-w-lg translate-y-full flex-col rounded-t-lg bg-white drop-shadow-lg transition-transform duration-300 sm:rounded-lg md:scale-50"
+        className="style-focus enter:translate-y-0 enter:scale-100 inset-x-0 bottom-0 flex max-h-full max-w-full sm:max-w-lg translate-y-full flex-col rounded-t-lg bg-white drop-shadow-lg transition-transform duration-300 sm:rounded-lg md:scale-50"
         preventBodyScroll={false}
         {...dialog}
       >
