@@ -34,6 +34,7 @@ export interface Global {
   exercise: string;
   searchPlaceholder: string;
   favourites: string;
+  familyfriendly: string;
 
   backToCalendar: string;
 

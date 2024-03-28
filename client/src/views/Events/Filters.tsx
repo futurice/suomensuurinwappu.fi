@@ -45,6 +45,7 @@ export const Filters: VFC<{ onSubmit: FormEventHandler<HTMLFormElement> }> = ({
         <Filter {...filter.isAccessible}>{translation?.accessible}</Filter>
         <Filter {...filter.isParty}>{translation?.party}</Filter>
         <Filter {...filter.isExercise}>{translation?.exercise}</Filter>
+        <Filter {...filter.isFamilyFriendly}>{translation?.familyfriendly}</Filter>
       </div>
 
       <Search

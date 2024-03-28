@@ -76,6 +76,7 @@ interface EventContextValue {
     isAccessible: FilterProps;
     search: SearchProps;
     isFavourite: FilterProps;
+    isFamilyFriendly: FilterProps;
   };
   count: {
     date: number;
@@ -127,6 +128,7 @@ const initialContext: EventContextValue = {
     isAccessible: initialFilter,
     search: initialFilter,
     isFavourite: initialFilter,
+    isFamilyFriendly: initialFilter,
   },
   count: {
     date: 0,
@@ -282,6 +284,7 @@ export const EventContextProvider: FC = (props) => {
   const isExercise = useFilter('exercise');
   const isAccessible = useFilter('accessible');
   const isFavourite = useFilter('favourite');
+  const isFamilyFriendly = useFilter('familyfriendly');
   const search = useSearch();
 
   const events = useMemo(
@@ -295,7 +298,8 @@ export const EventContextProvider: FC = (props) => {
           (isFree.checked && !content.isFree) ||
           (isParty.checked && !content.isParty) ||
           (isExercise.checked && !content.isExercise) ||
-          (isAccessible.checked && !content.isAccessible)
+          (isAccessible.checked && !content.isAccessible) ||
+          (isFamilyFriendly.checked && !content.isFamilyFriendly)
         ) {
           return false;
         }
@@ -365,6 +369,7 @@ export const EventContextProvider: FC = (props) => {
       isAccessible.checked,    
       search.value,
       isFavourite.checked,
+      isFamilyFriendly.checked
     ]
   );
 
@@ -386,6 +391,7 @@ export const EventContextProvider: FC = (props) => {
         isParty.checked,
         isExercise.checked,
         isAccessible.checked,
+        isFamilyFriendly.checked,
         isNotEmpty(search.value),
       ].filter((f) => f).length,
     [
@@ -400,6 +406,7 @@ export const EventContextProvider: FC = (props) => {
       isExercise.checked,
       isAccessible.checked,
       search.value,
+      isFamilyFriendly.checked
     ]
   );
 
@@ -417,6 +424,7 @@ export const EventContextProvider: FC = (props) => {
         isExercise.reset,
         isAccessible.reset,
         search.reset,
+        isFamilyFriendly.reset,
       ].forEach((reset) => reset()),
     [
       teemunkierros.reset,
@@ -430,6 +438,7 @@ export const EventContextProvider: FC = (props) => {
       isExercise.reset,
       isAccessible.reset,
       search.reset,
+      isFamilyFriendly.reset,
     ]
   );
 
@@ -455,6 +464,7 @@ export const EventContextProvider: FC = (props) => {
           isAccessible,
           search,
           isFavourite,
+          isFamilyFriendly
         },
         count: {
           date: dateCount,

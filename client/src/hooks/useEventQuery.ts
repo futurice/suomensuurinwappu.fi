@@ -34,7 +34,8 @@ const eventQuery = (page: number) => {
             isFree: free
             isParty: party
             isExercise: exercise,
-            isAccessible: accessible
+            isAccessible: accessible,
+            isFamilyFriendly: familyfriendly
           }
         }
       }

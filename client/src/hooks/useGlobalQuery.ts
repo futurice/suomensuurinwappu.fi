@@ -35,6 +35,7 @@ const globalQuery = gql`
           party
           exercise
           favourites
+          familyfriendly
 
           backToCalendar: back_to_calendar
 
