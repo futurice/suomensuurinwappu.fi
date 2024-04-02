@@ -43,6 +43,7 @@ export class WappuStack extends Stack {
         "'self'",
         'https://gapi.storyblok.com',
         'https://www.google-analytics.com',
+        'https://*.google-analytics.com'
       ],
       ['font-src', "'self'", 'https:', 'data:'],
       ['style-src', "'self'", 'https:', "'unsafe-inline'"],
