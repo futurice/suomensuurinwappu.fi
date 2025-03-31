@@ -8,6 +8,7 @@ export interface Global {
   title: string;
   description: string;
   events: string;
+  repeatingEvents: string;
 
   menu: string;
 

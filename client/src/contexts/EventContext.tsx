@@ -17,7 +17,8 @@ import { StoryblokRichtextContent } from 'storyblok-rich-text-react-renderer';
 import { Language, useLanguageContext } from 'contexts';
 import { useDates, useEventQuery } from 'hooks';
 import { EventItem } from 'interfaces';
-import { inStr, isNotEmpty, isOfEnum } from 'utils';
+import { asDate, inStr, isLongEvent, isNotEmpty, isOfEnum } from 'utils';
+import { endOfDay, isWithinInterval, startOfDay } from 'date-fns';
 
 export interface DateSelectProps {
   selected: string[];
@@ -321,14 +322,23 @@ export const EventContextProvider: FC = (props) => {
 
         if (dateSelect.selected.length > 0) {
           const date = content.dateBegin.split(' ')[0];
-
+          if (isLongEvent(content)) {
+            return dateSelect.selected.some((d) =>
+              isWithinInterval(asDate(d), {
+                start: startOfDay(asDate(content.dateBegin)),
+                end: endOfDay(asDate(content.dateEnd)),
+              })
+            );
+          }
           if (dateSelect.selected.every((d) => d !== date)) {
             return false;
           }
         }
 
         if (isFavourite.checked) {
-          const favourites = JSON.parse(localStorage.getItem('WAPPU_FAVOURITES') || '[]');
+          const favourites = JSON.parse(
+            localStorage.getItem('WAPPU_FAVOURITES') || '[]'
+          );
           if (!favourites.includes(slug)) {
             return false;
           }
@@ -366,10 +376,10 @@ export const EventContextProvider: FC = (props) => {
       isFree.checked,
       isParty.checked,
       isExercise.checked,
-      isAccessible.checked,    
+      isAccessible.checked,
       search.value,
       isFavourite.checked,
-      isFamilyFriendly.checked
+      isFamilyFriendly.checked,
     ]
   );
 
@@ -406,7 +416,7 @@ export const EventContextProvider: FC = (props) => {
       isExercise.checked,
       isAccessible.checked,
       search.value,
-      isFamilyFriendly.checked
+      isFamilyFriendly.checked,
     ]
   );
 
@@ -464,7 +474,7 @@ export const EventContextProvider: FC = (props) => {
           isAccessible,
           search,
           isFavourite,
-          isFamilyFriendly
+          isFamilyFriendly,
         },
         count: {
           date: dateCount,

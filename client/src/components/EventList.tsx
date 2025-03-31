@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { useEventContext, useGlobalContext } from 'contexts';
 import { EventItem } from 'interfaces';
-import { Format } from 'utils';
+import { Format, isLongEvent } from 'utils';
 
 import { EventInfo } from './EventInfo';
 import { Image } from './Image';
@@ -50,19 +50,26 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
 
 export const EventList: VFC<EventListProps> = ({ events }) => {
   const { currentRef } = useEventContext();
+  const { translation } = useGlobalContext();
   const { slug } = useParams<'slug'>();
   const [current, setCurrent] = useState<string>();
 
+  const longEvents = useMemo(
+    () => events.filter((event) => isLongEvent(event.content)),
+    [events]
+  );
   const grouped = useMemo(
     () =>
-      events.reduce((acc, cur) => {
-        const day = cur.content.dateBegin.split(' ')[0];
+      events
+        .filter((e) => !isLongEvent(e.content))
+        .reduce((acc, cur) => {
+          const day = cur.content.dateBegin.split(' ')[0];
 
-        return {
-          ...acc,
-          [day]: [...(acc[day] || []), cur],
-        };
-      }, {} as Record<string, EventItem[]>),
+          return {
+            ...acc,
+            [day]: [...(acc[day] || []), cur],
+          };
+        }, {} as Record<string, EventItem[]>),
     [events]
   );
 
@@ -77,6 +84,21 @@ export const EventList: VFC<EventListProps> = ({ events }) => {
 
   return (
     <ul className="m-auto max-w-7xl">
+      <li key="longEvents">
+        <h2 className="my-6 -ml-4 inline-flex rounded-r bg-white py-2 px-4 text-sm font-bold text-pink-700 xl:ml-0 xl:rounded">
+          {translation?.repeatingEvents}
+        </h2>
+        <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {longEvents.map((longEvent) => (
+            <Event
+              ref={longEvent.slug === current ? currentRef : undefined}
+              key={longEvent.slug}
+              {...longEvent}
+            />
+          ))}
+        </ul>
+      </li>
+
       {Object.entries(grouped).map(([date, group]) => (
         <li key={date}>
           <h2 className="my-6 -ml-4 inline-flex rounded-r bg-white py-2 px-4 text-sm font-bold text-pink-700 xl:ml-0 xl:rounded">

@@ -1,5 +1,7 @@
 import { VFC } from 'react';
 import { useLanguageContext } from 'contexts';
+import { intervalToDuration } from 'date-fns';
+import { Event } from 'interfaces';
 
 const DATE: Intl.DateTimeFormatOptions = {
   month: 'numeric',
@@ -15,6 +17,13 @@ const DATETIME: Intl.DateTimeFormatOptions = { ...DATE, ...TIME };
 
 const strReplace = (str: string) => str.replaceAll('-', '/');
 export const asDate = (str: string) => new Date(strReplace(str));
+
+export const isLongEvent = (event: Event) => {
+  const start = asDate(event.dateBegin);
+  const end = asDate(event.dateEnd);
+  const duration = intervalToDuration({ start, end });
+  return (duration?.days && duration.days > 1) ?? true;
+};
 
 export const formatTimeRange = (
   locale: string,
