@@ -34,7 +34,7 @@ export const EventModal: VFC = () => {
         unstable_finalFocusRef={currentRef}
         tabIndex={0}
         ref={modalRef}
-        className="style-focus enter:translate-y-0 enter:scale-100 inset-x-0 bottom-0 flex max-h-full max-w-full sm:max-w-lg translate-y-full flex-col rounded-t-lg bg-white drop-shadow-lg transition-transform duration-300 sm:rounded-lg md:scale-50"
+        className="style-focus enter:translate-y-0 enter:scale-100 inset-x-0 bottom-0 flex max-h-full max-w-full translate-y-full flex-col rounded-t-lg bg-white drop-shadow-lg transition-transform duration-300 sm:max-w-lg sm:rounded-lg md:scale-50"
         preventBodyScroll={false}
         {...dialog}
       >
@@ -46,29 +46,33 @@ export const EventModal: VFC = () => {
         <div className="flex flex-initial flex-col gap-1 overflow-hidden p-4">
           <h2
             id={labelId}
-            className="style-heading text-lg text-pink-700 outline-none focus:underline"
+            className="style-heading text-lg text-cyan-700 outline-none focus:underline"
           >
             {event?.content.title}
           </h2>
           {event && (
             <>
-            <div className="flex-initial flex-col overflow-auto text-sm">
-              <div className="mb-1 flex flex-col gap-1">
-                <EventInfo {...event.content} />
+              <div className="flex-initial flex-col overflow-auto text-sm">
+                <div className="mb-1 flex flex-col gap-1">
+                  <EventInfo {...event.content} />
+                </div>
+                <RichText>{event.content.description}</RichText>
+                <button
+                  onClick={closeEvent}
+                  className="style-btn mx-auto mt-2 mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
+                >
+                  {translation?.backToCalendar}
+                </button>
               </div>
-              <RichText>{event.content.description}</RichText>
-              <button
-                onClick={closeEvent}
-                className="style-btn mx-auto mt-2 mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"
-              >
-                {translation?.backToCalendar}
-              </button>
-            </div>
 
-            <div className='absolute top-8 right-5'>
-              <Favourite slug={event.slug} event={event.content} size={"30px"} />
-            </div>
-          </>
+              <div className="absolute top-8 right-5">
+                <Favourite
+                  slug={event.slug}
+                  event={event.content}
+                  size={'30px'}
+                />
+              </div>
+            </>
           )}
         </div>
       </Dialog>
