@@ -75,7 +75,9 @@ export const useDates = (eventData: QueryResponseItem<Event>[]) => {
 
   const initial: string[] = useMemo(() => {
     if (last) {
-      const current = startOfToday();
+      let current = startOfToday();
+      const firstDay = options[0]?.date ?? current;
+      if (firstDay > current) current = firstDay;
 
       return new Array(getInitialLength(current, asDate(last)))
         .fill(current)
@@ -83,7 +85,7 @@ export const useDates = (eventData: QueryResponseItem<Event>[]) => {
     }
 
     return [];
-  }, [last]);
+  }, [last, options]);
 
   return { initial, options, weekdays };
 };
