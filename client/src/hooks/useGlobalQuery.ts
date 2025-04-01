@@ -10,6 +10,7 @@ const globalQuery = gql`
           title
           description
           events
+          repeatingEvents
 
           menu
 
