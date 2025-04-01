@@ -9,12 +9,12 @@
     "cdk:deploy:prod": "cdk deploy suomensuurinwappu-stack-prod"
   },
   "dependencies": {
-    "@types/node": "^20.11.30",
-    "aws-cdk-lib": "^2.134.0",
-    "cdk": "^2.134.0",
-    "constructs": "^10.3.0",
+    "@types/node": "^22.13.15",
+    "aws-cdk-lib": "^2.187.0",
+    "cdk": "^2.1006.0",
+    "constructs": "^10.4.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3",
-    "zod": "^3.22.4"
+    "typescript": "^5.8.2",
+    "zod": "^3.24.2"
   }
 }
