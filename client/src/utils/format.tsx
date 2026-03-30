@@ -22,7 +22,7 @@ export const isLongEvent = (event: Event) => {
   const start = asDate(event.dateBegin);
   const end = asDate(event.dateEnd);
   const duration = intervalToDuration({ start, end });
-  return (duration?.days && duration.days > 1) ?? true;
+  return (duration?.days && duration.days > 1) ?? false;
 };
 
 export const formatTimeRange = (
