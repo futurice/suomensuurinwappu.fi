@@ -12,6 +12,7 @@ export interface Event {
   organizer: string;
   image: Image;
   description: StoryblokRichtext;
+  accessibilityDescription: StoryblokRichtext;
   teemunkierros: boolean;
   teemunkierrosKey: string;
   needsRegistration: boolean;

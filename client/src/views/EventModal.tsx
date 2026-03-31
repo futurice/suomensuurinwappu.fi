@@ -57,6 +57,20 @@ export const EventModal: VFC = () => {
                   <EventInfo {...event.content} />
                 </div>
                 <RichText>{event.content.description}</RichText>
+                {event.content.accessibilityDescription && (
+                  <div className="pt-2 mb-1 flex flex-col gap-1">
+                    <h3
+                      id={labelId}
+                      className="style-heading text-md text-cyan-700 outline-none focus:underline"
+                    >
+                      {translation?.accessibilityDescription}
+                    </h3>
+                    <RichText>
+                      {event.content.accessibilityDescription}
+                    </RichText>
+                  </div>
+                )}
+
                 <button
                   onClick={closeEvent}
                   className="style-btn mx-auto mt-2 mb-4 flex-none bg-cyan-700 px-3 text-white transition-colors hover:bg-cyan-900"

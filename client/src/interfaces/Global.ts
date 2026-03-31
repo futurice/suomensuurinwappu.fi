@@ -7,6 +7,7 @@ interface SocialLink {
 export interface Global {
   title: string;
   description: string;
+  accessibilityDescription: string;
   events: string;
   repeatingEvents: string;
 

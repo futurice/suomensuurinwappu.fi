@@ -9,6 +9,7 @@ const globalQuery = gql`
         content {
           title
           description
+          accessibilityDescription: accessibility_description
           events
           repeatingEvents
 

@@ -24,6 +24,7 @@ const eventQuery = (page: number) => {
               alt
             }
             description
+            accessibilityDescription: accessibility_description
             teemunkierros
             teemunkierrosKey: teemunkierros_key
             locationTag: location_tag
