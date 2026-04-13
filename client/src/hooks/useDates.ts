@@ -63,7 +63,7 @@ export const useDates = (eventData: QueryResponseItem<Event>[]) => {
   const options: DateOption[] = useMemo(() => {
     if (first && last) {
       return [
-        ...new Array(getDay(asDate(first))).fill(null),
+        ...new Array(getDay(asDate(first)) - 1).fill(null),
         ...new Array(differenceInDays(asDate(last), asDate(first)) + 1)
           .fill(asDate(first))
           .map((date, idx) => add(date, { days: idx })),
