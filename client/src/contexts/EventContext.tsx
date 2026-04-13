@@ -78,6 +78,7 @@ interface EventContextValue {
     search: SearchProps;
     isFavourite: FilterProps;
     isFamilyFriendly: FilterProps;
+    isStampEvent: FilterProps;
   };
   count: {
     date: number;
@@ -130,6 +131,7 @@ const initialContext: EventContextValue = {
     search: initialFilter,
     isFavourite: initialFilter,
     isFamilyFriendly: initialFilter,
+    isStampEvent: initialFilter,
   },
   count: {
     date: 0,
@@ -286,13 +288,20 @@ export const EventContextProvider: FC = (props) => {
   const isAccessible = useFilter('accessible');
   const isFavourite = useFilter('favourite');
   const isFamilyFriendly = useFilter('familyfriendly');
+  const isStampEvent = useFilter('stampevent');
   const search = useSearch();
 
   const events = useMemo(
     () =>
       data.filter(({ slug, content }) => {
+        const specialTagsMatch =
+          teemunkierros.checked && isStampEvent.checked
+            ? content.teemunkierros || content.isStampEvent
+            : (!teemunkierros.checked || content.teemunkierros) &&
+              (!isStampEvent.checked || content.isStampEvent);
+
         if (
-          (teemunkierros.checked && !content.teemunkierros) ||
+          !specialTagsMatch ||
           (needsRegistration.checked && !content.needsRegistration) ||
           (hasMusic.checked && !content.hasMusic) ||
           (isRemote.checked && !content.isRemote) ||
@@ -380,6 +389,7 @@ export const EventContextProvider: FC = (props) => {
       search.value,
       isFavourite.checked,
       isFamilyFriendly.checked,
+      isStampEvent.checked,
     ]
   );
 
@@ -402,6 +412,7 @@ export const EventContextProvider: FC = (props) => {
         isExercise.checked,
         isAccessible.checked,
         isFamilyFriendly.checked,
+        isStampEvent.checked,
         isNotEmpty(search.value),
       ].filter((f) => f).length,
     [
@@ -417,6 +428,7 @@ export const EventContextProvider: FC = (props) => {
       isAccessible.checked,
       search.value,
       isFamilyFriendly.checked,
+      isStampEvent.checked,
     ]
   );
 
@@ -435,6 +447,7 @@ export const EventContextProvider: FC = (props) => {
         isAccessible.reset,
         search.reset,
         isFamilyFriendly.reset,
+        isStampEvent.reset,
       ].forEach((reset) => reset()),
     [
       teemunkierros.reset,
@@ -449,6 +462,7 @@ export const EventContextProvider: FC = (props) => {
       isAccessible.reset,
       search.reset,
       isFamilyFriendly.reset,
+      isStampEvent.reset,
     ]
   );
 
@@ -475,6 +489,7 @@ export const EventContextProvider: FC = (props) => {
           search,
           isFavourite,
           isFamilyFriendly,
+          isStampEvent,
         },
         count: {
           date: dateCount,

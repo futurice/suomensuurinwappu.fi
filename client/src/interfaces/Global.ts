@@ -20,6 +20,7 @@ export interface Global {
   filterReset: string;
   filterAll: string;
   teemunkierros: string;
+  stampEvent: string;
   location: string;
   place: string;
   hervanta: string;

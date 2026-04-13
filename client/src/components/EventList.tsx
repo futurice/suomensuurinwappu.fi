@@ -37,6 +37,7 @@ const Event = forwardRef<HTMLAnchorElement, EventItem>(
               </Link>
             </p>
             {content.teemunkierros && <Tag>{translation?.teemunkierros}</Tag>}
+            {content.isStampEvent && <Tag>{translation?.stampEvent}</Tag>}
             <EventInfo {...content} />
           </div>
           <div className="flex items-end pr-3 pb-4">

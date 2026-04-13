@@ -38,6 +38,7 @@ const globalQuery = gql`
           exercise
           favourites
           familyfriendly
+          stampEvent: stampevent
 
           backToCalendar: back_to_calendar
 

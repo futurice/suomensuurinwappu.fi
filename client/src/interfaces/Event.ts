@@ -24,6 +24,7 @@ export interface Event {
   isExercise: boolean;
   isAccessible: boolean;
   isFamilyFriendly: boolean;
+  isStampEvent: boolean;
 }
 
 export type EventItem = QueryResponseItem<Event>;
